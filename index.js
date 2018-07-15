@@ -1,7 +1,21 @@
-/** @format */
+import React, {Component} from 'react';
+import {
+    AppRegistry,
+    SafeAreaView,
 
-import { AppRegistry } from "react-native";
-import App from "./App";
-import { name as appName } from "./app.json";
+} from 'react-native';
+import App from './App';
+import {name as appName} from './app.json';
+import baseStyle from './src/styles/base';
 
-AppRegistry.registerComponent(appName, () => App);
+class Root extends Component {
+    render() {
+        return (
+            <SafeAreaView style={baseStyle.container}>
+                <App/>
+            </SafeAreaView>
+        )
+    }
+}
+
+AppRegistry.registerComponent(appName, () => Root);
