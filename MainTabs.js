@@ -8,6 +8,8 @@ import {StackNavigator, TabNavigator} from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //Home
 import HomeScreen from './src/screens/home/Home';
+//Meditation
+import MeditationScreen from './src/screens/meditation/Meditation';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 // import AboutScreen from './src/screens/settings/About';
@@ -24,7 +26,17 @@ const HomeTab = StackNavigator({
             title: 'Home',
         },
     },
-})
+});
+
+const MeditationTab = StackNavigator({
+    Home: {
+        screen: MeditationScreen,
+        navigationOptions: {
+            title: 'Meditation',
+        },
+    },
+});
+
 const SettingsTab = StackNavigator({
     Settings: {
         screen: SettingsScreen,
@@ -44,7 +56,19 @@ const SettingsTab = StackNavigator({
 
 const StacksInTabs = TabNavigator(
     {
-
+        HomeTab: {
+            screen: HomeTab,
+            navigationOptions: {
+                tabBarLabel: 'Home',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-home' : 'ios-home-outline'}
+                        size={26}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
         SettingsTab: {
             screen: SettingsTab,
             navigationOptions: {
@@ -58,13 +82,14 @@ const StacksInTabs = TabNavigator(
                 ),
             },
         },
-        HomeTab: {
-            screen: HomeTab,
+
+        MeditationTab: {
+            screen: MeditationTab,
             navigationOptions: {
-                tabBarLabel: 'Home',
+                tabBarLabel: 'Meditation',
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
-                        name={focused ? 'ios-home' : 'ios-home-outline'}
+                        name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
                         size={26}
                         style={{color: tintColor}}
                     />
