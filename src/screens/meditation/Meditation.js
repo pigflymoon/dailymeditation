@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
-import {View, Text, Image,StyleSheet,ScrollView} from 'react-native';
-import baseStyle from '../../styles/base';
+import {View, Text, Image, StyleSheet, ScrollView, StatusBar} from 'react-native';
+import screenStyle from '../../styles/screen';
 
-import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
 import SlideTabBar from './SlideTabBar';
 import GridViewDemo from './GridViewDemo';
 export default class Meditation extends Component {
-
     render() {
         return (
+            <View style={screenStyle.meditationContainer}>
                 <ScrollableTabView
-                    style={{marginTop: 20, }}
                     initialPage={0}
                     renderTabBar={() => <SlideTabBar />}
                 >
@@ -38,11 +37,10 @@ export default class Meditation extends Component {
                         </View>
                     </ScrollView>
                 </ScrollableTabView>
-
+            </View>
         )
     }
 }
-
 
 
 const styles = StyleSheet.create({
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
         height: 150,
         padding: 15,
         shadowColor: '#ccc',
-        shadowOffset: { width: 2, height: 2, },
+        shadowOffset: {width: 2, height: 2,},
         shadowOpacity: 0.5,
         shadowRadius: 3,
     },

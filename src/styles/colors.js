@@ -3,7 +3,7 @@ const BLUE = '#007AFF';
 const GREEN = '#4CD964';
 const RED = '#FF3B30';
 const GREY = '#8E8E93';
-const PURPLE = '#5856D6';
+const PURPLE = '#484C82';
 const TEAL_BLUE = '#5AC8FA';
 
 export default {

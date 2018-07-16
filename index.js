@@ -11,9 +11,8 @@ import baseStyle from './src/styles/base';
 class Root extends Component {
     render() {
         return (
-            <SafeAreaView style={baseStyle.container}>
                 <App/>
-            </SafeAreaView>
+
         )
     }
 }

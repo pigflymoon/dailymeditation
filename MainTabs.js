@@ -29,13 +29,15 @@ const HomeTab = StackNavigator({
 });
 
 const MeditationTab = StackNavigator({
-    Home: {
-        screen: MeditationScreen,
-        navigationOptions: {
-            title: 'Meditation',
+        Home: {
+            screen: MeditationScreen,
+            navigationOptions: {
+                title: 'Meditation',
+                headerStyle:{backgroundColor:'#484C82'}
+            },
         },
     },
-});
+);
 
 const SettingsTab = StackNavigator({
     Settings: {
@@ -63,7 +65,7 @@ const StacksInTabs = TabNavigator(
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
                         name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
-                        size={26}
+                        size={30}
                         style={{color: tintColor}}
                     />
                 ),
@@ -76,7 +78,7 @@ const StacksInTabs = TabNavigator(
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
                         name={focused ? 'ios-home' : 'ios-home-outline'}
-                        size={26}
+                        size={30}
                         style={{color: tintColor}}
                     />
                 ),
@@ -89,7 +91,7 @@ const StacksInTabs = TabNavigator(
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
                         name={focused ? 'ios-settings' : 'ios-settings-outline'}
-                        size={26}
+                        size={30}
                         style={{color: tintColor}}
                     />
                 ),
@@ -97,13 +99,14 @@ const StacksInTabs = TabNavigator(
         },
 
 
-
     },
     {
         tabBarPosition: 'bottom',
         animationEnabled: false,
         swipeEnabled: false,
-        tabBarOptions: {activeTintColor: colors.secondary2}
+        tabBarOptions: {activeTintColor: colors.secondary2, style: {
+            backgroundColor: colors.purple,
+        },}
 
     },
 );
