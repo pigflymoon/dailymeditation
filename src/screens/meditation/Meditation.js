@@ -11,7 +11,7 @@ export default class Meditation extends Component {
         return (
                 <ScrollableTabView
                     style={{marginTop: 20, }}
-                    initialPage={1}
+                    initialPage={0}
                     renderTabBar={() => <SlideTabBar />}
                 >
                     <ScrollView tabLabel="ios-paper" style={styles.tabView}>

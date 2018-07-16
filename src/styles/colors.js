@@ -30,7 +30,7 @@ export default {
     white: '#ffffff',
     black: '#000000',
     error: '#ff190c',
-    orange: ORANGE,
+    orange: '#FF9500',
     orange1: '#E77151',
     purple: PURPLE,
     purple1: '#D19FE8',

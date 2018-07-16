@@ -56,6 +56,19 @@ const SettingsTab = StackNavigator({
 
 const StacksInTabs = TabNavigator(
     {
+        MeditationTab: {
+            screen: MeditationTab,
+            navigationOptions: {
+                tabBarLabel: 'Meditation',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
+                        size={26}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
         HomeTab: {
             screen: HomeTab,
             navigationOptions: {
@@ -83,19 +96,7 @@ const StacksInTabs = TabNavigator(
             },
         },
 
-        MeditationTab: {
-            screen: MeditationTab,
-            navigationOptions: {
-                tabBarLabel: 'Meditation',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
-                        size={26}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-        },
+
 
     },
     {

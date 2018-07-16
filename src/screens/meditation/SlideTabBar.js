@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-    StyleSheet,
     Text,
     View,
     TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+// import {Icon} from 'react-native-elements';
+import sliderTabStyle from '../../styles/slideTab';
+import colorStyle from '../../styles/colors';
 class SlideTabBar extends React.Component {
     icons = [];
 
@@ -16,10 +17,10 @@ class SlideTabBar extends React.Component {
     }
 
     componentDidMount() {
-        this._listener = this.props.scrollValue.addListener(this.setAnimationValue.bind(this));
+        // this._listener = this.props.scrollValue.addListener(this.setAnimationValue.bind(this));
     }
 
-    setAnimationValue({ value, }) {
+    setAnimationValue({value,}) {
         this.icons.forEach((icon, i) => {
             const progress = (value - i >= 0 && value - i <= 1) ? value - i : 1;
             icon.setNativeProps({
@@ -39,14 +40,19 @@ class SlideTabBar extends React.Component {
     }
 
     render() {
-        return <View style={[styles.tabs, this.props.style, ]}>
+
+        return <View style={[sliderTabStyle.tabs, this.props.style]}>
             {this.props.tabs.map((tab, i) => {
-                return <TouchableOpacity key={tab} onPress={() => this.props.goToPage(i)} style={styles.tab}>
-                    <Icon
-                        name={tab}
+                return <TouchableOpacity key={tab} onPress={() => this.props.goToPage(i)}
+                                         style={[sliderTabStyle.tab]}>
+                    <Ionicons
+                        iconStyle={[sliderTabStyle.iconContainer]}
+                        name={this.props.activeTab === i?tab:`${tab}-outline`}
                         size={30}
-                        color={this.props.activeTab === i ? 'rgb(59,89,152)' : 'rgb(204,204,204)'}
-                        ref={(icon) => { this.icons[i] = icon; }}
+                        color={this.props.activeTab === i?colorStyle.orange:'rgb(204,204,204)'}
+                        ref={(icon) => {
+                        this.icons[i] = icon;
+                    }}
                     />
                 </TouchableOpacity>;
             })}
@@ -54,23 +60,5 @@ class SlideTabBar extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    tab: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: 10,
-    },
-    tabs: {
-        height: 45,
-        flexDirection: 'row',
-        paddingTop: 5,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderLeftWidth: 0,
-        borderRightWidth: 0,
-        borderBottomColor: 'rgba(0,0,0,0.05)',
-    },
-});
 
 export default SlideTabBar;
