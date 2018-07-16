@@ -6,6 +6,8 @@ import baseStyle from '../../styles/base';
 // import bgVideo from '../../assets/video/bgVideo.mp4'
 export default class Home extends Component {
     render() {
+        // const {shouldUpdated, ...props, } = this.props;
+
         return (
             <View style={baseStyle.container}>
                 <Image
