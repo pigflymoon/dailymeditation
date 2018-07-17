@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, SectionList } from 'react-native';
+import {View, StyleSheet, SectionList} from 'react-native';
 
-import { ListItem, Divider, SearchBar } from 'react-native-elements';
+import {ListItem, Divider, SearchBar} from 'react-native-elements';
 import listStyle from '../../styles/list';
+import colors from '../../styles/colors';
+
 const ORANGE = '#FF9500';
 const BLUE = '#007AFF';
 const GREEN = '#4CD964';
@@ -109,7 +111,7 @@ const sections = [
         ],
     },
     // Space at the bottom
-    { data: [] },
+    {data: []},
 ];
 
 export default class Settings extends React.PureComponent {
@@ -124,7 +126,8 @@ export default class Settings extends React.PureComponent {
         },
     }) => (
         <ListItem
-            containerStyle={{ paddingVertical: 8 }}
+            containerStyle={{ paddingVertical: 8,backgroundColor:colors.purple4}}
+            titleStyle={{color:colors.grey4 }}
             switch={checkbox && { value: true }}
             key={title}
             chevron={!hideChevron}
@@ -145,17 +148,17 @@ export default class Settings extends React.PureComponent {
         />
     );
 
-    renderSectionHeader = () => <View style={listStyle.headerSection} />;
+    renderSectionHeader = () => <View style={[listStyle.headerSection,{backgroundColor:colors.purple4}]}/>;
 
     ItemSeparatorComponent = () => (
         <View style={listStyle.separatorComponent}>
-            <Divider style={listStyle.separator} />
+            <Divider style={listStyle.separator}/>
         </View>
     );
 
     ListHeaderComponent = () => (
         <View>
-            <SearchBar platform="ios" placeholder="Search" />
+            <SearchBar platform="ios" placeholder="Search"/>
             <Divider />
         </View>
     );
@@ -164,17 +167,19 @@ export default class Settings extends React.PureComponent {
 
     render() {
         return (
-            <SectionList
-                keyExtractor={this.keyExtractor}
-                ListHeaderComponent={this.ListHeaderComponent}
-                contentContainerStyle={listStyle.listBgColor}
-                sections={sections}
-                renderItem={this.renderItem}
-                renderSectionHeader={this.renderSectionHeader}
-                ItemSeparatorComponent={this.ItemSeparatorComponent}
-                SectionSeparatorComponent={Divider}
-                stickySectionHeadersEnabled={false}
-            />
+            <View style={{backgroundColor:'#7C7482'}}>
+                <SectionList
+                    keyExtractor={this.keyExtractor}
+                    contentContainerStyle={[listStyle.listBgColor,{backgroundColor:'#7C7482'}]}
+                    sections={sections}
+                    renderItem={this.renderItem}
+                    renderSectionHeader={this.renderSectionHeader}
+                    ItemSeparatorComponent={this.ItemSeparatorComponent}
+                    SectionSeparatorComponent={Divider}
+                    stickySectionHeadersEnabled={false}
+                />
+            </View>
+
         );
     }
 }

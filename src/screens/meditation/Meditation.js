@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, ScrollView, StatusBar} from 'react-native';
+import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
 
 import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
@@ -10,7 +11,7 @@ import sliderTabStyle from '../../styles/slideTab';
 export default class Meditation extends Component {
     render() {
         return (
-            <View style={screenStyle.meditationContainer}>
+            <View style={[baseStyle.container,screenStyle.screenBgPurple]}>
                 <ScrollableTabView
                     initialPage={0}
                     renderTabBar={() => <SlideTabBar />}

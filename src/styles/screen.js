@@ -1,7 +1,9 @@
 import colors from './colors';
 export default {
-    meditationContainer: {
-        flex: 1,
+    screenBgBlue: {
+        backgroundColor: colors.blue1,
+    },
+    screenBgPurple: {
         backgroundColor: colors.purple,
     }
 }
