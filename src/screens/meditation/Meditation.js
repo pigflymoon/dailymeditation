@@ -5,6 +5,8 @@ import screenStyle from '../../styles/screen';
 import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
 import SlideTabBar from './SlideTabBar';
 import GridViewDemo from './GridViewDemo';
+import sliderTabStyle from '../../styles/slideTab';
+
 export default class Meditation extends Component {
     render() {
         return (
@@ -13,26 +15,26 @@ export default class Meditation extends Component {
                     initialPage={0}
                     renderTabBar={() => <SlideTabBar />}
                 >
-                    <ScrollView tabLabel="ios-paper" style={styles.tabView}>
+                    <ScrollView tabLabel="ios-paper" style={sliderTabStyle.tabView}>
                         <GridViewDemo/>
                     </ScrollView>
-                    <ScrollView tabLabel="ios-people" style={styles.tabView}>
-                        <View style={styles.card}>
+                    <ScrollView tabLabel="ios-people" style={sliderTabStyle.tabView}>
+                        <View style={sliderTabStyle.card}>
                             <Text>Friends</Text>
                         </View>
                     </ScrollView>
-                    <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
-                        <View style={styles.card}>
+                    <ScrollView tabLabel="ios-chatboxes" style={sliderTabStyle.tabView}>
+                        <View style={sliderTabStyle.card}>
                             <Text>Messenger</Text>
                         </View>
                     </ScrollView>
-                    <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
-                        <View style={styles.card}>
+                    <ScrollView tabLabel="ios-notifications" style={sliderTabStyle.tabView}>
+                        <View style={sliderTabStyle.card}>
                             <Text>Notifications</Text>
                         </View>
                     </ScrollView>
-                    <ScrollView tabLabel="ios-list" style={styles.tabView}>
-                        <View style={styles.card}>
+                    <ScrollView tabLabel="ios-list" style={sliderTabStyle.tabView}>
+                        <View style={sliderTabStyle.card}>
                             <Text>Other nav</Text>
                         </View>
                     </ScrollView>
@@ -41,24 +43,3 @@ export default class Meditation extends Component {
         )
     }
 }
-
-
-const styles = StyleSheet.create({
-    tabView: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: 'rgba(0,0,0,0.01)',
-    },
-    card: {
-        borderWidth: 1,
-        backgroundColor: '#fff',
-        borderColor: 'rgba(0,0,0,0.1)',
-        margin: 5,
-        height: 150,
-        padding: 15,
-        shadowColor: '#ccc',
-        shadowOffset: {width: 2, height: 2,},
-        shadowOpacity: 0.5,
-        shadowRadius: 3,
-    },
-});
