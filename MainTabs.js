@@ -4,7 +4,9 @@
 
 import React from 'react';
 import {ScrollView, Alert} from 'react-native';
-import {StackNavigator, TabNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //Home
 import HomeScreen from './src/screens/home/Home';
@@ -18,8 +20,7 @@ import CustomTabBar from './src/components/CustomTabBar';
 
 import colors from './src/styles/colors';
 
-
-const HomeTab = StackNavigator({
+const HomeTab = createStackNavigator({
     Home: {
         screen: HomeScreen,
         navigationOptions: ({navigation, screenProps}) => ({
@@ -30,7 +31,7 @@ const HomeTab = StackNavigator({
     },
 });
 
-const MeditationTab = StackNavigator({
+const MeditationTab = createStackNavigator({
         Meditation: {
             screen: MeditationScreen,
             navigationOptions: ({navigation, screenProps}) => ({
@@ -42,7 +43,7 @@ const MeditationTab = StackNavigator({
     },
 );
 
-const SettingsTab = StackNavigator({
+const SettingsTab = createStackNavigator({
     Settings: {
         screen: SettingsScreen,
         navigationOptions: ({navigation, screenProps}) => ({
@@ -62,7 +63,7 @@ const SettingsTab = StackNavigator({
     },
 });
 
-const StacksInTabs = TabNavigator(
+const StacksInTabs = createBottomTabNavigator(
     {
         MeditationTab: {
             screen: MeditationTab,
@@ -124,7 +125,7 @@ const StacksInTabs = TabNavigator(
     },
 );
 
-const StacksOverTabs = StackNavigator({
+const StacksOverTabs = createStackNavigator({
         Root: {
             screen: StacksInTabs,
         },

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import {TabBarBottom} from 'react-navigation';
+// import {TabBarBottom} from 'react-navigation';
+import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import colors from '../styles/colors';
 
 export default class CustomTabBar extends Component {
@@ -25,7 +26,7 @@ export default class CustomTabBar extends Component {
 
     render() {
         return (
-            <TabBarBottom
+            <BottomTabBar
                 {...this.props}
                 style={{backgroundColor: this.getTabColor(this.props.screenProps.currentTab)}}
             />
