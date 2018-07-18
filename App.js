@@ -11,7 +11,7 @@ import {
 
 import MainTabs from './MainTabs';
 import  Utils from './src/utils/utils';
-var tab;
+var tab = '';
 export default class App extends Component {
 
     constructor(props, context) {
@@ -97,14 +97,13 @@ export default class App extends Component {
                     signin: this.state.signin,
                     currentScreen: this.state.currentScreen,
                     isConnected: this.state.isConnected,
-                    currentTab:this.state.currentTab,
+                    currentTab:this.state.currentTab||'MeditationTab',
                     tabBg:this.props.tabBg
                 }}
                 onNavigationStateChange={(prevState, currentState) => {
                     const currentScreen = this.getCurrentRouteName(currentState);
                     const prevScreen = this.getCurrentRouteName(prevState);
                     if (prevScreen.screen !== currentScreen.screen) {
-                        console.log('currentScreen.tab',currentScreen.tab)
                         this.setState({currentScreen: currentScreen,currentTab:currentScreen.tab})
                     }
                 }}

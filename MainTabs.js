@@ -36,7 +36,7 @@ const MeditationTab = StackNavigator({
             screen: MeditationScreen,
             navigationOptions: ({navigation,screenProps}) => ({
                 title: 'Meditation',
-                headerStyle:{backgroundColor:'transparent'}
+                headerStyle:{backgroundColor:screenProps.tabBg}
 
             }),
             // navigationOptions: {
