@@ -22,30 +22,22 @@ import colors from './src/styles/colors';
 const HomeTab = StackNavigator({
     Home: {
         screen: HomeScreen,
-        navigationOptions: {
+        navigationOptions: ({navigation, screenProps}) => ({
             title: 'Home',
-            // headerStyle: {backgroundColor: colors.blue1},
-            // headerTitleStyle: {color: colors.grey6}
-
-        },
+            headerStyle: {backgroundColor: screenProps.tabBg},
+            headerTitleStyle: {color: colors.grey6}
+        }),
     },
 });
 
 const MeditationTab = StackNavigator({
         Meditation: {
             screen: MeditationScreen,
-            navigationOptions: ({navigation,screenProps}) => ({
+            navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Meditation',
-                headerStyle:{backgroundColor:screenProps.tabBg}
-
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6}
             }),
-            // navigationOptions: {
-            //     title: 'Meditation',
-                // headerStyle:{backgroundColor:this.props.screenProps.tabBg}
-                // headerStyle: {backgroundColor: colors.purple},
-                // headerTitleStyle: {color: colors.grey6}
-
-            // },
         },
     },
 );
@@ -53,20 +45,20 @@ const MeditationTab = StackNavigator({
 const SettingsTab = StackNavigator({
     Settings: {
         screen: SettingsScreen,
-        navigationOptions: {
+        navigationOptions: ({navigation, screenProps}) => ({
             title: 'Settings',//#F6F6F5
-            // headerStyle: {backgroundColor: colors.purple4},
-            // headerTitleStyle: {color: colors.grey6}
+            headerStyle: {backgroundColor: screenProps.tabBg},
+            headerTitleStyle: {color: colors.grey6}
 
-        },
+        }),
     },
     About: {
         screen: AboutScreen,
-        navigationOptions: {
+        navigationOptions: ({navigation, screenProps}) => ({
             title: 'About',
-            headerStyle: {backgroundColor: colors.purple4},
+            headerStyle: {backgroundColor: screenProps.tabBg},
             headerTitleStyle: {color: colors.grey6}
-        }
+        }),
     },
 });
 
@@ -123,7 +115,7 @@ const StacksInTabs = TabNavigator(
         tabBarOptions: {
             activeTintColor: colors.green,
             inactiveTintColor: colors.grey6,
-            iconStyle:colors.grey6,
+            iconStyle: colors.grey6,
             // style: {
             //     backgroundColor: colors.purple //'#071441'//colors.purple,
             // },

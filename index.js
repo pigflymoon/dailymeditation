@@ -35,7 +35,6 @@ class Root extends Component {
                 tabColor = colors.blue1
         }
         this.setState({tabColor: tabColor})
-        // return tabColor
     }
 
     componentDidMount() {
