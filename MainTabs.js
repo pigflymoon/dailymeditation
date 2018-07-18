@@ -12,9 +12,9 @@ import HomeScreen from './src/screens/home/Home';
 import MeditationScreen from './src/screens/meditation/Meditation';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
-// import AboutScreen from './src/screens/settings/About';
+import AboutScreen from './src/screens/settings/About';
 // import UnLockModalScreen from './src/screens/settings/UnLockModal';
-
+import CustomTabBar from './src/components/CustomTabBar';
 
 import colors from './src/styles/colors';
 
@@ -32,7 +32,7 @@ const HomeTab = StackNavigator({
 });
 
 const MeditationTab = StackNavigator({
-        Home: {
+        Meditation: {
             screen: MeditationScreen,
             navigationOptions: {
                 title: 'Meditation',
@@ -54,14 +54,14 @@ const SettingsTab = StackNavigator({
 
         },
     },
-    // About: {
-    //     screen: AboutScreen,
-    //     navigationOptions: {
-    //         title: 'About',
-    //         headerTintColor: colors.secondary2,
-    //         headerTitleStyle: {color: colors.black},
-    //     }
-    // },
+    About: {
+        screen: AboutScreen,
+        navigationOptions: {
+            title: 'About',
+            headerStyle: {backgroundColor: colors.purple4},
+            headerTitleStyle: {color: colors.grey6}
+        }
+    },
 });
 
 const StacksInTabs = TabNavigator(
@@ -104,11 +104,13 @@ const StacksInTabs = TabNavigator(
                     />
                 ),
             },
+
         },
 
 
     },
     {
+        tabBarComponent: CustomTabBar,
         tabBarPosition: 'bottom',
         animationEnabled: false,
         swipeEnabled: false,
@@ -116,9 +118,9 @@ const StacksInTabs = TabNavigator(
             activeTintColor: colors.green,
             inactiveTintColor: colors.grey6,
             iconStyle:colors.grey6,
-            style: {
-                backgroundColor: colors.purple4 //'#071441'//colors.purple,
-            },
+            // style: {
+            //     backgroundColor: colors.purple //'#071441'//colors.purple,
+            // },
         }
 
     },

@@ -129,6 +129,7 @@ export default class Settings extends React.PureComponent {
             containerStyle={{ paddingVertical: 8,backgroundColor:colors.purple4}}
             titleStyle={{color:colors.grey4 }}
             switch={checkbox && { value: true }}
+            onPress={() => this.onAbout()}
             key={title}
             chevron={!hideChevron}
             rightTitle={rightTitle}
@@ -156,15 +157,11 @@ export default class Settings extends React.PureComponent {
         </View>
     );
 
-    ListHeaderComponent = () => (
-        <View>
-            <SearchBar platform="ios" placeholder="Search"/>
-            <Divider />
-        </View>
-    );
-
     keyExtractor = (item, index) => index
 
+    onAbout = () => {
+        this.props.navigation.push('About');
+    };
     render() {
         return (
             <View style={{backgroundColor:'#7C7482'}}>

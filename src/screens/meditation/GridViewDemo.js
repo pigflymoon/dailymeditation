@@ -30,7 +30,7 @@ export default class GridViewDemo extends Component {
                     <TouchableHighlight>
                       <ImageBackground style={imageStyle.imageContainer}
                         imageStyle={imageStyle.imageRadiusBorder} source={item.image}>
-                       <LinearGradient colors={['transparent', 'black']} start={[0.5, 0.40]} style={imageStyle.imageGradient}>
+                       <LinearGradient colors={['transparent', 'black']}  start={{x: 0.5, y: 0.4}}  style={imageStyle.imageGradient}>
                          <Text>SKIP</Text>
                        </LinearGradient>
                       </ImageBackground>

@@ -11,7 +11,7 @@ import {
 
 import MainTabs from './MainTabs';
 import  Utils from './src/utils/utils';
-
+var tab;
 export default class App extends Component {
 
     constructor(props, context) {
@@ -27,11 +27,18 @@ export default class App extends Component {
         if (!navigationState) {
             return null;
         }
+
         const route = navigationState.routes[navigationState.index];
         if (route.routes) {
+            var tabReg = /Tab/;
+
+            if ((route.key).match(tabReg)) {
+                tab = route.key;
+            }
             return this.getCurrentRouteName(route);
         }
-        return route.routeName;
+        console.log('route name is ', route.routeName)
+        return {screen: route.routeName, tab: tab};//route.routeName;
     }
 
     handleConnectivityChange = (connectionInfo) => {
@@ -42,7 +49,6 @@ export default class App extends Component {
                 isConnected: false
             });
         } else {
-            console.log('type is ', connectionType)
             this.setState({
                 // connectionInfo: connectionType,
                 isConnected: true
@@ -91,13 +97,14 @@ export default class App extends Component {
                     signin: this.state.signin,
                     currentScreen: this.state.currentScreen,
                     isConnected: this.state.isConnected,
-
+                    currentTab:this.state.currentTab
                 }}
                 onNavigationStateChange={(prevState, currentState) => {
                     const currentScreen = this.getCurrentRouteName(currentState);
                     const prevScreen = this.getCurrentRouteName(prevState);
-                    if (prevScreen !== currentScreen) {
-                        this.setState({currentScreen: currentScreen})
+                    if (prevScreen.screen !== currentScreen.screen) {
+                        console.log('currentScreen.tab',currentScreen.tab)
+                        this.setState({currentScreen: currentScreen,currentTab:currentScreen.tab})
                     }
                 }}
             />
