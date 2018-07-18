@@ -9,6 +9,10 @@ import GridViewDemo from './GridViewDemo';
 import sliderTabStyle from '../../styles/slideTab';
 
 export default class Meditation extends Component {
+    static navigationOptions = ({navigation,screenProps}) => {
+        console.log('props are ',screenProps)
+    }
+
     render() {
         return (
             <View style={[baseStyle.container,screenStyle.screenBgPurple]}>

@@ -24,8 +24,8 @@ const HomeTab = StackNavigator({
         screen: HomeScreen,
         navigationOptions: {
             title: 'Home',
-            headerStyle: {backgroundColor: colors.blue1},
-            headerTitleStyle: {color: colors.grey6}
+            // headerStyle: {backgroundColor: colors.blue1},
+            // headerTitleStyle: {color: colors.grey6}
 
         },
     },
@@ -34,12 +34,18 @@ const HomeTab = StackNavigator({
 const MeditationTab = StackNavigator({
         Meditation: {
             screen: MeditationScreen,
-            navigationOptions: {
+            navigationOptions: ({navigation,screenProps}) => ({
                 title: 'Meditation',
-                headerStyle: {backgroundColor: colors.purple},
-                headerTitleStyle: {color: colors.grey6}
+                headerStyle:{backgroundColor:'transparent'}
 
-            },
+            }),
+            // navigationOptions: {
+            //     title: 'Meditation',
+                // headerStyle:{backgroundColor:this.props.screenProps.tabBg}
+                // headerStyle: {backgroundColor: colors.purple},
+                // headerTitleStyle: {color: colors.grey6}
+
+            // },
         },
     },
 );
@@ -49,8 +55,8 @@ const SettingsTab = StackNavigator({
         screen: SettingsScreen,
         navigationOptions: {
             title: 'Settings',//#F6F6F5
-            headerStyle: {backgroundColor: colors.purple4},
-            headerTitleStyle: {color: colors.grey6}
+            // headerStyle: {backgroundColor: colors.purple4},
+            // headerTitleStyle: {color: colors.grey6}
 
         },
     },
