@@ -104,6 +104,7 @@ export default class App extends Component {
                     const currentScreen = this.getCurrentRouteName(currentState);
                     const prevScreen = this.getCurrentRouteName(prevState);
                     if (prevScreen.screen !== currentScreen.screen) {
+                        this.props.getCurrentTab(currentScreen.tab||'MeditationTab')
                         this.setState({currentScreen: currentScreen,currentTab:currentScreen.tab})
                     }
                 }}
