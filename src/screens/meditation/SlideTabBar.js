@@ -16,7 +16,6 @@ class SlideTabBar extends React.Component {
     }
 
     render() {
-        console.log('this.props',this.props)
         return <View style={[sliderTabStyle.tabs, this.props.style]}>
             {this.props.tabs.map((tab, i) => {
 

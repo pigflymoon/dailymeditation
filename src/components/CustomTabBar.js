@@ -7,7 +7,6 @@ import colors from '../styles/colors';
 export default class CustomTabBar extends Component {
     getTabColor = (type) => {
         var tabColor;
-        console.log('type is ',type)
         switch (type) {
             case 'HomeTab' :
                 tabColor = colors.blue1;

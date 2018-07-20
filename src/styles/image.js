@@ -1,5 +1,7 @@
+import colors from './colors';
+
 export default {
-    gridView:{
+    gridView: {
         paddingTop: 25,
         flex: 1,
     },
@@ -16,5 +18,18 @@ export default {
         width: '100%',
         height: '100%',
         borderRadius: 5,
-    }
+    },
+    text: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title: {
+        color: colors.white,
+       marginBottom: 10,
+    },
+    subtitle: {
+        fontSize: 12,
+        color: colors.grey5,
+    },
 }

@@ -15,7 +15,9 @@ import MeditationScreen from './src/screens/meditation/Meditation';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
-// import UnLockModalScreen from './src/screens/settings/UnLockModal';
+import MedidationAudioModalScreen from './src/screens/meditation/MedidationAudioModal';
+import PlayListScreen from './src/screens/meditation/PlayList';
+
 import CustomTabBar from './src/components/CustomTabBar';
 
 import colors from './src/styles/colors';
@@ -129,10 +131,16 @@ const StacksOverTabs = createStackNavigator({
         Root: {
             screen: StacksInTabs,
         },
-        // UnLock: {
-        //     screen: UnLockModalScreen,
+        PlayList: {
+            screen: PlayListScreen,
+            navigationOptions: {
+                title: 'Meditation Audio',
+            },
+        },
+        // MedidationAudioModal: {
+        //     screen: MedidationAudioModalScreen,
         //     navigationOptions: {
-        //         title: 'UnLock',
+        //         title: 'Meditation Audio',
         //     },
         // },
 
