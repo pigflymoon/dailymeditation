@@ -1,4 +1,13 @@
 {
-  "presets": ["es2015", "stage-1","react-native"],
-  "plugins": ["transform-decorators-legacy","transform-decorators"]
- }
+  "presets": [
+    "react-native"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-transform-runtime", {
+      "helpers": true,
+      "polyfill": false,
+      "regenerator": false
+    }]
+  ]
+}

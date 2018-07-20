@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewPropTypes } from 'react-native';
 
-// import TrackStore from '../stores/Track';
+import TrackStore from '../stores/Track';
 import PlayerStore from '../stores/Player';
 
 class ProgressBar extends ProgressComponent {
@@ -55,10 +55,10 @@ export default class Player extends Component {
         }
         return (
             <View style={[styles.card, style]}>
-                {/*<Image style={styles.cover} source={{ uri: TrackStore.artwork }} />*/}
+                <Image style={styles.cover} source={{ uri: TrackStore.artwork }} />
                 <ProgressBar />
-                {/*<Text style={styles.title}>{TrackStore.title}</Text>*/}
-                {/*<Text style={styles.artist}>{TrackStore.artist}</Text>*/}
+                <Text style={styles.title}>{TrackStore.title}</Text>
+                <Text style={styles.artist}>{TrackStore.artist}</Text>
                 <View style={styles.controls}>
                     <ControlButton title={'<<'} onPress={onPrevious} />
                     <ControlButton title={middleButtonText} onPress={onTogglePlayback} />
