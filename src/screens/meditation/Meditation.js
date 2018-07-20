@@ -25,7 +25,11 @@ export default class Meditation extends Component {
             <Text>{`${name}-test`}</Text>
         </TouchableHighlight>;
 
-
+    }
+    renderSlideTabBar = () => {
+        return (
+            <SlideTabBar/>
+        )
     }
 
     render() {
@@ -33,7 +37,7 @@ export default class Meditation extends Component {
             <View style={[baseStyle.container,screenStyle.screenBgPurple]}>
                 <ScrollableTabView
                     initialPage={0}
-                    renderTabBar={() => <SlideTabBar />}
+                    renderTabBar={this.renderSlideTabBar}
                 >
                     <ScrollView tabLabel="All" style={sliderTabStyle.tabView}>
                         <GridCardView {...this.props}/>
