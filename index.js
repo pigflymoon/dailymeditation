@@ -62,6 +62,8 @@ class Root extends Component {
 AppRegistry.registerComponent(appName, () => Root);
 
 TrackPlayer.registerEventHandler(async (data) => {
+    console.log('data is ',data)
+
     if (data.type === 'playback-track-changed') {
         if (data.nextTrack) {
             const track = await TrackPlayer.getTrack(data.nextTrack);

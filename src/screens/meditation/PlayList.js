@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { observer } from 'mobx-react';
+import {observer} from 'mobx-react';
 import TrackPlayer, {ProgressComponent} from 'react-native-track-player';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
@@ -56,6 +56,12 @@ export default class PlayList extends Component {
         } catch (_) {
         }
     }
+    seekTo = async(value) => {
+        // await TrackPlayer.add(...)
+        // await TrackPlayer.skip(...)
+        console.log('seek to value ', value)
+        TrackPlayer.seekTo(value)
+    }
 
     render() {
         return (
@@ -69,6 +75,8 @@ export default class PlayList extends Component {
                     onNext={() => this.skipToNext()}
                     onPrevious={() => this.skipToPrevious()}
                     onTogglePlayback={() => this.togglePlayback()}
+                    onSeekTo={this.seekTo}
+
                 />
                 <Text style={styles.state}>{PlayerStore.playbackState}</Text>
             </View>
