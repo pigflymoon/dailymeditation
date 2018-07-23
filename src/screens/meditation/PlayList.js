@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     player: {
+        // flex:1,
         marginTop: 40,
     },
     state: {

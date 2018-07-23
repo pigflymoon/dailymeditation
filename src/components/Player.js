@@ -46,9 +46,12 @@ export default class Player extends Component {
         return (
             <View style={[styles.card, style]}>
                 <Image style={styles.cover} source={{ uri: TrackStore.artwork }}/>
-                <ProgressBar handleSeekTo={onSeekTo} />
-                <Text style={styles.title}>{TrackStore.title}</Text>
-                <Text style={styles.artist}>{TrackStore.artist}</Text>
+                <ProgressBar handleSeekTo={onSeekTo}/>
+                <View style={{height:50,}}>
+                    <Text style={styles.title}>{TrackStore.title}</Text>
+                    <Text style={styles.artist}>{TrackStore.artist}</Text>
+                </View>
+
                 <View style={styles.controls}>
                     <ControlButton title={'<<'} onPress={onPrevious}/>
                     <ControlButton title={middleButtonText} onPress={onTogglePlayback}/>
@@ -67,6 +70,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         shadowRadius: 2,
         shadowOpacity: 0.1,
+        justifyContent: 'flex-start',
         alignItems: 'center',
         shadowColor: 'black',
         backgroundColor: 'white',
@@ -78,12 +82,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: 'grey',
     },
-    progress: {
-        height: 1,
-        width: '90%',
-        marginTop: 10,
-        flexDirection: 'row',
-    },
     title: {
         marginTop: 10,
     },
@@ -91,6 +89,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     controls: {
+        // height:30,
         marginVertical: 20,
         flexDirection: 'row',
     },
