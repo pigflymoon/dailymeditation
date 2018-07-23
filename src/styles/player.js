@@ -1,11 +1,48 @@
 import colors from './colors';
 
 export default {
+//player
+    card: {
+        width: '80%',
+        elevation: 1,
+        borderRadius: 4,
+        shadowRadius: 2,
+        shadowOpacity: 0.1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        shadowColor: 'black',
+        backgroundColor: 'white',
+        shadowOffset: {width: 0, height: 1},
+    },
+    cover: {
+        width: 140,
+        height: 140,
+        marginTop: 20,
+        backgroundColor: 'grey',
+    },
+    title: {
+        marginTop: 10,
+    },
+    artist: {
+        fontWeight: 'bold',
+    },
+    controls: {
+        // height:30,
+        marginVertical: 20,
+        flexDirection: 'row',
+    },
+    controlButtonContainer: {
+        flex: 1,
+    },
+    controlButtonText: {
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    //progress bar
     container: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '95%',
-        // height: 50,
         marginVertical: 10,
 
 

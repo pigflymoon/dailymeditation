@@ -8,6 +8,7 @@ import playlistData from '../../config/playlist.json';
 
 import PlayerStore from '../../stores/Player';
 
+import playerListStyle from '../../styles/playerList';
 @observer
 export default class PlayList extends Component {
     constructor(props) {
@@ -65,41 +66,21 @@ export default class PlayList extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.description}>
+            <View style={playerListStyle.container}>
+                <Text style={playerListStyle.description}>
                     We'll be inserting a playlist into the library loaded from `playlist.json`.
                     We'll also be using the `ProgressComponent` which allows us to track playback time.
                 </Text>
                 <Player
-                    style={styles.player}
+                    style={playerListStyle.player}
                     onNext={() => this.skipToNext()}
                     onPrevious={() => this.skipToPrevious()}
                     onTogglePlayback={() => this.togglePlayback()}
                     onSeekTo={this.seekTo}
 
                 />
-                <Text style={styles.state}>{PlayerStore.playbackState}</Text>
+                <Text style={playerListStyle.state}>{PlayerStore.playbackState}</Text>
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    description: {
-        width: '80%',
-        marginTop: 20,
-        textAlign: 'center',
-    },
-    player: {
-        // flex:1,
-        marginTop: 40,
-    },
-    state: {
-        marginTop: 20,
-    },
-});
