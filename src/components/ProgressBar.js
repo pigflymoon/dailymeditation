@@ -25,7 +25,7 @@ class ProgressBar extends ProgressComponent {
 
                 <Slider
                     style={playerStyle.progressBarContainer}
-                    minimumTrackTintColor={colors.red}
+                    minimumTrackTintColor={colors.purple}
                     value={progress}
                     maximumValue={1}
                     onValueChange={this.getSeekValue(progress)}/>
