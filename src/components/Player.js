@@ -1,20 +1,32 @@
 import React, {Component} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View, ViewPropTypes} from 'react-native';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 
 import TrackPlayer, {ProgressComponent} from 'react-native-track-player';
-import {Image, StyleSheet, Text, TouchableOpacity, View, ViewPropTypes} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import TrackStore from '../stores/Track';
 import PlayerStore from '../stores/Player';
+import colors from '../styles/colors';
 
 import ProgressBar from './ProgressBar';
 import playerStyle from '../styles/player';
 
-function ControlButton({title, onPress}) {
+function ControlButton({name, onPress}) {
     return (
-        <TouchableOpacity style={playerStyle.controlButtonContainer} onPress={onPress}>
-            <Text style={playerStyle.controlButtonText}>{title}</Text>
-        </TouchableOpacity>
+        <View style={playerStyle.controlButtonContainer}>
+            <View style={playerStyle.circleContainer}>
+                <Ionicons
+                    color={colors.white}
+                    name={name}
+                    size={24}
+                    onPress={onPress}
+                />
+            </View>
+
+        </View>
+
     );
 }
 
@@ -54,9 +66,9 @@ export default class Player extends Component {
                 </View>
 
                 <View style={playerStyle.controls}>
-                    <ControlButton title={'<<'} onPress={onPrevious}/>
-                    <ControlButton title={middleButtonText} onPress={onTogglePlayback}/>
-                    <ControlButton title={'>>'} onPress={onNext}/>
+                    <ControlButton name='ios-skip-backward' onPress={onPrevious}/>
+                    <ControlButton name={'ios-play'} onPress={onTogglePlayback}/>
+                    <ControlButton name={'ios-skip-forward'} onPress={onNext}/>
 
                 </View>
             </View>

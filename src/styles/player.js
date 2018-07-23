@@ -27,13 +27,29 @@ export default {
         fontWeight: 'bold',
     },
     controls: {
-        // height:30,
-        marginVertical: 20,
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        marginVertical: 20,
+
     },
     controlButtonContainer: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
+
+    circleContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 34,
+        height: 34,
+        borderRadius: 17,
+        backgroundColor: colors.purple,
+    },
+
     controlButtonText: {
         fontSize: 18,
         textAlign: 'center',

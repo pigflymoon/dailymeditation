@@ -18,9 +18,7 @@ class ProgressBar extends ProgressComponent {
         const duration = formatTime(Math.floor(this.state.duration));
         const info = position + ' / ' + duration;
 
-
         let progress = this.getProgress()// * 100;
-
 
         return (
             <View style={playerStyle.container}>
