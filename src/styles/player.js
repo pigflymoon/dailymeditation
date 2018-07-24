@@ -76,7 +76,7 @@ export default {
     },
     info: {
         fontSize: 12,
-        color: colors.grey3
+        color: colors.grey6,
     }
 
 

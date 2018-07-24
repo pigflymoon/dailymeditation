@@ -50,11 +50,11 @@ export default class Player extends Component {
 
     render() {
         const {style, onNext, onPrevious, onTogglePlayback, onSeekTo} = this.props;
-        var middleButtonText = 'Play'
+        var middleButtonName = 'ios-play'
 
         if (PlayerStore.playbackState === TrackPlayer.STATE_PLAYING
             || PlayerStore.playbackState === TrackPlayer.STATE_BUFFERING) {
-            middleButtonText = 'Pause'
+            middleButtonName = 'ios-pause'
         }
         return (
             <View style={[playerStyle.card, style]}>
@@ -67,7 +67,7 @@ export default class Player extends Component {
 
                 <View style={playerStyle.controls}>
                     <ControlButton name='ios-skip-backward' onPress={onPrevious}/>
-                    <ControlButton name={'ios-play'} onPress={onTogglePlayback}/>
+                    <ControlButton name={middleButtonName} onPress={onTogglePlayback}/>
                     <ControlButton name={'ios-skip-forward'} onPress={onNext}/>
 
                 </View>

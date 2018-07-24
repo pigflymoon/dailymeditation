@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import TrackPlayer, {ProgressComponent} from 'react-native-track-player';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-
+import {
+    Icon,
+} from 'react-native-elements';
 import Player from '../../components/Player';
 import playlistData from '../../config/playlist.json';
 
@@ -64,22 +66,42 @@ export default class PlayList extends Component {
         TrackPlayer.seekTo(value)
     }
 
+
+    goBack = () => {
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
+
     render() {
         return (
             <View style={playerListStyle.container}>
-                <Text style={playerListStyle.description}>
-                    We'll be inserting a playlist into the library loaded from `playlist.json`.
-                    We'll also be using the `ProgressComponent` which allows us to track playback time.
-                </Text>
-                <Player
-                    style={playerListStyle.player}
-                    onNext={() => this.skipToNext()}
-                    onPrevious={() => this.skipToPrevious()}
-                    onTogglePlayback={() => this.togglePlayback()}
-                    onSeekTo={this.seekTo}
+                <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        marginLeft: 20,
+                        marginTop: 30,
+                    }}>
+                    <Icon
+                        name='close'
+                        size={28}
+                        onPress={this.goBack}
+                    />
 
-                />
-                <Text style={playerListStyle.state}>{PlayerStore.playbackState}</Text>
+                </View>
+                <View style={playerListStyle.playerContainer}>
+                    <Text style={playerListStyle.description}>
+                     7 Days of Calm Meditation
+                    </Text>
+                    <Player
+                        style={playerListStyle.player}
+                        onNext={() => this.skipToNext()}
+                        onPrevious={() => this.skipToPrevious()}
+                        onTogglePlayback={() => this.togglePlayback()}
+                        onSeekTo={this.seekTo}
+                    />
+                    <Text style={playerListStyle.state}>{PlayerStore.playbackState}</Text>
+                </View>
+
             </View>
         );
     }
