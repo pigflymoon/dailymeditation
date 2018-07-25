@@ -16,7 +16,7 @@ import MeditationScreen from './src/screens/meditation/Meditation';
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
 // import MedidationAudioModalScreen from './src/screens/meditation/MedidationAudioModal';
-import PlayListScreen from './src/components/MusicPlayer' // './src/screens/meditation/PlayList';
+import MusicPlayerScreen from './src/components/MusicPlayer' // './src/screens/meditation/PlayList';
 
 import CustomTabBar from './src/components/CustomTabBar';
 
@@ -131,10 +131,10 @@ const StacksOverTabs = createStackNavigator({
         Root: {
             screen: StacksInTabs,
         },
-        PlayList: {
-            screen: PlayListScreen,
+        MusicPlayer: {
+            screen: MusicPlayerScreen,
             navigationOptions: {
-                title: 'Meditation Audio',
+                title: 'Meditation Music Player',
             },
         },
         // MedidationAudioModal: {

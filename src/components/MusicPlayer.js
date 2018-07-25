@@ -1,11 +1,3 @@
-/**
- * AudioPlayerDemo
- * 作者Git：https://github.com/guangqiang-liu
- * 技术交流群：620792950
- * 作者QQ：1126756952
- * @guangqiang
- */
-
 import React, {Component} from 'react'
 import {
     View,
@@ -23,11 +15,12 @@ import {
 import Video from 'react-native-video'
 import {VibrancyView, BlurView} from 'react-native-blur'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import musicPlayerStyle from '../styles/musicPlayer';
 import colors from '../styles/colors';
 import mockData from '../config/musicList.json';
 import bgCD from '../assets/images/bgCD.png';
-// const mockData = require('./musicList.json')
+
 const deviceInfo = {
     deviceWidth: Dimensions.get('window').width,
     deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
@@ -68,7 +61,7 @@ export default class MusicPlayer extends Component {
         })
     }
 
-    formatMediaTime(duration) {
+    formatMediaTime = (duration) => {
         let min = Math.floor(duration / 60)
         let second = duration - min * 60
         min = min >= 10 ? min : '0' + min
@@ -76,7 +69,7 @@ export default class MusicPlayer extends Component {
         return min + ':' + second
     }
 
-    spining() {
+    spining = () => {
         if (this.rotation) {
             this.state.spinValue.setValue(0)
             this.spinAnimated.start(() => {
@@ -85,7 +78,7 @@ export default class MusicPlayer extends Component {
         }
     }
 
-    spin() {
+    spin = () => {
         console.log('spin~~~~')
         this.rotation = !this.rotation
         if (this.rotation) {
@@ -143,11 +136,14 @@ export default class MusicPlayer extends Component {
     //     .done()
     // }
 
-    setDuration(duration) {
+    setDuration = (duration)  => {
+        console.log('data in setDuration is ',duration)
+
         this.setState({duration: duration.duration})
     }
 
-    setTime(data) {
+    setTime = (data)  => {
+        console.log('data in setTime is ',data)
         let sliderValue = parseInt(this.state.currentTime)
         this.setState({
             slideValue: sliderValue,
@@ -155,7 +151,7 @@ export default class MusicPlayer extends Component {
         })
     }
 
-    nextSong(currentIndex) {
+    nextSong = (currentIndex) => (e) => {
         this.reset()
         this.setState({currentIndex: currentIndex >= mockData.list.length ? 0 : currentIndex})
 
@@ -171,7 +167,7 @@ export default class MusicPlayer extends Component {
         // }
     }
 
-    preSong(currentIndex) {
+    preSong = (currentIndex) => (e) => {
         this.reset()
         this.setState({currentIndex: currentIndex < 0 ? mockData.list.length - 1 : currentIndex})
 
@@ -187,7 +183,7 @@ export default class MusicPlayer extends Component {
         // }
     }
 
-    reset() {
+    reset = () => {
         this.setState({
             currentTime: 0.00,
             slideValue: 0.00,
@@ -195,7 +191,7 @@ export default class MusicPlayer extends Component {
         })
     }
 
-    play() {
+    play = () => {
         this.spin()
         this.setState({
             paused: !this.state.paused,
@@ -203,7 +199,7 @@ export default class MusicPlayer extends Component {
         })
     }
 
-    playMode(playMode) {
+    playMode = (playMode) => (e) => {
         playMode++
         playMode = playMode === 3 ? playMode = 0 : playMode
         switch (playMode) {
@@ -221,7 +217,7 @@ export default class MusicPlayer extends Component {
         }
     }
 
-    onEnd(data) {
+    onEnd = () => {
         this.showMessageBar('亲！')('已帮你切换到下一首')('fuccess')
         if (this.state.playMode === 0) {
             this.nextSong(this.state.currentIndex + 1)
@@ -232,7 +228,7 @@ export default class MusicPlayer extends Component {
         }
     }
 
-    videoError(error) {
+    videoError = (error) => {
         this.showMessageBar('播放器报错啦！')(error)('error')
     }
 
@@ -240,7 +236,7 @@ export default class MusicPlayer extends Component {
         // 报错信息
     }
 
-    renderPlayer() {
+    renderPlayer = () => {
         // let musicInfo = this.state.musicInfo
         let musicInfo = mockData.list[this.state.currentIndex]
         console.log(' musicInfo.url is ', musicInfo.url)
@@ -339,6 +335,7 @@ export default class MusicPlayer extends Component {
                             name={`${this.state.playModeIcon}`}
                             size={26}
                             color={colors.black}
+                            onPress={this.playMode(this.state.playMode)}
                         />
 
                         <View style={styles.cdStyle}>
@@ -347,7 +344,7 @@ export default class MusicPlayer extends Component {
                                 name={'ios-skip-backward'}
                                 size={26}
                                 color={colors.black}
-                                onPress={() => this.preSong(this.state.currentIndex - 1)}
+                                onPress={this.preSong(this.state.currentIndex - 1)}
 
                             />
                             <Ionicons
@@ -355,14 +352,14 @@ export default class MusicPlayer extends Component {
                                 name={`${this.state.playIcon}`}
                                 size={26}
                                 color={colors.black}
-                                onPress={() => this.play()}
+                                onPress={this.play}
                             />
                             <Ionicons
                                 style={{width: 35, height: 35,  justifyContent: 'center', alignItems: 'center'}}
                                 name={'ios-skip-forward'}
                                 size={26}
                                 color={colors.black}
-                                onPress={() => this.nextSong(this.state.currentIndex + 1)}
+                                onPress={this.nextSong(this.state.currentIndex + 1)}
                             />
                         </View>
                         <Ionicons
@@ -380,24 +377,24 @@ export default class MusicPlayer extends Component {
                     paused={this.state.paused}
                     playInBackground={true}
                     onLoadStart={this.loadStart}
-                    onLoad={data => this.setDuration(data)}
-                    onProgress={(data) => this.setTime(data)}
-                    onEnd={(data) => this.onEnd(data)}
-                    onError={(data) => this.videoError(data)}
+                    onLoad={this.setDuration}
+                    onProgress={this.setTime}
+                    onEnd={this.onEnd}
+                    onError={this.videoError}
                     onBuffer={this.onBuffer}
                     onTimedMetadata={this.onTimedMetadata}/>
             </View>
         )
     }
 
-    imageLoaded() {
+    imageLoaded = () => {
         this.setState({viewRef: findNodeHandle(this.backgroundImage)})
     }
 
     render() {
         // const data = this.state.musicInfo || {}
         const data = mockData.list[this.state.currentIndex]
-        console.log('data ',data)
+        console.log('data ', data)
         return (
             data.url ?
                 <View style={styles.container}>
@@ -406,7 +403,7 @@ export default class MusicPlayer extends Component {
                         style={styles.bgContainer}
                         source={{uri: data.cover}}
                         resizeMode='cover'
-                        onLoadEnd={() => this.imageLoaded()}
+                        onLoadEnd={this.imageLoaded}
                     />
                     <View style={styles.bgContainer}>
                         {

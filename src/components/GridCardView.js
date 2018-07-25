@@ -27,7 +27,7 @@ export default class GridCardView extends Component {
     openAudioModal = (item) => {
         console.log('item is ', item);
         // console.log('this.prop',this.props)
-        this.props.navigation.navigate("PlayList");
+        this.props.navigation.navigate("MusicPlayer");
 
     }
 
