@@ -297,18 +297,6 @@ export default class MusicPlayer extends Component {
                             size={26}
                             color={colors.black}
                         />
-                        <Ionicons
-                            style={{marginTop: 5}}
-                            name={'ios-chatboxes-outline'}
-                            size={26}
-                            color={colors.black}
-                        />
-                        <Ionicons
-                            style={{marginTop: 5}}
-                            name={'md-more'}
-                            size={26}
-                            color={colors.black}
-                        />
 
                     </View>
                     <View style={styles.progressStyle}>
