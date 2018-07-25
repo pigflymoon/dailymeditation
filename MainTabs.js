@@ -15,8 +15,8 @@ import MeditationScreen from './src/screens/meditation/Meditation';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
-import MedidationAudioModalScreen from './src/screens/meditation/MedidationAudioModal';
-import PlayListScreen from './src/screens/meditation/PlayList';
+// import MedidationAudioModalScreen from './src/screens/meditation/MedidationAudioModal';
+import PlayListScreen from './src/components/MusicPlayer' // './src/screens/meditation/PlayList';
 
 import CustomTabBar from './src/components/CustomTabBar';
 

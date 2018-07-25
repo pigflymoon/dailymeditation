@@ -31,32 +31,61 @@ export default class PlayList extends Component {
     }
 
     togglePlayback = async() => {
-        const currentTrack = await TrackPlayer.getCurrentTrack();
-        if (currentTrack == null) {
+        console.log('#########playback state is #########', PlayerStore.playbackState)
+        if (PlayerStore.playbackState === TrackPlayer.STATE_STOPPED) {
+            console.log('player is stopped!!!');
             TrackPlayer.reset();
-            await TrackPlayer.add(playlistData);
-            TrackPlayer.play();
+            // await TrackPlayer.add(playlistData);
+            // TrackPlayer.play()
         } else {
-            if (PlayerStore.playbackState === TrackPlayer.STATE_PAUSED) {
+            const currentTrack = await TrackPlayer.getCurrentTrack();
+            if (currentTrack == null) {
+                TrackPlayer.reset();
+                console.log('first  reset then add!!')
+                await TrackPlayer.add(playlistData);
                 TrackPlayer.play();
             } else {
-                TrackPlayer.pause();
+                if (PlayerStore.playbackState === TrackPlayer.STATE_PAUSED) {
+                    TrackPlayer.play();
+                }
+                else {
+                    TrackPlayer.pause();
+                }
             }
         }
+
     }
 
     skipToNext = async() => {
+        const currentTrack = await TrackPlayer.getCurrentTrack();
+        if (currentTrack == null) {
+
+            TrackPlayer.reset();
+            await TrackPlayer.add(playlistData);
+        }
+        console.log('TrackPlayer state  is ', TrackPlayer.getState())
         try {
+
             await TrackPlayer.skipToNext()
         } catch (_) {
-            TrackPlayer.reset();
+            console.log('error TrackPlayer is ', TrackPlayer)
+            console.log('error current Track is ', currentTrack)
+            console.log('skip next error reset!!!')
+            // TrackPlayer.reset();
         }
     }
 
     skipToPrevious = async() => {
         try {
+            const currentTrack = await TrackPlayer.getCurrentTrack();
+            if (currentTrack == null) {
+                TrackPlayer.reset();
+                await TrackPlayer.add(playlistData);
+            }
             await TrackPlayer.skipToPrevious()
         } catch (_) {
+            console.log('skip previous error reset!!!')
+            TrackPlayer.reset();
         }
     }
     seekTo = async(value) => {
@@ -73,6 +102,8 @@ export default class PlayList extends Component {
     }
 
     render() {
+        console.log('@@@@@ render playback state is @@@@@@', PlayerStore.playbackState)
+
         return (
             <View style={playerListStyle.container}>
                 <View style={{
@@ -90,7 +121,7 @@ export default class PlayList extends Component {
                 </View>
                 <View style={playerListStyle.playerContainer}>
                     <Text style={playerListStyle.description}>
-                     7 Days of Calm Meditation
+                        7 Days of Calm Meditation
                     </Text>
                     <Player
                         style={playerListStyle.player}

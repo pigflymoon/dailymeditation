@@ -31,7 +31,7 @@ function ControlButton({name, onPress}) {
 }
 
 ControlButton.propTypes = {
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
 };
 

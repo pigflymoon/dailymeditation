@@ -12,9 +12,9 @@ import colors from './src/styles/colors';
 import TrackPlayer from 'react-native-track-player';
 
 // import playHander from './src/utils/playerHandler';
-import PlayerStore, { playbackStates } from './src/stores/Player';
+// import PlayerStore, { playbackStates } from './src/stores/Player';
 
-import TrackStore from './src/stores/Track';
+// import TrackStore from './src/stores/Track';
 
 class Root extends Component {
     constructor(props, context) {
@@ -61,25 +61,30 @@ class Root extends Component {
 
 AppRegistry.registerComponent(appName, () => Root);
 
-TrackPlayer.registerEventHandler(async (data) => {
-    console.log('data is ',data)
-
-    if (data.type === 'playback-track-changed') {
-        if (data.nextTrack) {
-            const track = await TrackPlayer.getTrack(data.nextTrack);
-            TrackStore.title = track.title;
-            TrackStore.artist = track.artist;
-            TrackStore.artwork = track.artwork;
-        }
-    } else if(data.type == 'remote-play') {
-        TrackPlayer.play()
-    } else if(data.type == 'remote-pause') {
-        TrackPlayer.pause()
-    } else if(data.type == 'remote-next') {
-        TrackPlayer.skipToNext()
-    } else if(data.type == 'remote-previous') {
-        TrackPlayer.skipToPrevious()
-    } else if (data.type === 'playback-state') {
-        PlayerStore.playbackState = data.state;
-    }
-});
+// TrackPlayer.registerEventHandler(async (data) => {
+//     console.log('##########data  type is ',data.type)
+//
+//     if (data.type === 'playback-track-changed') {
+//         if (data.nextTrack) {
+//             const track = await TrackPlayer.getTrack(data.nextTrack);
+//             TrackStore.title = track.title;
+//             TrackStore.artist = track.artist;
+//             TrackStore.artwork = track.artwork;
+//         }else{
+//             console.log('player reset!!')
+//             // TrackPlayer.reset();
+//         }
+//     } else if(data.type == 'remote-play') {
+//         TrackPlayer.play()
+//     } else if(data.type == 'remote-pause') {
+//         TrackPlayer.pause()
+//     } else if(data.type == 'remote-next') {
+//         TrackPlayer.skipToNext()
+//     } else if(data.type == 'remote-previous') {
+//         TrackPlayer.skipToPrevious()
+//     } else if (data.type === 'playback-state') {
+//         console.log('##########playbackState is ',data.state)
+//
+//         PlayerStore.playbackState = data.state;
+//     }
+// });
