@@ -15,6 +15,8 @@ import {
 import Video from 'react-native-video'
 import {VibrancyView, BlurView} from 'react-native-blur'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 import musicPlayerStyle from '../styles/musicPlayer';
 import colors from '../styles/colors';
@@ -48,10 +50,10 @@ export default class MusicPlayer extends Component {
             slideValue: 0.00,
             currentTime: 0.00,
             currentIndex: 0,
-            playMode: 0,
+            playMode: 2,//random
             spinValue: new Animated.Value(0),
             playIcon: 'ios-pause',
-            playModeIcon: 'ios-repeat',
+            playModeIcon: 'ios-shuffle',
             musicInfo: {},
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
@@ -136,14 +138,14 @@ export default class MusicPlayer extends Component {
     //     .done()
     // }
 
-    setDuration = (duration)  => {
-        console.log('data in setDuration is ',duration)
+    setDuration = (duration) => {
+        console.log('data in setDuration is ', duration)
 
         this.setState({duration: duration.duration})
     }
 
-    setTime = (data)  => {
-        console.log('data in setTime is ',data)
+    setTime = (data) => {
+        console.log('data in setTime is ', data)
         let sliderValue = parseInt(this.state.currentTime)
         this.setState({
             slideValue: sliderValue,
@@ -151,9 +153,11 @@ export default class MusicPlayer extends Component {
         })
     }
 
-    nextSong = (currentIndex) => (e) => {
-        this.reset()
-        this.setState({currentIndex: currentIndex >= mockData.list.length ? 0 : currentIndex})
+    onNextSong = (currentIndex) => (e) => {
+
+        e.preventDefault();
+        console.log('currentIndex is ', currentIndex)
+        this.nextSong(currentIndex);
 
         // currentIndex === this.state.musicList.length ? currentIndex = 0 : currentIndex
         // let newSong = this.state.musicList[currentIndex]
@@ -166,8 +170,14 @@ export default class MusicPlayer extends Component {
         //   this.showMessageBar('抱歉')('没有找到音乐信息，已帮你切换到下一首')('error')
         // }
     }
+    nextSong = (currentIndex)=>{
+        console.log('currentIndex is ', currentIndex)
+        this.reset()
+        this.setState({currentIndex: currentIndex >= mockData.list.length ? 0 : currentIndex})
 
-    preSong = (currentIndex) => (e) => {
+    }
+
+    preSong = (currentIndex) => {
         this.reset()
         this.setState({currentIndex: currentIndex < 0 ? mockData.list.length - 1 : currentIndex})
 
@@ -207,7 +217,7 @@ export default class MusicPlayer extends Component {
                 this.setState({playMode, playModeIcon: 'ios-repeat'})//music_cycle_o
                 break
             case 1:
-                this.setState({playMode, playModeIcon: 'ios-shuffle'})//random music_single_cycle_o
+                this.setState({playMode, playModeIcon: 'repeat-one'})//random music_single_cycle_o
                 break
             case 2:
                 this.setState({playMode, playModeIcon: 'ios-shuffle'})
@@ -224,7 +234,9 @@ export default class MusicPlayer extends Component {
         } else if (this.state.playMode === 1) {
             this.player.seek(0)
         } else {
-            this.nextSong(Math.floor(Math.random() * this.musicList.length))
+            console.log('list length', mockData.list.length);//mockData.list.length
+            console.log('random is', Math.floor(Math.random() * mockData.list.length));//this.musicList.length
+            this.nextSong(3)
         }
     }
 
@@ -235,6 +247,11 @@ export default class MusicPlayer extends Component {
     showMessageBar = title => msg => type => {
         // 报错信息
     }
+    goBack = () => {
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
+
 
     renderPlayer = () => {
         // let musicInfo = this.state.musicInfo
@@ -246,9 +263,10 @@ export default class MusicPlayer extends Component {
                     <View style={styles.navBarContent}>
                         <Ionicons
                             style={{marginTop: 5}}
-                            name={'ios-arrow-back'}
-                            size={26}
-                            onPress={() => alert('pop')}
+                            name={'ios-close'}
+                            size={30}
+                            color={colors.white}
+                            onPress={this.goBack}
                         />
                         <View style={{alignItems: 'center'}}>
                             <Text style={styles.title}>{musicInfo.title}</Text>
@@ -257,7 +275,8 @@ export default class MusicPlayer extends Component {
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-share-outline'}
-                            size={26}
+                            size={30}
+                            color={colors.white}
                             onPress={() => alert('pop')}
                         />
                     </View>
@@ -289,19 +308,19 @@ export default class MusicPlayer extends Component {
                             style={{marginTop: 5}}
                             name={'ios-heart-outline'}
                             size={26}
-                            color={colors.black}
+                            color={colors.white}
                         />
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-download-outline'}
                             size={26}
-                            color={colors.black}
+                            color={colors.white}
                         />
 
                     </View>
                     <View style={styles.progressStyle}>
                         <Text
-                            style={{width: 35, fontSize: 11, color: colors.black, marginLeft: 5}}>{this.formatMediaTime(Math.floor(this.state.currentTime))}</Text>
+                            style={{width: 35, fontSize: 11, color: colors.white, marginLeft: 5}}>{this.formatMediaTime(Math.floor(this.state.currentTime))}</Text>
                         <Slider
                             style={styles.slider}
                             value={this.state.slideValue}
@@ -314,47 +333,57 @@ export default class MusicPlayer extends Component {
                         />
                         <View style={{width: 35, alignItems: 'flex-end', marginRight: 5}}>
                             <Text
-                                style={{fontSize: 11, color: colors.black}}>{this.formatMediaTime(Math.floor(this.state.duration))}</Text>
+                                style={{fontSize: 11, color: colors.white}}>{this.formatMediaTime(Math.floor(this.state.duration))}</Text>
                         </View>
                     </View>
                     <View style={styles.toolBar}>
-                        <Ionicons
-                            style={{width: 50, marginLeft: 5}}
-                            name={`${this.state.playModeIcon}`}
-                            size={26}
-                            color={colors.black}
-                            onPress={this.playMode(this.state.playMode)}
-                        />
+                        {this.state.playMode == 1 ?
+                            <MaterialIcons
+                                style={{width: 50, marginLeft: 5}}
+                                name={`${this.state.playModeIcon}`}
+                                size={26}
+                                color={colors.white}
+                                onPress={this.playMode(this.state.playMode)}
+                            /> :
+                            <Ionicons
+                                style={{width: 50, marginLeft: 5}}
+                                name={`${this.state.playModeIcon}`}
+                                size={26}
+                                color={colors.white}
+                                onPress={this.playMode(this.state.playMode)}
+                            />
+                        }
+
 
                         <View style={styles.cdStyle}>
                             <Ionicons
                                 style={{width: 50, marginLeft: 5}}
                                 name={'ios-skip-backward'}
                                 size={26}
-                                color={colors.black}
-                                onPress={this.preSong(this.state.currentIndex - 1)}
+                                color={colors.white}
+                                onPress={()=>this.preSong(this.state.currentIndex - 1)}
 
                             />
                             <Ionicons
                                 style={{width: 35, height: 35, justifyContent: 'center', alignItems: 'center'}}
                                 name={`${this.state.playIcon}`}
                                 size={26}
-                                color={colors.black}
+                                color={colors.white}
                                 onPress={this.play}
                             />
                             <Ionicons
                                 style={{width: 35, height: 35,  justifyContent: 'center', alignItems: 'center'}}
                                 name={'ios-skip-forward'}
                                 size={26}
-                                color={colors.black}
-                                onPress={this.nextSong(this.state.currentIndex + 1)}
+                                color={colors.white}
+                                onPress={this.onNextSong(this.state.currentIndex + 1)}
                             />
                         </View>
                         <Ionicons
                             style={{width: 50, alignItems: 'flex-end', marginRight: 5}}
                             name={'ios-list'}
                             size={26}
-                            color={colors.black}
+                            color={colors.white}
                         />
                     </View>
                 </View>
