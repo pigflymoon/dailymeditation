@@ -170,7 +170,8 @@ export default class MusicPlayer extends Component {
         //   this.showMessageBar('抱歉')('没有找到音乐信息，已帮你切换到下一首')('error')
         // }
     }
-    nextSong = (currentIndex)=>{
+    nextSong = (currentIndex) => {
+        console.log('next song called')
         console.log('currentIndex is ', currentIndex)
         this.reset()
         this.setState({currentIndex: currentIndex >= mockData.list.length ? 0 : currentIndex})
@@ -235,8 +236,10 @@ export default class MusicPlayer extends Component {
             this.player.seek(0)
         } else {
             console.log('list length', mockData.list.length);//mockData.list.length
-            console.log('random is', Math.floor(Math.random() * mockData.list.length));//this.musicList.length
-            this.nextSong(3)
+             var randomIndex = Math.floor(Math.random() * mockData.list.length);
+            console.log('random is', randomIndex);//this.musicList.length
+
+            this.nextSong(randomIndex)
         }
     }
 
