@@ -10,10 +10,12 @@ import {
     Easing,
     Platform,
     findNodeHandle,
-    Dimensions
+    Dimensions,
+    ScrollView
 } from 'react-native'
-import Video from 'react-native-video'
-import {VibrancyView, BlurView} from 'react-native-blur'
+import {Overlay, Avatar} from 'react-native-elements';
+import Video from 'react-native-video';
+import {VibrancyView, BlurView} from 'react-native-blur';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -36,6 +38,51 @@ const header = {
 const musicListUrl = 'http://v3.wufazhuce.com:8000/api/music/bymonth/2017-10'
 const musicDetail = 'http://xiamirun.avosapps.com/run?song=http://www.xiami.com/song/'
 
+const USERS = [
+    {
+        name: 'Johh Smith',
+        avatar: 'https://images.unsplash.com/photo-1483127299475-15dad2a69465?ixlib=rb-0.3.5&s=64b764ab6649b4217350cb39c6bc4944&dpr=2&auto=format&fit=crop&w=225&q=60',
+        value: '- 164'
+    },
+    {
+        name: 'Sarah Parker',
+        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
+        value: '+ 203',
+        positive: true
+    },
+    {
+        name: 'Paul Allen',
+        avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
+        value: '+ 464',
+        positive: true
+    },
+    {
+        name: 'Terry Andrews',
+        avatar: 'https://images.unsplash.com/photo-1532528791647-87400fc51288?ixlib=rb-0.3.5&s=815620d4ddfa6874ddd43b71997f45b9&dpr=2&auto=format&fit=crop&w=225&q=60',
+        value: '- 80',
+        positive: false
+    },
+    {
+        name: 'Sarah Parker',
+        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
+        value: '+ 203',
+        positive: true
+    },
+    {
+        name: 'Paul Allen',
+        avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
+        value: '+ 464',
+        positive: true
+    },
+    {
+        name: 'Sarah Parker',
+        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
+        value: '+ 203',
+        positive: true
+    },
+];
+
+
 export default class MusicPlayer extends Component {
 
     constructor(props) {
@@ -55,6 +102,7 @@ export default class MusicPlayer extends Component {
             playIcon: 'ios-pause',
             playModeIcon: 'ios-shuffle',
             musicInfo: {},
+            musicListVisible: false,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
             toValue: 1,
@@ -236,7 +284,7 @@ export default class MusicPlayer extends Component {
             this.player.seek(0)
         } else {
             console.log('list length', mockData.list.length);//mockData.list.length
-             var randomIndex = Math.floor(Math.random() * mockData.list.length);
+            var randomIndex = Math.floor(Math.random() * mockData.list.length);
             console.log('random is', randomIndex);//this.musicList.length
 
             this.nextSong(randomIndex)
@@ -254,7 +302,84 @@ export default class MusicPlayer extends Component {
         const {navigation} = this.props;
         navigation.goBack();
     }
+    showMusicList = () => {
+        this.setState({musicListVisible: true})
+    }
 
+    renderValue(user) {
+        const {value, positive} = user;
+
+        if (positive) {
+            return (
+                <View
+                    style={{ backgroundColor: 'rgba(220,230,218,1)', width: 70, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginLeft: 10}}>
+                    <Ionicons
+                        name='md-arrow-dropup'
+                        color='green'
+                        size={25}
+                    />
+                    <Text style={{color: 'green',  fontSize: 13, marginLeft: 5}}>{value}</Text>
+                </View>
+            );
+        } else {
+            return (
+                <View
+                    style={{ backgroundColor: 'rgba(244,230,224,1)', width: 70, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginLeft: 10}}>
+                    <Ionicons
+                        name='md-arrow-dropdown'
+                        color='red'
+                        size={25}
+                    />
+                    <Text style={{color: 'red',  fontSize: 13, marginLeft: 5}}>{value}</Text>
+                </View>
+            );
+        }
+    }
+
+    renderCard(user, index) {
+        const {name, avatar} = user;
+
+        return (
+            <View key={index}
+                  style={{marginHorizontal: 20, marginTop: 10,paddingVertical:10, backgroundColor: 'white', borderRadius: 5, alignItems: 'center', flexDirection: 'row'}}>
+                <View style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{marginLeft: 15}}>
+                        <Avatar
+                            small
+                            rounded
+                            source={{
+                uri: avatar,
+              }}
+                            activeOpacity={0.7}
+                        />
+                    </View>
+                    <Text style={{fontSize: 15, marginLeft: 10, color: 'gray'}}>
+                        {name}
+                    </Text>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 10 }}>
+                    <View
+                        style={{ width: 35, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
+                        <Ionicons
+                            name='ios-lock-outline'
+                            color='gray'
+                            size={20}
+                        />
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    renderListCards() {
+        return USERS.map((user, index) => {
+            return this.renderCard(user, index);
+
+        })
+        // return _.map(USERS, (user, index) => {
+        //     return this.renderCard(user, index);
+        // });
+    }
 
     renderPlayer = () => {
         // let musicInfo = this.state.musicInfo
@@ -387,6 +512,7 @@ export default class MusicPlayer extends Component {
                             name={'ios-list'}
                             size={26}
                             color={colors.white}
+                            onPress={this.showMusicList}
                         />
                     </View>
                 </View>
@@ -403,6 +529,24 @@ export default class MusicPlayer extends Component {
                     onError={this.videoError}
                     onBuffer={this.onBuffer}
                     onTimedMetadata={this.onTimedMetadata}/>
+
+                <Overlay
+                    overlayBackgroundColor='rgba(223, 223, 223, .8)'
+                    overlayStyle={{flex:1,zIndex:1001,position:'absolute',bottom:0,width:'100%',right:0,height:'70%'}}
+                    isVisible={this.state.musicListVisible}
+                    onBackdropPress={() => this.setState({musicListVisible: false})}
+                >
+                    <View style={{flex:1,height:100}}>
+                        <Text>Hello from Overlay!</Text>
+                            <ScrollView style={{flex:1,zIndex: 99999, backgroundColor:'pink'}}>
+
+                                {this.renderListCards()}
+                            </ScrollView>
+
+
+                    </View>
+                </Overlay>
+
             </View>
         )
     }
@@ -441,6 +585,7 @@ export default class MusicPlayer extends Component {
                         }
                     </View>
                     {this.renderPlayer()}
+
                 </View> : <View/>
         )
     }
