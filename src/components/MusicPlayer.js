@@ -40,42 +40,42 @@ const musicDetail = 'http://xiamirun.avosapps.com/run?song=http://www.xiami.com/
 
 const USERS = [
     {
-        name: 'Johh Smith',
+        name: 'How to breathe',
         avatar: 'https://images.unsplash.com/photo-1483127299475-15dad2a69465?ixlib=rb-0.3.5&s=64b764ab6649b4217350cb39c6bc4944&dpr=2&auto=format&fit=crop&w=225&q=60',
         value: '- 164'
     },
     {
-        name: 'Sarah Parker',
+        name: 'Being in Present',
         avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
         value: '+ 203',
         positive: true
     },
     {
-        name: 'Paul Allen',
+        name: 'Paying Attention',
         avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
         value: '+ 464',
         positive: true
     },
     {
-        name: 'Terry Andrews',
+        name: 'Patience',
         avatar: 'https://images.unsplash.com/photo-1532528791647-87400fc51288?ixlib=rb-0.3.5&s=815620d4ddfa6874ddd43b71997f45b9&dpr=2&auto=format&fit=crop&w=225&q=60',
         value: '- 80',
         positive: false
     },
     {
-        name: 'Sarah Parker',
+        name: 'Awareness',
         avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
         value: '+ 203',
         positive: true
     },
     {
-        name: 'Paul Allen',
+        name: 'Relax',
         avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
         value: '+ 464',
         positive: true
     },
     {
-        name: 'Sarah Parker',
+        name: 'Sleep',
         avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
         value: '+ 203',
         positive: true
@@ -338,33 +338,50 @@ export default class MusicPlayer extends Component {
 
     renderCard(user, index) {
         const {name, avatar} = user;
+        let currentIndex = this.state.currentIndex;
+        let isCurrentIndex = (currentIndex === index) ? true : false;
 
         return (
-            <View key={index}
-                  style={{marginHorizontal: 20, marginTop: 10,paddingVertical:10, backgroundColor: 'white', borderRadius: 5, alignItems: 'center', flexDirection: 'row'}}>
-                <View style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
-                    <View style={{marginLeft: 15}}>
-                        <Avatar
-                            small
-                            rounded
-                            source={{
-                uri: avatar,
-              }}
-                            activeOpacity={0.7}
-                        />
-                    </View>
-                    <Text style={{fontSize: 15, marginLeft: 10, color: 'gray'}}>
-                        {name}
-                    </Text>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 10 }}>
-                    <View
-                        style={{ width: 35, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
+
+            <View style={{flex:1,flexDirection:'row',justifyContent: 'center', alignItems: 'center',}}>
+                {isCurrentIndex ? <View
+                        style={{width:25,}}>
                         <Ionicons
-                            name='ios-lock-outline'
-                            color='gray'
+                            name='ios-musical-note'
+                            color={colors.purple}
                             size={20}
                         />
+                    </View> : <View
+                        style={{width:25,backgroundColor:'pink',}}>
+
+                    </View>}
+
+                <View key={index}
+                      style={{flex:1,marginTop: 10,paddingVertical:10, backgroundColor: 'white', borderRadius: 5, alignItems: 'center', flexDirection: 'row'}}>
+                    <View style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={{marginLeft: 15}}>
+                            <Avatar
+                                small
+                                rounded
+                                source={{
+                uri: avatar,
+              }}
+                                activeOpacity={0.7}
+                            />
+                        </View>
+                        <Text style={{fontSize: 15, marginLeft: 10, color: 'gray'}}>
+                            {name}
+                        </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 10 }}>
+                        <View
+                            style={{ width: 35, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
+                            <Ionicons
+                                name='ios-lock-outline'
+                                color='gray'
+                                size={20}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>
@@ -388,7 +405,7 @@ export default class MusicPlayer extends Component {
         return (
             <View style={styles.bgContainer}>
                 <View style={styles.navBarStyle}>
-                    <View style={styles.navBarContent}>
+                    <View style={[styles.topNavBar,styles.navBarWrapper]}>
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-close'}
@@ -532,16 +549,26 @@ export default class MusicPlayer extends Component {
 
                 <Overlay
                     overlayBackgroundColor='rgba(223, 223, 223, .8)'
-                    overlayStyle={{flex:1,zIndex:1001,position:'absolute',bottom:0,width:'100%',right:0,height:'70%'}}
+                    overlayStyle={{flex:1,position:'absolute',bottom:0,width:'100%',right:0,height:'70%'}}
                     isVisible={this.state.musicListVisible}
                     onBackdropPress={() => this.setState({musicListVisible: false})}
                 >
-                    <View style={{flex:1,height:100}}>
-                        <Text>Hello from Overlay!</Text>
-                            <ScrollView style={{flex:1,zIndex: 99999, backgroundColor:'pink'}}>
+                    <View style={{flex:1,padding:10,}}>
+                        <View style={[styles.navBarWrapper]}>
+                            <Ionicons
+                                name='ios-close'
+                                color='gray'
+                                size={30}
+                                onPress={()=>this.setState({musicListVisible:false})}
+                            />
+                            <View style={{justifyContent:'center',alignItems: 'center'}}>
+                                <Text style={styles.title}>{`Play List`}</Text>
+                            </View>
+                        </View>
 
-                                {this.renderListCards()}
-                            </ScrollView>
+                        <ScrollView style={{flex:1,marginTop:10,flexDirection:'column'}}>
+                            {this.renderListCards()}
+                        </ScrollView>
 
 
                     </View>
@@ -613,12 +640,14 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: musicPlayerStyle.lineColor
     },
-    navBarContent: {
+    topNavBar: {
         marginTop: 25,
+        marginHorizontal: 10
+    },
+    navBarWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginHorizontal: 10
     },
     title: {
         color: colors.grey0,
