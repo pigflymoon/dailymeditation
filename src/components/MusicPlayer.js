@@ -13,7 +13,7 @@ import {
     Dimensions,
     ScrollView
 } from 'react-native'
-import {Overlay, Avatar} from 'react-native-elements';
+import {Overlay, Avatar, ListItem, Icon} from 'react-native-elements';
 import Video from 'react-native-video';
 import {VibrancyView, BlurView} from 'react-native-blur';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -342,49 +342,28 @@ export default class MusicPlayer extends Component {
         let isCurrentIndex = (currentIndex === index) ? true : false;
 
         return (
+            <ListItem
+                leftIcon={isCurrentIndex ? {
+                        name: 'ios-musical-note',
+                        type: 'ionicon',
+                        color: colors.purple
+                      }: undefined}
 
-            <View style={{flex:1,flexDirection:'row',justifyContent: 'center', alignItems: 'center',}}>
-                {isCurrentIndex ? <View
-                        style={{width:25,}}>
-                        <Ionicons
-                            name='ios-musical-note'
-                            color={colors.purple}
-                            size={20}
-                        />
-                    </View> : <View
-                        style={{width:25,backgroundColor:'pink',}}>
-
-                    </View>}
-
-                <View key={index}
-                      style={{flex:1,marginTop: 10,paddingVertical:10, backgroundColor: 'white', borderRadius: 5, alignItems: 'center', flexDirection: 'row'}}>
-                    <View style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={{marginLeft: 15}}>
-                            <Avatar
-                                small
-                                rounded
-                                source={{
-                uri: avatar,
+                leftAvatar={{rounded: true, size:"medium", source: { uri: avatar } }}
+                rightIcon={{
+                name: 'ios-lock-outline',
+                type: 'ionicon',
+                color: colors.grey3
               }}
-                                activeOpacity={0.7}
-                            />
-                        </View>
-                        <Text style={{fontSize: 15, marginLeft: 10, color: 'gray'}}>
-                            {name}
-                        </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 10 }}>
-                        <View
-                            style={{ width: 35, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
-                            <Ionicons
-                                name='ios-lock-outline'
-                                color='gray'
-                                size={20}
-                            />
-                        </View>
-                    </View>
-                </View>
-            </View>
+                key={index}
+                title={name}
+                titleStyle={{ color: colors.grey1,}}
+                containerStyle={{
+                marginVertical: 8,
+                borderRadius: 8,
+              }}
+            />
+
         );
     }
 
