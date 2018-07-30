@@ -251,6 +251,7 @@ export default class MusicPlayer extends Component {
     }
 
     play = () => {
+        console.log('########play called!!###########',)
         this.spin()
         this.setState({
             paused: !this.state.paused,
@@ -336,8 +337,8 @@ export default class MusicPlayer extends Component {
         }
     }
 
-    renderCard(user, index) {
-        const {name, avatar} = user;
+    renderCard(item, index) {
+        const {title, cover} = item;
         let currentIndex = this.state.currentIndex;
         let isCurrentIndex = (currentIndex === index) ? true : false;
 
@@ -349,28 +350,31 @@ export default class MusicPlayer extends Component {
                         color: colors.purple
                       }: undefined}
 
-                leftAvatar={{ size:'medium', source: { uri: avatar } }}
+                leftAvatar={{ size:'medium', source: { uri: cover } }}
                 rightIcon={{
                 name: 'ios-lock-outline',
                 type: 'ionicon',
                 color: colors.grey3
               }}
                 key={index}
-                title={name}
+                title={title}
                 titleStyle={{ color: colors.grey1,}}
                 containerStyle={{
                 paddingVertical:10,
                 marginVertical: 4,
                 borderRadius: 8,
               }}
+                onPress={()=>this.nextSong(index)}
             />
 
         );
     }
 
     renderListCards() {
-        return USERS.map((user, index) => {
-            return this.renderCard(user, index);
+        let musicList = mockData.list
+
+        return musicList.map((item, index) => {
+            return this.renderCard(item, index);
 
         })
         // return _.map(USERS, (user, index) => {
