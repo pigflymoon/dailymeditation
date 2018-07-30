@@ -349,7 +349,7 @@ export default class MusicPlayer extends Component {
                         color: colors.purple
                       }: undefined}
 
-                leftAvatar={{rounded: true, size:"medium", source: { uri: avatar } }}
+                leftAvatar={{ size:'medium', source: { uri: avatar } }}
                 rightIcon={{
                 name: 'ios-lock-outline',
                 type: 'ionicon',
@@ -359,7 +359,8 @@ export default class MusicPlayer extends Component {
                 title={name}
                 titleStyle={{ color: colors.grey1,}}
                 containerStyle={{
-                marginVertical: 8,
+                paddingVertical:10,
+                marginVertical: 4,
                 borderRadius: 8,
               }}
             />
@@ -528,7 +529,7 @@ export default class MusicPlayer extends Component {
 
                 <Overlay
                     overlayBackgroundColor='rgba(223, 223, 223, .8)'
-                    overlayStyle={{flex:1,position:'absolute',bottom:0,width:'100%',right:0,height:'70%'}}
+                    overlayStyle={{flex:1,position:'absolute',bottom:0,width:'100%',right:0,height:'80%'}}
                     isVisible={this.state.musicListVisible}
                     onBackdropPress={() => this.setState({musicListVisible: false})}
                 >
