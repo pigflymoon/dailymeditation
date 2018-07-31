@@ -31,6 +31,11 @@ export default class GridCardView extends Component {
 
     }
 
+    componentWillMount() {
+        const {category}=this.props;
+        console.log('category is ',category)
+    }
+
     render() {
         return (
             <GridView
