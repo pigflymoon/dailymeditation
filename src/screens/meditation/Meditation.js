@@ -33,14 +33,15 @@ export default class Meditation extends Component {
     }
 
     render() {
+        console.log('Meditation??')
         return (
             <View style={[baseStyle.container,screenStyle.screenBgPurple]}>
                 <ScrollableTabView
                     initialPage={0}
                     renderTabBar={this.renderSlideTabBar}
                 >
-                    <ScrollView tabLabel="All" style={sliderTabStyle.tabView}>
-                        <GridCardView category="all" {...this.props}/>
+                    <ScrollView tabLabel="Beginner" style={sliderTabStyle.tabView}>
+                        <GridCardView category="beginner" {...this.props}/>
                     </ScrollView>
                     <ScrollView tabLabel="Meditation" style={sliderTabStyle.tabView}>
                         <View style={sliderTabStyle.card}>
