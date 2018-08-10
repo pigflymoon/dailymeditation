@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, ScrollView, StatusBar, TouchableHighlight} from 'react-native';
-import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
-import SlideTabBar from './SlideTabBar';
+// import SlideTabBar from './SlideTabBar';
 import GridCardView from '../../components/GridCardView';
 
 import baseStyle from '../../styles/base';
@@ -18,7 +18,7 @@ export default class Meditation extends Component {
             key={`${name}_${page}`}
             onPress={() => onPressHandler(page)}
             onLayout={onLayoutHandler}
-            style={{flex: 1, width: 100, }}
+            style={{flex: 1, width: 100,}}
             underlayColor="#aaaaaa"
         >
 
@@ -35,13 +35,13 @@ export default class Meditation extends Component {
     render() {
         console.log('Meditation??')
         return (
-            <View style={[baseStyle.container,screenStyle.screenBgPurple]}>
+            <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
                 <ScrollableTabView
                     initialPage={0}
-                    renderTabBar={this.renderSlideTabBar}
+                    renderTabBar={ScrollableTabBar}
                 >
                     <ScrollView tabLabel="Beginner" style={sliderTabStyle.tabView}>
-                        <GridCardView category="beginner" {...this.props}/>
+                        <GridCardView category="beginner" type="all" {...this.props}/>
                     </ScrollView>
                     <ScrollView tabLabel="Meditation" style={sliderTabStyle.tabView}>
                         <View style={sliderTabStyle.card}>
@@ -49,20 +49,16 @@ export default class Meditation extends Component {
                         </View>
                     </ScrollView>
                     <ScrollView tabLabel="Anxiety" style={sliderTabStyle.tabView}>
-                        <View style={sliderTabStyle.card}>
-                            <Text>Messenger</Text>
-                        </View>
+                        <GridCardView category="meditationCategory" type="anxiety" {...this.props}/>
+                    </ScrollView>
+                    <ScrollView tabLabel="Stress" style={sliderTabStyle.tabView}>
+                        <GridCardView category="meditationCategory" type="stress" {...this.props}/>
                     </ScrollView>
                     <ScrollView tabLabel="Focus" style={sliderTabStyle.tabView}>
-                        <View style={sliderTabStyle.card}>
-                            <Text>Notifications</Text>
-                        </View>
+                        <GridCardView category="meditationCategory" type="focus" {...this.props}/>
                     </ScrollView>
-                    <ScrollView tabLabel="Stresst" style={sliderTabStyle.tabView}>
-                        <View style={sliderTabStyle.card}>
-                            <Text>Other nav</Text>
-                        </View>
-                    </ScrollView>
+
+
                 </ScrollableTabView>
             </View>
         )

@@ -18,7 +18,7 @@ const images = [
     {image: img6, name: 'NEPHRITIS', code: '#27ae60'}
 ];
 import {
-    getAllAudiosByType,
+    getAudiosByCategoryAndType,
 
 } from '../utils/FetchAudiosByApi';
 
@@ -26,7 +26,7 @@ export default class GridCardView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imagesData: []
+            audiosData: []
         }
     }
 
@@ -37,19 +37,19 @@ export default class GridCardView extends Component {
 
     }
 
-    fetchData = (imageType, isPaidUser) => {
+    fetchData = (category, type, isPaidUser) => {
         var self = this;
         return new Promise(function (resolve, reject) {
             // some async operation here
             setTimeout(function () {
                 // resolve the promise with some value
                 if (!isPaidUser) {
-                    getAllAudiosByType(imageType, 3).then(function (images) {
+                    getAudiosByCategoryAndType(category, type, 3).then(function (images) {
                         resolve(images)
                     });
 
                 } else {
-                    getAllAudiosByType(imageType).then(function (images) {
+                    getAudiosByCategoryAndType(category, type, 3).then(function (images) {
                         resolve(images)
 
                     });
@@ -63,12 +63,12 @@ export default class GridCardView extends Component {
     componentWillMount() {
         var self = this;
         console.log('fetch data???')
-        const {imageType, isPaidUser, category} = this.props;
-
-        this.fetchData(imageType, isPaidUser).then(function (audios) {
+        const {category, type, isPaidUser} = this.props;
+        console.log('category is ', category);
+        this.fetchData(category, type, isPaidUser).then(function (audios) {
             console.log('fetch data', audios)
             self.setState({
-                imagesData: audios
+                audiosData: audios
             });
         });
 
@@ -80,7 +80,7 @@ export default class GridCardView extends Component {
         return (
             <GridView
                 itemDimension={130}
-                items={this.state.imagesData}
+                items={this.state.audiosData}
                 style={imageStyle.gridView}
                 renderItem={item => (
                     <TouchableHighlight
