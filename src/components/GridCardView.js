@@ -2,24 +2,11 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, ImageBackground, TouchableHighlight} from 'react-native';
 import GridView from 'react-native-super-grid';
 import LinearGradient from 'react-native-linear-gradient';
-import img1 from '../assets/images/1.jpg';
-import img2 from '../assets/images/2.jpg';
-import img3 from '../assets/images/3.jpg';
-import img4 from '../assets/images/4.jpg';
-import img5 from '../assets/images/5.jpg';
-import img6 from '../assets/images/6.jpg';
+
 import imageStyle from '../styles/image'
-const images = [
-    {image: img1, name: 'TURQUOISE', code: '#1abc9c'},
-    {image: img2, name: 'PETER RIVER', code: '#3498db'},
-    {image: img3, name: 'WET ASPHALT', code: '#34495e'},
-    {image: img4, name: 'PUMPKIN', code: '#d35400'},
-    {image: img5, name: 'ALIZARIN', code: '#e74c3c'},
-    {image: img6, name: 'NEPHRITIS', code: '#27ae60'}
-];
+
 import {
     getAudiosByCategoryAndType,
-
 } from '../utils/FetchAudiosByApi';
 
 export default class GridCardView extends Component {
@@ -44,14 +31,13 @@ export default class GridCardView extends Component {
             setTimeout(function () {
                 // resolve the promise with some value
                 if (!isPaidUser) {
-                    getAudiosByCategoryAndType(category, type, 3).then(function (images) {
-                        resolve(images)
+                    getAudiosByCategoryAndType(category, type, 3).then(function (audios) {
+                        resolve(audios)
                     });
 
                 } else {
-                    getAudiosByCategoryAndType(category, type, 3).then(function (images) {
-                        resolve(images)
-
+                    getAudiosByCategoryAndType(category, type, 3).then(function (audios) {
+                        resolve(audios)
                     });
                 }
 
@@ -76,7 +62,6 @@ export default class GridCardView extends Component {
     }
 
     render() {
-        console.log('Gridview??')
         return (
             <GridView
                 itemDimension={130}
