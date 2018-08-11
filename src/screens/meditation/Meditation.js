@@ -13,21 +13,6 @@ import sliderTabStyle from '../../styles/slideTab';
 
 export default class Meditation extends Component {
 
-    renderTab = (name, page, isTabActive, onPressHandler, onLayoutHandler) => {
-        console.log('page', page)
-        return <TouchableHighlight
-            key={`${name}_${page}`}
-            onPress={() => onPressHandler(page)}
-            onLayout={onLayoutHandler}
-            style={{flex: 1, width: 100,}}
-            underlayColor="#aaaaaa"
-        >
-
-            <Text>{`${name}-test`}</Text>
-        </TouchableHighlight>;
-
-    }
-
     render() {
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
@@ -54,11 +39,25 @@ export default class Meditation extends Component {
                     <ScrollView tabLabel="Focus" style={sliderTabStyle.tabView}>
                         <GridCardView category="meditationCategory" type="focus" {...this.props}/>
                     </ScrollView>
-
+                    <ScrollView tabLabel="Sleep" style={sliderTabStyle.tabView}>
+                        <GridCardView category="meditationCategory" type="sleep" {...this.props}/>
+                    </ScrollView>
+                    <ScrollView tabLabel="Emotions" style={sliderTabStyle.tabView}>
+                        <GridCardView category="meditationCategory" type="emotions" {...this.props}/>
+                    </ScrollView>
+                    <ScrollView tabLabel="Healing" style={sliderTabStyle.tabView}>
+                        <GridCardView category="meditationCategory" type="healing" {...this.props}/>
+                    </ScrollView>
+                    <ScrollView tabLabel="Letting Go" style={sliderTabStyle.tabView}>
+                        <GridCardView category="meditationCategory" type="lettingGo" {...this.props}/>
+                    </ScrollView>
+                    <ScrollView tabLabel="Inner Peace" style={sliderTabStyle.tabView}>
+                        <GridCardView category="meditationCategory" type="innerPeace" {...this.props}/>
+                    </ScrollView>
 
                 </ScrollableTabView>
             </View>
         )
-        console.log('Meditation??')
+
     }
 }
