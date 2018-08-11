@@ -4,6 +4,7 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 
 // import SlideTabBar from './SlideTabBar';
 import GridCardView from '../../components/GridCardView';
+import colorStyle from '../../styles/colors';
 
 import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
@@ -26,19 +27,15 @@ export default class Meditation extends Component {
         </TouchableHighlight>;
 
     }
-    renderSlideTabBar = () => {
-        return (
-            <SlideTabBar/>
-        )
-    }
 
     render() {
-        console.log('Meditation??')
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
                 <ScrollableTabView
                     initialPage={0}
-                    renderTabBar={ScrollableTabBar}
+                    tabBarInactiveTextColor={colorStyle.white}
+                    tabBarActiveTextColor={colorStyle.orange}
+                    renderTabBar={() => <ScrollableTabBar />}
                 >
                     <ScrollView tabLabel="Beginner" style={sliderTabStyle.tabView}>
                         <GridCardView category="beginner" type="all" {...this.props}/>
@@ -62,5 +59,6 @@ export default class Meditation extends Component {
                 </ScrollableTabView>
             </View>
         )
+        console.log('Meditation??')
     }
 }
