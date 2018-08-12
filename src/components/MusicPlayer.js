@@ -89,7 +89,7 @@ export default class MusicPlayer extends Component {
         super(props)
         this.player = ''
         this.rotation = false
-        this.musicList = []
+        // this.musicList = []
         this.state = {
             viewRef: null,
             paused: false, // false: 表示播放，true: 表示暂停
@@ -102,6 +102,7 @@ export default class MusicPlayer extends Component {
             playIcon: 'ios-pause',
             playModeIcon: 'ios-shuffle',
             musicInfo: {},
+            musicList: [],
             musicListVisible: false,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
@@ -151,9 +152,18 @@ export default class MusicPlayer extends Component {
         }
     }
 
+    componentWillMount() {
+        const {audio} = this.props.navigation.state.params;
+        console.log('audio list is*********** ', audio)
+
+        console.log('audio is*********** ', audio[this.state.currentIndex])
+        this.setState({musicInfo: audio[this.state.currentIndex], musicList: audio})
+
+    }
+
     componentDidMount() {
         this.spin()
-        this.setState({musicInfo: mockData.list[this.state.currentIndex]})
+        // this.setState({musicInfo: mockData.list[this.state.currentIndex]})
         // fetch(musicListUrl, {
         //   method: 'GET',
         //   headers: header
@@ -222,13 +232,13 @@ export default class MusicPlayer extends Component {
         console.log('next song called')
         console.log('currentIndex is ', currentIndex)
         this.reset()
-        this.setState({currentIndex: currentIndex >= mockData.list.length ? 0 : currentIndex})
+        this.setState({currentIndex: currentIndex >= this.state.musicList.length ? 0 : currentIndex})
 
     }
 
     preSong = (currentIndex) => {
         this.reset()
-        this.setState({currentIndex: currentIndex < 0 ? mockData.list.length - 1 : currentIndex})
+        this.setState({currentIndex: currentIndex < 0 ? this.state.musicList.length - 1 : currentIndex})
 
         // currentIndex === -1 ? currentIndex = this.state.musicList.length -1 : currentIndex
         // let newSong = this.state.musicList[currentIndex]
@@ -284,8 +294,8 @@ export default class MusicPlayer extends Component {
         } else if (this.state.playMode === 1) {
             this.player.seek(0)
         } else {
-            console.log('list length', mockData.list.length);//mockData.list.length
-            var randomIndex = Math.floor(Math.random() * mockData.list.length);
+            console.log('list length', this.state.musicList.length);//mockData.list.length
+            var randomIndex = Math.floor(Math.random() * this.state.musicList.length);
             console.log('random is', randomIndex);//this.musicList.length
 
             this.nextSong(randomIndex)
@@ -313,25 +323,43 @@ export default class MusicPlayer extends Component {
         if (positive) {
             return (
                 <View
-                    style={{ backgroundColor: 'rgba(220,230,218,1)', width: 70, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginLeft: 10}}>
+                    style={{
+                        backgroundColor: 'rgba(220,230,218,1)',
+                        width: 70,
+                        height: 28,
+                        borderRadius: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        marginLeft: 10
+                    }}>
                     <Ionicons
                         name='md-arrow-dropup'
                         color='green'
                         size={25}
                     />
-                    <Text style={{color: 'green',  fontSize: 13, marginLeft: 5}}>{value}</Text>
+                    <Text style={{color: 'green', fontSize: 13, marginLeft: 5}}>{value}</Text>
                 </View>
             );
         } else {
             return (
                 <View
-                    style={{ backgroundColor: 'rgba(244,230,224,1)', width: 70, height: 28, borderRadius: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginLeft: 10}}>
+                    style={{
+                        backgroundColor: 'rgba(244,230,224,1)',
+                        width: 70,
+                        height: 28,
+                        borderRadius: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        marginLeft: 10
+                    }}>
                     <Ionicons
                         name='md-arrow-dropdown'
                         color='red'
                         size={25}
                     />
-                    <Text style={{color: 'red',  fontSize: 13, marginLeft: 5}}>{value}</Text>
+                    <Text style={{color: 'red', fontSize: 13, marginLeft: 5}}>{value}</Text>
                 </View>
             );
         }
@@ -348,30 +376,30 @@ export default class MusicPlayer extends Component {
                         name: 'ios-musical-note',
                         type: 'ionicon',
                         color: colors.purple
-                      }: undefined}
+                    } : undefined}
 
-                leftAvatar={{ size:'medium', source: { uri: cover } }}
+                leftAvatar={{size: 'medium', source: {uri: cover}}}
                 rightIcon={{
-                name: 'ios-lock-outline',
-                type: 'ionicon',
-                color: colors.grey3
-              }}
+                    name: 'ios-lock-outline',
+                    type: 'ionicon',
+                    color: colors.grey3
+                }}
                 key={index}
                 title={title}
-                titleStyle={{ color: colors.grey1,}}
+                titleStyle={{color: colors.grey1,}}
                 containerStyle={{
-                paddingVertical:10,
-                marginVertical: 4,
-                borderRadius: 8,
-              }}
-                onPress={()=>this.nextSong(index)}
+                    paddingVertical: 10,
+                    marginVertical: 4,
+                    borderRadius: 8,
+                }}
+                onPress={() => this.nextSong(index)}
             />
 
         );
     }
 
     renderListCards() {
-        let musicList = mockData.list
+        let musicList = this.state.musicList
 
         return musicList.map((item, index) => {
             return this.renderCard(item, index);
@@ -383,13 +411,13 @@ export default class MusicPlayer extends Component {
     }
 
     renderPlayer = () => {
-        // let musicInfo = this.state.musicInfo
-        let musicInfo = mockData.list[this.state.currentIndex]
-        console.log(' musicInfo.url is ', musicInfo.url)
+        let musicData = this.state.musicList[this.state.currentIndex]
+        let musicInfo = musicData
+        console.log('render Player is called~~~~~~~~~~~')
         return (
             <View style={styles.bgContainer}>
                 <View style={styles.navBarStyle}>
-                    <View style={[styles.topNavBar,styles.navBarWrapper]}>
+                    <View style={[styles.topNavBar, styles.navBarWrapper]}>
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-close'}
@@ -398,8 +426,8 @@ export default class MusicPlayer extends Component {
                             onPress={this.goBack}
                         />
                         <View style={{alignItems: 'center'}}>
-                            <Text style={styles.title}>{musicInfo.title}</Text>
-                            <Text style={styles.subTitle}>子标题</Text>
+                            <Text style={styles.title}>{musicInfo.audioType}</Text>
+                            <Text style={styles.subTitle}>{musicInfo.name}</Text>
                         </View>
                         <Ionicons
                             style={{marginTop: 5}}
@@ -419,20 +447,28 @@ export default class MusicPlayer extends Component {
                 />
                 <Animated.Image
                     style={{
-            width: 170,
-            height: 170,
-            borderRadius: 85,
-            alignSelf: 'center',
-            position: 'absolute', top: 235,
-            transform: [{rotate: this.state.spinValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['0deg', '360deg']
-            })}]
-          }}
-                    source={{uri: musicInfo.cover}}/>
+                        width: 170,
+                        height: 170,
+                        borderRadius: 85,
+                        alignSelf: 'center',
+                        position: 'absolute', top: 235,
+                        transform: [{
+                            rotate: this.state.spinValue.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: ['0deg', '360deg']
+                            })
+                        }]
+                    }}
+                    source={{uri: musicInfo.imageDownloadUrl}}/>
                 <View style={{flex: 1}}>
                     <View
-                        style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 50, justifyContent: 'space-around', bottom: -60}}>
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginHorizontal: 50,
+                            justifyContent: 'space-around',
+                            bottom: -60
+                        }}>
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-heart-outline'}
@@ -449,7 +485,12 @@ export default class MusicPlayer extends Component {
                     </View>
                     <View style={styles.progressStyle}>
                         <Text
-                            style={{width: 35, fontSize: 11, color: colors.white, marginLeft: 5}}>{this.formatMediaTime(Math.floor(this.state.currentTime))}</Text>
+                            style={{
+                                width: 35,
+                                fontSize: 11,
+                                color: colors.white,
+                                marginLeft: 5
+                            }}>{this.formatMediaTime(Math.floor(this.state.currentTime))}</Text>
                         <Slider
                             style={styles.slider}
                             value={this.state.slideValue}
@@ -462,7 +503,10 @@ export default class MusicPlayer extends Component {
                         />
                         <View style={{width: 35, alignItems: 'flex-end', marginRight: 5}}>
                             <Text
-                                style={{fontSize: 11, color: colors.white}}>{this.formatMediaTime(Math.floor(this.state.duration))}</Text>
+                                style={{
+                                    fontSize: 11,
+                                    color: colors.white
+                                }}>{this.formatMediaTime(Math.floor(this.state.duration))}</Text>
                         </View>
                     </View>
                     <View style={styles.toolBar}>
@@ -490,7 +534,7 @@ export default class MusicPlayer extends Component {
                                 name={'ios-skip-backward'}
                                 size={26}
                                 color={colors.white}
-                                onPress={()=>this.preSong(this.state.currentIndex - 1)}
+                                onPress={() => this.preSong(this.state.currentIndex - 1)}
 
                             />
                             <Ionicons
@@ -501,7 +545,7 @@ export default class MusicPlayer extends Component {
                                 onPress={this.play}
                             />
                             <Ionicons
-                                style={{width: 35, height: 35,  justifyContent: 'center', alignItems: 'center'}}
+                                style={{width: 35, height: 35, justifyContent: 'center', alignItems: 'center'}}
                                 name={'ios-skip-forward'}
                                 size={26}
                                 color={colors.white}
@@ -519,7 +563,7 @@ export default class MusicPlayer extends Component {
                 </View>
                 <Video
                     ref={video => this.player = video}
-                    source={{uri: musicInfo.url}}
+                    source={{uri: musicInfo.downloadUrl}}
                     volume={1.0}
                     paused={this.state.paused}
                     playInBackground={true}
@@ -533,24 +577,24 @@ export default class MusicPlayer extends Component {
 
                 <Overlay
                     overlayBackgroundColor='rgba(223, 223, 223, .8)'
-                    overlayStyle={{flex:1,position:'absolute',bottom:0,width:'100%',right:0,height:'80%'}}
+                    overlayStyle={{flex: 1, position: 'absolute', bottom: 0, width: '100%', right: 0, height: '80%'}}
                     isVisible={this.state.musicListVisible}
                     onBackdropPress={() => this.setState({musicListVisible: false})}
                 >
-                    <View style={{flex:1,padding:10,}}>
+                    <View style={{flex: 1, padding: 10,}}>
                         <View style={[styles.navBarWrapper]}>
                             <Ionicons
                                 name='ios-close'
                                 color='gray'
                                 size={30}
-                                onPress={()=>this.setState({musicListVisible:false})}
+                                onPress={() => this.setState({musicListVisible: false})}
                             />
-                            <View style={{justifyContent:'center',alignItems: 'center'}}>
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={styles.title}>{`Play List`}</Text>
                             </View>
                         </View>
 
-                        <ScrollView style={{flex:1,marginTop:10,flexDirection:'column'}}>
+                        <ScrollView style={{flex: 1, marginTop: 10, flexDirection: 'column'}}>
                             {this.renderListCards()}
                         </ScrollView>
 
@@ -567,16 +611,18 @@ export default class MusicPlayer extends Component {
     }
 
     render() {
-        // const data = this.state.musicInfo || {}
-        const data = mockData.list[this.state.currentIndex]
-        console.log('data ', data)
+        const musicData = this.state.musicInfo || {}, musicList = this.state.musicList || [];
+        const data = musicList[this.state.currentIndex]
+
         return (
-            data.url ?
+            data.downloadUrl ?
                 <View style={styles.container}>
                     <Image
-                        ref={(img) => { this.backgroundImage = img}}
+                        ref={(img) => {
+                            this.backgroundImage = img
+                        }}
                         style={styles.bgContainer}
-                        source={{uri: data.cover}}
+                        source={{uri: data.imageDownloadUrl}}
                         resizeMode='cover'
                         onLoadEnd={this.imageLoaded}
                     />
