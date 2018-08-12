@@ -412,7 +412,6 @@ export default class MusicPlayer extends Component {
 
     renderPlayer = () => {
         let musicData = this.state.musicList[this.state.currentIndex]
-        let musicInfo = musicData
         console.log('render Player is called~~~~~~~~~~~')
         return (
             <View style={styles.bgContainer}>
@@ -426,8 +425,8 @@ export default class MusicPlayer extends Component {
                             onPress={this.goBack}
                         />
                         <View style={{alignItems: 'center'}}>
-                            <Text style={styles.title}>{musicInfo.audioType}</Text>
-                            <Text style={styles.subTitle}>{musicInfo.name}</Text>
+                            <Text style={styles.title}>{musicData.audioType}</Text>
+                            <Text style={styles.subTitle}>{musicData.name}</Text>
                         </View>
                         <Ionicons
                             style={{marginTop: 5}}
@@ -459,7 +458,7 @@ export default class MusicPlayer extends Component {
                             })
                         }]
                     }}
-                    source={{uri: musicInfo.imageDownloadUrl}}/>
+                    source={{uri: musicData.imageDownloadUrl}}/>
                 <View style={{flex: 1}}>
                     <View
                         style={{
@@ -563,7 +562,7 @@ export default class MusicPlayer extends Component {
                 </View>
                 <Video
                     ref={video => this.player = video}
-                    source={{uri: musicInfo.downloadUrl}}
+                    source={{uri: musicData.downloadUrl}}
                     volume={1.0}
                     paused={this.state.paused}
                     playInBackground={true}
@@ -611,18 +610,18 @@ export default class MusicPlayer extends Component {
     }
 
     render() {
-        const musicData = this.state.musicInfo || {}, musicList = this.state.musicList || [];
-        const data = musicList[this.state.currentIndex]
+        const musicList = this.state.musicList || [];
+        const musicData = musicList[this.state.currentIndex]
 
         return (
-            data.downloadUrl ?
+            musicData.downloadUrl ?
                 <View style={styles.container}>
                     <Image
                         ref={(img) => {
                             this.backgroundImage = img
                         }}
                         style={styles.bgContainer}
-                        source={{uri: data.imageDownloadUrl}}
+                        source={{uri: musicData.imageDownloadUrl}}
                         resizeMode='cover'
                         onLoadEnd={this.imageLoaded}
                     />

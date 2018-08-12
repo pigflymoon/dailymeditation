@@ -13,16 +13,22 @@ export default class GridCardView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            audiosData: []
+            audiosData: [],
+            category: this.props.category,
         }
     }
 
-    openAudioModal = (e, item) => {
+    openAudioModal = (e, audioData, item) => {
         console.log('item is ', item);
-        // console.log('this.prop',this.props)
-        // var audioArray = [];
-        // audioArray.push(item);
-        this.props.navigation.push("MusicPlayer", {audio: item});//audioArray
+        var audioArray = [];
+        if (this.state.category == 'beginner') {
+            audioArray.push(item);
+
+        } else {
+            audioArray = audioData;
+        }
+        console.log('audioArray is ', audioArray)
+        this.props.navigation.push("MusicPlayer", {audio: audioArray, category: this.state.category});//audioArray
 
     }
 
@@ -71,7 +77,7 @@ export default class GridCardView extends Component {
                 style={imageStyle.gridView}
                 renderItem={item => (
                     <TouchableHighlight
-                        onPress={(e,) => this.openAudioModal(e, this.state.audiosData)}
+                        onPress={(e,) => this.openAudioModal(e, this.state.audiosData, item)}
                     >
                         <ImageBackground style={imageStyle.imageContainer}
                                          imageStyle={imageStyle.imageRadiusBorder}
