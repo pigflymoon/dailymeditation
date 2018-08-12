@@ -217,16 +217,16 @@ export default class MusicPlayer extends Component {
         console.log('currentIndex is ', currentIndex)
         this.nextSong(currentIndex);
 
-        // currentIndex === this.state.musicList.length ? currentIndex = 0 : currentIndex
-        // let newSong = this.state.musicList[currentIndex]
-        // let music_id = newSong.music_id
-        // if (!isNaN(parseInt(music_id))) {
-        //   this.getxiamiMusic(music_id)
-        //   this.setState({currentIndex})
-        // } else {
-        //   this.nextSong(currentIndex + 1)
-        //   this.showMessageBar('抱歉')('没有找到音乐信息，已帮你切换到下一首')('error')
-        // }
+        currentIndex === this.state.musicList.length ? currentIndex = 0 : currentIndex
+        let newSong = this.state.musicList[currentIndex]
+        let music_name = newSong.name;
+        if (!music_name) {
+          // this.getxiamiMusic(music_id)
+          this.setState({currentIndex})
+        } else {
+          this.nextSong(currentIndex + 1)
+          this.showMessageBar('抱歉')('没有找到音乐信息，已帮你切换到下一首')('error')
+        }
     }
     nextSong = (currentIndex) => {
         console.log('next song called')
@@ -307,6 +307,7 @@ export default class MusicPlayer extends Component {
     }
 
     showMessageBar = title => msg => type => {
+        console.log('error ')
         // 报错信息
     }
     goBack = () => {
