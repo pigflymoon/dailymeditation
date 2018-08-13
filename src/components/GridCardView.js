@@ -61,6 +61,18 @@ export default class GridCardView extends Component {
         console.log('category is ', category);
         this.fetchData(category, type, isPaidUser).then(function (audios) {
             console.log('fetch data', audios)
+            if (category !== 'beginner') {
+                Object.keys(audios).map(key => {
+                    const items = audios[key];
+                    console.log('items are', items)
+                    items.map(item => {
+                        console.log('item is ', item)
+                    });
+
+                })
+            }
+
+
             self.setState({
                 audiosData: audios
             });
@@ -70,31 +82,78 @@ export default class GridCardView extends Component {
     }
 
     render() {
+        const {category} = this.props;
         return (
-            <GridView
-                itemDimension={130}
-                items={this.state.audiosData}
-                style={imageStyle.gridView}
-                renderItem={item => (
-                    <TouchableHighlight
-                        onPress={(e,) => this.openAudioModal(e, this.state.audiosData, item)}
-                    >
-                        <ImageBackground style={imageStyle.imageContainer}
-                                         imageStyle={imageStyle.imageRadiusBorder}
-                                         source={{uri: item.imageDownloadUrl}}>
-                            <LinearGradient colors={['transparent', 'black']} start={{x: 0.5, y: 0.4}}
-                                            style={imageStyle.imageGradient}>
-                                <View style={imageStyle.text}>
-                                    <Text style={imageStyle.title}>{item.audioType}</Text>
-                                    <Text style={imageStyle.subtitle}>{item.name}</Text>
-                                </View>
-                            </LinearGradient>
-                        </ImageBackground>
-                    </TouchableHighlight>
+            <View>
+                {(category == 'beginner') ? <GridView
+                        itemDimension={130}
+                        items={this.state.audiosData}
+                        style={imageStyle.gridView}
+                        renderItem={item => (
+                            <TouchableHighlight
+                                onPress={(e,) => this.openAudioModal(e, this.state.audiosData, item)}
+                            >
+                                <ImageBackground style={imageStyle.imageContainer}
+                                                 imageStyle={imageStyle.imageRadiusBorder}
+                                                 source={{uri: item.imageDownloadUrl}}>
+                                    <LinearGradient colors={['transparent', 'black']} start={{x: 0.5, y: 0.4}}
+                                                    style={imageStyle.imageGradient}>
+                                        <View style={imageStyle.text}>
+                                            <Text style={imageStyle.title}>{item.audioType}</Text>
+                                            <Text style={imageStyle.subtitle}>{item.name}</Text>
+                                        </View>
+                                    </LinearGradient>
+                                </ImageBackground>
+                            </TouchableHighlight>
 
 
-                )}
-            />
+                        )}
+                    /> : <View>
+
+                        {Object.keys(this.state.audiosData).map(key => {
+                            const items = (this.state.audiosData)[key];
+                            console.log('items are', items)
+                            return (
+                                <GridView
+                                    key={key}
+                                    itemDimension={130}
+                                    items={items}
+                                    style={imageStyle.gridView}
+                                    renderItem={item => (
+                                        <TouchableHighlight
+                                            onPress={(e,) => this.openAudioModal(e, items, item)}
+                                        >
+                                            <ImageBackground style={imageStyle.imageContainer}
+                                                             imageStyle={imageStyle.imageRadiusBorder}
+                                                             source={{uri: item.imageDownloadUrl}}>
+                                                <LinearGradient colors={['transparent', 'black']}
+                                                                start={{x: 0.5, y: 0.4}}
+                                                                style={imageStyle.imageGradient}>
+                                                    <View style={imageStyle.text}>
+                                                        <Text style={imageStyle.title}>{item.audioType}</Text>
+                                                        <Text style={imageStyle.subtitle}>{item.name}</Text>
+                                                    </View>
+                                                </LinearGradient>
+                                            </ImageBackground>
+                                        </TouchableHighlight>
+
+
+                                    )}
+                                />
+                            )
+
+                        })}
+
+
+                    </View>
+
+
+
+
+
+                }
+            </View>
+
         );
     }
 }

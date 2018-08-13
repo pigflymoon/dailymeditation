@@ -27,17 +27,37 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = '') {
                 });
             } else {//
                 db.ref().child(`${type}`).once("value", function (snapshot) {
-                    var downloadAudios = snapshot.val(), audiosArray = [];
-                    console.log('********88downloadAudios are**********: ', downloadAudios)
+                    var downloadAudios = snapshot.val(), audiosArray = [], audioCategoryArray = {};
+                    console.log('********downloadAudios are**********: ', downloadAudios)
+
+                    for (var k in downloadAudios) {
+                        if (downloadAudios.hasOwnProperty(k)) {
+                            console.log('key is ', k, 'value is******* ', downloadAudios[k])
+                            var childArray = []
+                            for (var key in downloadAudios[k]) {
+                                if (downloadAudios[k].hasOwnProperty(key)) {
+                                    console.log('child key is ', key, 'child value is******* ', downloadAudios[k][key])
+                                    //obj["key3"] = "value3";
+                                    childArray.push(downloadAudios[k][key]);
+
+                                }
+                            }
+                            audioCategoryArray[k] = childArray;
+                        }
+                    }
+
+                    console.log('*******audioCategoryArray is******** ', audioCategoryArray)
+                 /*
                     snapshot.forEach(function (childSnap) {
-                        console.log('child snap is ', childSnap.val());
+                        console.log('********* child snap is********* ', childSnap.val());
                         childSnap.forEach(function (snap) {
                             console.log('snap is ', snap.val());
                             audiosArray.push(snap.val())
                         })
                     })
                     console.log('audiosArray is ', audiosArray)
-                    resolve(audiosArray);
+                    */
+                    resolve(audioCategoryArray);
                 });
             }
 
