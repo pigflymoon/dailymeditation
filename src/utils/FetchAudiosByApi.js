@@ -45,18 +45,6 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = '') {
                             audioCategoryArray[k] = childArray;
                         }
                     }
-
-                    console.log('*******audioCategoryArray is******** ', audioCategoryArray)
-                 /*
-                    snapshot.forEach(function (childSnap) {
-                        console.log('********* child snap is********* ', childSnap.val());
-                        childSnap.forEach(function (snap) {
-                            console.log('snap is ', snap.val());
-                            audiosArray.push(snap.val())
-                        })
-                    })
-                    console.log('audiosArray is ', audiosArray)
-                    */
                     resolve(audioCategoryArray);
                 });
             }
