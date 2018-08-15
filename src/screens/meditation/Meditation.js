@@ -23,7 +23,7 @@ export default class Meditation extends Component {
                     renderTabBar={() => <ScrollableTabBar />}
                 >
                     <ScrollView tabLabel="Beginner" style={sliderTabStyle.tabView}>
-                        <GridCardView category="beginner" type="all" {...this.props}/>
+                        <GridCardView category="beginner" type="beginner" {...this.props}/>
                     </ScrollView>
                     <ScrollView tabLabel="Meditation" style={sliderTabStyle.tabView}>
                         <View style={sliderTabStyle.card}>

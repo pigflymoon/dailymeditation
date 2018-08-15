@@ -27,6 +27,7 @@ export default {
     title: {
         color: colors.white,
        marginBottom: 10,
+        textTransform:'capitalize',
     },
     subtitle: {
         fontSize: 12,
