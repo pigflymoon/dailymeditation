@@ -56,23 +56,9 @@ export default class GridCardView extends Component {
 
     componentWillMount() {
         var self = this;
-        console.log('fetch data???')
         const {category, type, isPaidUser} = this.props;
-        console.log('category is ', category);
+
         this.fetchData(category, type, isPaidUser).then(function (audios) {
-            console.log('fetch data', audios)
-            if (category !== 'beginner') {
-                Object.keys(audios).map(key => {
-                    const items = audios[key];
-                    console.log('items are', items)
-                    items.map(item => {
-                        console.log('item is ', item)
-                    });
-
-                })
-            }
-
-
             self.setState({
                 audiosData: audios
             });
@@ -82,90 +68,40 @@ export default class GridCardView extends Component {
     }
 
     render() {
-        const {category} = this.props;
         return (
             <View>
-                {(category == 'beginner') ? <View>
-
-                        {Object.keys(this.state.audiosData).map(key => {
-                            const items = (this.state.audiosData)[key];
-                            console.log('items are', items)
-                            return (
-                                <GridView
-                                    key={key}
-                                    itemDimension={130}
-                                    items={items}
-                                    style={imageStyle.gridView}
-                                    renderItem={item => (
-                                        <TouchableHighlight
-                                            onPress={(e,) => this.openAudioModal(e, items, item)}
-                                        >
-                                            <ImageBackground style={imageStyle.imageContainer}
-                                                             imageStyle={imageStyle.imageRadiusBorder}
-                                                             source={{uri: item.imageDownloadUrl}}>
-                                                <LinearGradient colors={['transparent', 'black']}
-                                                                start={{x: 0.5, y: 0.4}}
-                                                                style={imageStyle.imageGradient}>
-                                                    <View style={imageStyle.text}>
-                                                        <Text style={imageStyle.title}>{item.audioType}</Text>
-                                                        <Text style={imageStyle.subtitle}>{item.name}</Text>
-                                                    </View>
-                                                </LinearGradient>
-                                            </ImageBackground>
-                                        </TouchableHighlight>
+                {Object.keys(this.state.audiosData).map(key => {
+                    const items = (this.state.audiosData)[key];
+                    return (
+                        <GridView
+                            key={key}
+                            itemDimension={130}
+                            items={items}
+                            style={imageStyle.gridView}
+                            renderItem={item => (
+                                <TouchableHighlight
+                                    onPress={(e,) => this.openAudioModal(e, items, item)}
+                                >
+                                    <ImageBackground style={imageStyle.imageContainer}
+                                                     imageStyle={imageStyle.imageRadiusBorder}
+                                                     source={{uri: item.imageDownloadUrl}}>
+                                        <LinearGradient colors={['transparent', 'black']}
+                                                        start={{x: 0.5, y: 0.4}}
+                                                        style={imageStyle.imageGradient}>
+                                            <View style={imageStyle.text}>
+                                                <Text style={imageStyle.title}>{item.audioType}</Text>
+                                                <Text style={imageStyle.subtitle}>{item.name}</Text>
+                                            </View>
+                                        </LinearGradient>
+                                    </ImageBackground>
+                                </TouchableHighlight>
 
 
-                                    )}
-                                />
-                            )
+                            )}
+                        />
+                    )
 
-                        })}
-
-
-                    </View> : <View>
-
-                        {Object.keys(this.state.audiosData).map(key => {
-                            const items = (this.state.audiosData)[key];
-                            console.log('items are', items)
-                            return (
-                                <GridView
-                                    key={key}
-                                    itemDimension={130}
-                                    items={items}
-                                    style={imageStyle.gridView}
-                                    renderItem={item => (
-                                        <TouchableHighlight
-                                            onPress={(e,) => this.openAudioModal(e, items, item)}
-                                        >
-                                            <ImageBackground style={imageStyle.imageContainer}
-                                                             imageStyle={imageStyle.imageRadiusBorder}
-                                                             source={{uri: item.imageDownloadUrl}}>
-                                                <LinearGradient colors={['transparent', 'black']}
-                                                                start={{x: 0.5, y: 0.4}}
-                                                                style={imageStyle.imageGradient}>
-                                                    <View style={imageStyle.text}>
-                                                        <Text style={imageStyle.title}>{item.audioType}</Text>
-                                                        <Text style={imageStyle.subtitle}>{item.name}</Text>
-                                                    </View>
-                                                </LinearGradient>
-                                            </ImageBackground>
-                                        </TouchableHighlight>
-
-
-                                    )}
-                                />
-                            )
-
-                        })}
-
-
-                    </View>
-
-
-
-
-
-                }
+                })}
             </View>
 
         );
