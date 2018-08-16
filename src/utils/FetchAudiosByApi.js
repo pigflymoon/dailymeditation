@@ -12,10 +12,6 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
             // resolve the promise with some value
             db.ref().child(`${type}`).once("value", function (snapshot) {
                 var downloadAudios = snapshot.val(), audioCategoryArray = {};
-                console.log('********downloadAudios are**********: ', downloadAudios)
-
-                //
-
                 for (const key of Object.keys(downloadAudios)) {
                     console.log('key is :', key, 'data is :', downloadAudios[key]);
                     var audios = downloadAudios[key], childArray = [];
@@ -27,25 +23,6 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
                     audioCategoryArray[key] = childArray;
                 }
 
-
-                //
-                /*
-                 for (var key in downloadAudios) {
-                 if (downloadAudios.hasOwnProperty(key)) {
-                 console.log('key is ', key, 'value is******* ', downloadAudios[key])
-                 var childArray = []
-                 for (var subKey in downloadAudios[key]) {
-                 if (downloadAudios[key].hasOwnProperty(subKey)) {
-                 console.log('child key is ', subKey, 'child value is******* ', downloadAudios[key][subKey])
-                 childArray.push(downloadAudios[key][subKey]);
-                 }
-                 }
-                 audioCategoryArray[key] = childArray;
-                 }
-
-
-                 }
-                 */
                 resolve(audioCategoryArray);
             });
 
