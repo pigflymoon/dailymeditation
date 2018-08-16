@@ -216,18 +216,8 @@ export default class MusicPlayer extends Component {
         e.preventDefault();
         console.log('currentIndex is ', currentIndex)
         this.nextSong(currentIndex);
-
-        currentIndex === this.state.musicList.length ? currentIndex = 0 : currentIndex
-        let newSong = this.state.musicList[currentIndex]
-        let music_name = newSong.name;
-        if (!music_name) {
-          // this.getxiamiMusic(music_id)
-          this.setState({currentIndex})
-        } else {
-          this.nextSong(currentIndex + 1)
-          this.showMessageBar('抱歉')('没有找到音乐信息，已帮你切换到下一首')('error')
-        }
     }
+
     nextSong = (currentIndex) => {
         console.log('next song called')
         console.log('currentIndex is ', currentIndex)
@@ -367,7 +357,7 @@ export default class MusicPlayer extends Component {
     }
 
     renderCard(item, index) {
-        const {title, cover} = item;
+        const {name, imageDownloadUrl} = item;
         let currentIndex = this.state.currentIndex;
         let isCurrentIndex = (currentIndex === index) ? true : false;
 
@@ -379,21 +369,21 @@ export default class MusicPlayer extends Component {
                         color: colors.purple
                     } : undefined}
 
-                leftAvatar={{size: 'medium', source: {uri: cover}}}
+                leftAvatar={{size: 'medium', source: {uri: imageDownloadUrl}}}
                 rightIcon={{
                     name: 'ios-lock-outline',
                     type: 'ionicon',
                     color: colors.grey3
                 }}
                 key={index}
-                title={title}
+                title={name}
                 titleStyle={{color: colors.grey1,}}
                 containerStyle={{
                     paddingVertical: 10,
                     marginVertical: 4,
                     borderRadius: 8,
                 }}
-                onPress={() => this.nextSong(index)}
+                onPress={this.onNextSong(index)}
             />
 
         );
@@ -406,14 +396,11 @@ export default class MusicPlayer extends Component {
             return this.renderCard(item, index);
 
         })
-        // return _.map(USERS, (user, index) => {
-        //     return this.renderCard(user, index);
-        // });
     }
 
     renderPlayer = () => {
         let musicData = this.state.musicList[this.state.currentIndex]
-        console.log('render Player is called~~~~~~~~~~~')
+        console.log('render Player is called~~~~~~~~~~~musicData is : ', musicData)
         return (
             <View style={styles.bgContainer}>
                 <View style={styles.navBarStyle}>
