@@ -360,14 +360,16 @@ export default class MusicPlayer extends Component {
         const {name, imageDownloadUrl} = item;
         let currentIndex = this.state.currentIndex;
         let isCurrentIndex = (currentIndex === index) ? true : false;
+//                    {isCurrentIndex ? color:colors.purple:colors.grey3}
 
         return (
             <ListItem
-                leftIcon={isCurrentIndex ? {
-                        name: 'ios-musical-note',
-                        type: 'ionicon',
-                        color: colors.purple
-                    } : undefined}
+                leftIcon={{
+                    name: 'ios-musical-note',
+                    type: 'ionicon',
+                    color: isCurrentIndex ? colors.red : colors.grey3
+                }
+                }
 
                 leftAvatar={{size: 'medium', source: {uri: imageDownloadUrl}}}
                 rightIcon={{
