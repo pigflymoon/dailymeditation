@@ -14,19 +14,38 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
                 var downloadAudios = snapshot.val(), audioCategoryArray = {};
                 console.log('********downloadAudios are**********: ', downloadAudios)
 
-                for (var key in downloadAudios) {
-                    if (downloadAudios.hasOwnProperty(key)) {
-                        console.log('key is ', key, 'value is******* ', downloadAudios[key])
-                        var childArray = []
-                        for (var subKey in downloadAudios[key]) {
-                            if (downloadAudios[key].hasOwnProperty(subKey)) {
-                                console.log('child key is ', subKey, 'child value is******* ', downloadAudios[key][subKey])
-                                childArray.push(downloadAudios[key][subKey]);
-                            }
-                        }
-                        audioCategoryArray[key] = childArray;
+                //
+
+                for (const key of Object.keys(downloadAudios)) {
+                    console.log('key is :', key, 'data is :', downloadAudios[key]);
+                    var audios = downloadAudios[key], childArray = [];
+                    for (const subKey of Object.keys(audios)) {
+                        console.log('subKey: ', subKey, 'value is :', audios[subKey])
+                        // audioCategoryArray[key] = audios[subKey];
+                        childArray.push(audios[subKey]);
                     }
+                    audioCategoryArray[key] = childArray;
                 }
+
+
+                //
+                /*
+                 for (var key in downloadAudios) {
+                 if (downloadAudios.hasOwnProperty(key)) {
+                 console.log('key is ', key, 'value is******* ', downloadAudios[key])
+                 var childArray = []
+                 for (var subKey in downloadAudios[key]) {
+                 if (downloadAudios[key].hasOwnProperty(subKey)) {
+                 console.log('child key is ', subKey, 'child value is******* ', downloadAudios[key][subKey])
+                 childArray.push(downloadAudios[key][subKey]);
+                 }
+                 }
+                 audioCategoryArray[key] = childArray;
+                 }
+
+
+                 }
+                 */
                 resolve(audioCategoryArray);
             });
 
