@@ -7,7 +7,8 @@
     "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint src --fix",
-    "lint:watch": "onchange \"src/\" -- onerror \"npm run lint --silent\""
+    "lint:watch": "onchange \"src/\" -- onerror \"npm run lint --silent\"",
+    "flow": "flow"
   },
   "dependencies": {
     "firebase": "^5.3.1",
@@ -15,6 +16,7 @@
     "react-native": "0.56.0",
     "react-native-blur": "^3.2.2",
     "react-native-elements": "^v1.0.0-beta5",
+    "react-native-firebase": "^4.3.8",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-scrollable-tab-view": "git+https://github.com/pigflymoon/react-native-scrollable-tab-view.git",
     "react-native-super-grid": "^2.4.1",
@@ -38,6 +40,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-react-native": "^3.2.1",
+    "flow-bin": "^0.79.1",
     "jest": "23.4.0",
     "prettier": "^1.13.7",
     "react-test-renderer": "16.4.1"
