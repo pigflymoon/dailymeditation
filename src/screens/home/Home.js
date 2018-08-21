@@ -9,6 +9,13 @@ import screenStyle from '../../styles/screen';
 // import bgVideo from '../../assets/video/bgVideo.mp4'
 export default class Home extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            badgeNumber: 0
+        };
+    }
 
     componentDidMount() {
         reactFirebase.messaging().hasPermission()
@@ -29,44 +36,67 @@ export default class Home extends Component {
                         });
                 }
             });
+        /*
+
+         this.notificationListener = reactFirebase.notifications().onNotification((notification) => {
+
+         // Process your notification as required
+         const {
+         body,
+         data,
+         notificationId,
+         sound,
+         subtitle,
+         title,
+         badge
+         } = notification;
+         console.log("notification : ", title, body, JSON.stringify(data))
+         });
 
 
-        this.notificationListener = reactFirebase.notifications().onNotification((notification) => {
 
-            // Process your notification as required
-            const {
-                body,
-                data,
-                notificationId,
-                sound,
-                subtitle,
-                title,
-                badge
-            } = notification;
-            console.log("notification : ", title, body, JSON.stringify(data))
+         */
+        var self = this;
+
+        this.messageListener = reactFirebase.messaging().onMessage((message: RemoteMessage) => {
+            // Process your message as required
+            console.log('message get???', message)
         });
 
-        // this.notificationDisplayedListener = reactFirebase.notifications().onNotificationDisplayed((notification: Notification) => {
-        //     // Process your notification as required
-        //     // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
-        //
-        //     console.log('notification opened:', notification.ios.badge, notification.body, 'title: ', notification.title)
-        //
-        // });
+        this.notificationDisplayedListener = reactFirebase.notifications().onNotificationDisplayed((notification: Notification) => {
+            // Process your notification as required
+            // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+            console.log('***********  onNotificationDisplayed get notification ***********???', notification);
+        });
+
+
+
 
         this.notificationOpenedListener = reactFirebase.notifications().onNotificationOpened((notificationOpen: NotificationOpen) => {
             // Get the action triggered by the notification being opened
-            reactFirebase.notifications().setBadge(0);
-            const action = notificationOpen.action;
             // Get information about the notification that was opened
             const notification: Notification = notificationOpen.notification;
+            // if (self.badgeNumber == 0){
+            //     self.setState({badgeNumber: notification.ios.badge});
+            // }
+            var badgeNumber = reactFirebase.notifications().getBadge()
+                .then((number) => {
+                    console.log('badgeNumber is ', number);
+                });
+
+            // reactFirebase.notifications().setBadge(0);
+
+            const action = notificationOpen.action;
+
             console.log('notification opened:', notification.ios.badge, notification.body, 'title: ', notification.title)
 
         });
 
+
         //App Closed
-        reactFirebase.notifications().getInitialNotification()
+        this.getInitialNotificationListener = reactFirebase.notifications().getInitialNotification()
             .then((notificationOpen: NotificationOpen) => {
+
                 if (notificationOpen) {
                     // App was opened by a notification
                     // Get the action triggered by the notification being opened
@@ -75,25 +105,24 @@ export default class Home extends Component {
                     const action = notificationOpen.action;
                     // Get information about the notification that was opened
                     const notification: Notification = notificationOpen.notification;
-                    console.log('App closed. notification opened:', notification.body, 'title: ', notification.title)
 
+                    console.log('App closed. notification opened:', notification, notification.body, 'title: ', notification.title)
+
+                } else {
+                    console.log('not opened',)
                 }
             });
-
-        this.messageListener = reactFirebase.messaging().onMessage((message: RemoteMessage) => {
-            // Process your message as required
-            alert('message is ', message);
-        });
 
 
     }
 
 
     componentWillUnmount() {
-        this.messageListener();
-        this.notificationListener();
-        this.notificationOpenedListener();
         this.notificationDisplayedListener();
+        this.notificationOpenedListener();
+        this.getInitialNotificationListener();
+        this.messageListener();
+
     }
 
 
