@@ -17,7 +17,8 @@ import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
 // import MedidationAudioModalScreen from './src/screens/meditation/MedidationAudioModal';
 import MusicPlayerScreen from './src/components/MusicPlayer' // './src/screens/meditation/PlayList';
-
+//PlayList
+import PlayListScreen from './src/components/PlayList';
 import CustomTabBar from './src/components/CustomTabBar';
 
 import colors from './src/styles/colors';
@@ -34,6 +35,16 @@ const HomeTab = createStackNavigator({
 });
 
 const MeditationTab = createStackNavigator({
+        PlayList: {
+            screen: PlayListScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'My Play List',
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6},
+                headerTintColor: colors.grey6,
+
+            }),
+        },
         Meditation: {
             screen: MeditationScreen,
             navigationOptions: ({navigation, screenProps}) => ({
@@ -42,7 +53,8 @@ const MeditationTab = createStackNavigator({
                 headerTitleStyle: {color: colors.grey6}
             }),
         },
-    },
+
+    }
 );
 
 const SettingsTab = createStackNavigator({
@@ -137,6 +149,7 @@ const StacksOverTabs = createStackNavigator({
                 title: 'Meditation Music Player',
             },
         },
+
         // MedidationAudioModal: {
         //     screen: MedidationAudioModalScreen,
         //     navigationOptions: {

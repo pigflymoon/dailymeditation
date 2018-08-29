@@ -29,7 +29,7 @@ export default class GridCardView extends Component {
         //     audioArray = audioData;
         // }
         // console.log('audioArray is ', audioArray)
-        this.props.navigation.push("MusicPlayer", {audio: audioData, category: this.state.category});//audioArray
+        this.props.navigation.push("PlayList", {audio: audioData, category: this.state.category});//audioArray
 
     }
 
