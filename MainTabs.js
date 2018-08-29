@@ -35,6 +35,15 @@ const HomeTab = createStackNavigator({
 });
 
 const MeditationTab = createStackNavigator({
+
+        Meditation: {
+            screen: MeditationScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Meditation',
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6}
+            }),
+        },
         PlayList: {
             screen: PlayListScreen,
             navigationOptions: ({navigation, screenProps}) => ({
@@ -43,14 +52,6 @@ const MeditationTab = createStackNavigator({
                 headerTitleStyle: {color: colors.grey6},
                 headerTintColor: colors.grey6,
 
-            }),
-        },
-        Meditation: {
-            screen: MeditationScreen,
-            navigationOptions: ({navigation, screenProps}) => ({
-                title: 'Meditation',
-                headerStyle: {backgroundColor: screenProps.tabBg},
-                headerTitleStyle: {color: colors.grey6}
             }),
         },
 

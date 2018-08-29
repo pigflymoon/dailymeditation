@@ -83,7 +83,38 @@ const USERS = [
         positive: true
     },
 ];
-
+const list2 = [
+    {
+        name: 'Amy Farha',
+        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+        subtitle: 'Vice President',
+        linearGradientColors: ['#FF9800', '#F44336'],
+    },
+    {
+        name: 'Chris Jackson',
+        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+        subtitle: 'Vice Chairman',
+        linearGradientColors: ['#3F51B5', '#2196F3'],
+    },
+    {
+        name: 'Amanda Martin',
+        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+        subtitle: 'CEO',
+        linearGradientColors: ['#FFD600', '#FF9800'],
+    },
+    {
+        name: 'Christy Thomas',
+        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg',
+        subtitle: 'Lead Developer',
+        linearGradientColors: ['#4CAF50', '#8BC34A'],
+    },
+    {
+        name: 'Melissa Jones',
+        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg',
+        subtitle: 'CTO',
+        linearGradientColors: ['#F44336', '#E91E63'],
+    },
+];
 
 export default class PlayList extends Component {
 
@@ -130,18 +161,72 @@ export default class PlayList extends Component {
 
     };
 
+    componentWillMount() {
+        const {audio} = this.props.navigation.state.params;
+        console.log('audio list is*********** ', audio)
 
-    renderPlayer = () => {
+        console.log('audio is*********** ', audio[this.state.currentIndex])
+        this.setState({musicList: audio})
+
+    }
+
+    renderCard(item, index) {
+        const {name, imageDownloadUrl} = item;
+        let currentIndex = this.state.currentIndex;
+        let isCurrentIndex = (currentIndex === index) ? true : false;
+//                    {isCurrentIndex ? color:colors.purple:colors.grey3}
+
+        return (
+
+            <ListItem
+                leftIcon={{
+            name: 'ios-musical-note',
+                type: 'ionicon',
+                color: colors.grey4
+        }
+    }
+
+                leftAvatar={{size: 'medium', source: {uri: imageDownloadUrl}}}
+                rightIcon={{
+            name: 'ios-lock-outline',
+                type: 'ionicon',
+                color: colors.grey4
+        }}
+                key={index}
+                title={name}
+                titleStyle={{color: colors.grey4,}}
+                containerStyle={{
+                    backgroundColor:'transparent',
+                    paddingVertical: 10,
+                    marginVertical: 4,
+        }}
+                bottomDivider
+            />
+
+
+        );
+    }
+
+    renderListCards() {
+        let musicList = this.state.musicList;
+
+        return musicList.map((item, index) => {
+            return this.renderCard(item, index);
+
+        })
+    }
+
+    renderPlayList = () => {
         // let musicData = this.state.musicList[this.state.currentIndex]
         return (
             <View style={styles.bgContainer}>
                 <ScrollView style={{flex: 1, marginBottom: 20}}>
                     <View
-                        style={{flex: 1, flexDirection: 'column', backgroundColor: 'white', borderRadius: 5, alignItems: 'center', marginHorizontal: 10, height: 250, marginBottom: 10}}>
+                        style={{flex: 1, flexDirection: 'column', backgroundColor:'rgba(46,49,87 , 1)', alignItems: 'center', height: 160, marginBottom: 10}}>
                         <View style={{flex: 3, flexDirection: 'row'}}>
                             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                                 <Avatar
-                                    size="xlarge"
+                                    size="large"
                                     rounded
                                     source={bg}
                                     onPress={() => console.log("Works!")}
@@ -151,7 +236,7 @@ export default class PlayList extends Component {
                             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                                 <View style={{ flex: 1, marginTop: 10, justifyContent: 'center'}}>
                                     <Text
-                                        style={{fontSize: 25, color: 'rgba(98,93,144,1)', marginLeft: -15}}>
+                                        style={{fontSize: 16, color: colors.grey4, marginLeft: -15}}>
                                         Paul Allen
                                     </Text>
                                 </View>
@@ -164,20 +249,36 @@ export default class PlayList extends Component {
                             <View style={{flex: 1,}}>
                                 <Icon
                                     name='share'
-                                    color={colors.grey3}
+                                    color={colors.grey4}
                                     onPress={() => console.log('hello')}/>
                             </View>
 
                             <View style={{flex: 1,}}>
                                 <Icon
                                     name='file-download'
-                                    color={colors.grey3}
+                                    color={colors.grey4}
                                     onPress={() => console.log('hello')}/>
                             </View>
 
                         </View>
                     </View>
+                    <View style={{flex: 1, padding: 10,}}>
+                        <View style={[styles.navBarWrapper]}>
+                            <MaterialIcons
+                                name='play-circle-outline'
+                                color={colors.grey4}
+                                size={26}
+                            />
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={styles.title}>{`Play All`}</Text>
+                            </View>
+                        </View>
 
+                        <View style={{flex: 1, marginTop: 10, flexDirection: 'column'}}>
+                            {this.renderListCards()}
+                        </View>
+
+                    </View>
                 </ScrollView>
 
             </View>
@@ -191,7 +292,7 @@ export default class PlayList extends Component {
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
 
-                {this.renderPlayer()}
+                {this.renderPlayList()}
 
             </View>
         )
@@ -228,9 +329,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        paddingBottom: 5,
+        borderBottomWidth: 0.5,
+        borderColor: colors.grey4
     },
     title: {
-        color: colors.grey0,
+        color: colors.grey4,
         fontSize: 14
     },
     subTitle: {
