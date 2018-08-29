@@ -19,10 +19,24 @@ import AboutScreen from './src/screens/settings/About';
 import MusicPlayerScreen from './src/components/MusicPlayer' // './src/screens/meditation/PlayList';
 //PlayList
 import PlayListScreen from './src/components/PlayList';
+//My Meditation
+import MyMeditationScreen from './src/screens/myMeditation/MyMeditation';
+
 import CustomTabBar from './src/components/CustomTabBar';
 
 import colors from './src/styles/colors';
 
+
+const MyMeditationTab = createStackNavigator({
+    MyMeditation: {
+        screen: MyMeditationScreen,
+        navigationOptions: ({navigation, screenProps}) => ({
+            title: 'My Meditation',
+            headerStyle: {backgroundColor: screenProps.tabBg},
+            headerTitleStyle: {color: colors.grey6}
+        }),
+    },
+});
 const HomeTab = createStackNavigator({
     Home: {
         screen: HomeScreen,
@@ -80,6 +94,19 @@ const SettingsTab = createStackNavigator({
 
 const StacksInTabs = createBottomTabNavigator(
     {
+        MyMeditationTab:{
+            screen: MyMeditationTab,
+            navigationOptions: {
+                tabBarLabel: 'My Meditation',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-flower' : 'ios-flower-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
         MeditationTab: {
             screen: MeditationTab,
             navigationOptions: {
