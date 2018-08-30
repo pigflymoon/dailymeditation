@@ -27,6 +27,7 @@ import colors from '../../styles/colors';
 import mockData from '../../config/musicList.json';
 import bg from '../../assets/images/1.jpg';
 
+import SortablePlayList from '../../components/SortablePlayList';
 const deviceInfo = {
     deviceWidth: Dimensions.get('window').width,
     deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
@@ -309,12 +310,11 @@ export default class MyMeditation extends Component {
     render() {
         // const musicList = this.state.musicList || [];
         // const musicData = musicList[this.state.currentIndex]
+        //  {this.renderPlayList()}
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgBlue]}>
-
-                {this.renderPlayList()}
-
+                <SortablePlayList/>
             </View>
         )
     }
