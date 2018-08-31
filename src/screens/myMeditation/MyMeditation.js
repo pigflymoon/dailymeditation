@@ -313,7 +313,7 @@ export default class MyMeditation extends Component {
         //  {this.renderPlayList()}
 
         return (
-            <View style={[baseStyle.container, screenStyle.screenBgBlue]}>
+            <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
                 <SortablePlayList/>
             </View>
         )

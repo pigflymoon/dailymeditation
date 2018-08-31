@@ -29,16 +29,16 @@ class Root extends Component {
         console.log('type is ', type)
         switch (type) {
             case 'HomeTab' :
-                tabColor = colors.blue1;
+                tabColor = colors.purple;//blue1
                 break;
             case 'MeditationTab':
                 tabColor = colors.purple;
                 break;
             case 'SettingsTab' :
-                tabColor = colors.purple4;
+                tabColor = colors.purple;//purple4
                 break;
             default:
-                tabColor = colors.blue1
+                tabColor = colors.purple//blue1
         }
         this.setState({tabColor: tabColor})
     }

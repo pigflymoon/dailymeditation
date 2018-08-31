@@ -4,6 +4,7 @@ import {View, StyleSheet, SectionList} from 'react-native';
 import {ListItem, Divider, SearchBar} from 'react-native-elements';
 import listStyle from '../../styles/list';
 import colors from '../../styles/colors';
+import screenStyle from '../../styles/screen';
 
 const ORANGE = '#FF9500';
 const BLUE = '#007AFF';
@@ -126,7 +127,7 @@ export default class Settings extends React.PureComponent {
         },
     }) => (
         <ListItem
-            containerStyle={{ paddingVertical: 8,backgroundColor:colors.purple4}}
+            containerStyle={{ paddingVertical: 8,backgroundColor:colors.purple}}//purple4
             titleStyle={{color:colors.grey4 }}
             switch={checkbox && { value: true }}
             onPress={() => this.onAbout()}
@@ -149,7 +150,7 @@ export default class Settings extends React.PureComponent {
         />
     );
 
-    renderSectionHeader = () => <View style={[listStyle.headerSection,{backgroundColor:colors.purple4}]}/>;
+    renderSectionHeader = () => <View style={[listStyle.headerSection,{backgroundColor:colors.purple}]}/>;//{backgroundColor:colors.purple4}
 
     ItemSeparatorComponent = () => (
         <View style={listStyle.separatorComponent}>
@@ -163,11 +164,12 @@ export default class Settings extends React.PureComponent {
         this.props.navigation.push('About');
     };
     render() {
+        //backgroundColor:'#7C7482'
         return (
-            <View style={{backgroundColor:'#7C7482'}}>
+            <View style={screenStyle.screenBgPurple}>
                 <SectionList
                     keyExtractor={this.keyExtractor}
-                    contentContainerStyle={[listStyle.listBgColor,{backgroundColor:'#7C7482'}]}
+                    contentContainerStyle={[listStyle.listBgColor,{backgroundColor:colors.purple}]}//#7C7482
                     sections={sections}
                     renderItem={this.renderItem}
                     renderSectionHeader={this.renderSectionHeader}
