@@ -303,7 +303,12 @@ export default class MyMeditation extends Component {
        }}>
                     <Icon
                         containerStyle={{marginRight:10}}
-                        name='queue-music'
+                        name='playlist-play'
+                        color={colors.grey6}
+                        onPress={() => console.log('hello')}/>
+                    <Icon
+                        containerStyle={{marginRight:10}}
+                        name='play-circle-outline'
                         color={colors.grey6}
                         onPress={() => console.log('hello')}/>
                     <Icon

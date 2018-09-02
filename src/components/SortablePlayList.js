@@ -114,7 +114,7 @@ export default class SortablePlayList extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>React Native Sortable List</Text>
+
                 <SortableList
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
