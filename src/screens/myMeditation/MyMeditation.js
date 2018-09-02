@@ -117,48 +117,62 @@ const list2 = [
         linearGradientColors: ['#F44336', '#E91E63'],
     },
 ];
-const musicData = {
-    0: {
-        image: 'https://placekitten.com/200/240',
-        text: 'Chloe',
-    },
-    1: {
-        image: 'https://placekitten.com/200/201',
-        text: 'Jasper',
-    },
-    2: {
-        image: 'https://placekitten.com/200/202',
-        text: 'Pepper',
-    },
-    3: {
-        image: 'https://placekitten.com/200/203',
-        text: 'Oscar',
-    },
-    4: {
-        image: 'https://placekitten.com/200/204',
-        text: 'Dusty',
-    },
-    5: {
-        image: 'https://placekitten.com/200/205',
-        text: 'Spooky',
-    },
-    6: {
-        image: 'https://placekitten.com/200/210',
-        text: 'Kiki',
-    },
-    7: {
-        image: 'https://placekitten.com/200/215',
-        text: 'Smokey',
-    },
-    8: {
-        image: 'https://placekitten.com/200/220',
-        text: 'Gizmo',
-    },
-    9: {
-        image: 'https://placekitten.com/220/239',
-        text: 'Kitty',
-    },
-};
+const musicData = [{
+    audioType: "being present",
+    downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb",
+    imageDownloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F1?alt=media&token=6f3fd8d3-a0b4-4e62-a706-17fdf8524edb",
+    name: "1"
+}
+    , {
+        audioType: "being present",
+        downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F2?alt=media&token=d5c91eaa-d126-45c4-9ffa-3757f2506648",
+        imageDownloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F2?alt=media&token=9f6d1d22-0e93-475b-a8a5-1c20ee6450f8",
+        name: "2"
+    }
+
+];
+// const musicData = {
+//     0: {
+//         image: 'https://placekitten.com/200/240',
+//         text: 'Chloe',
+//     },
+//     1: {
+//         image: 'https://placekitten.com/200/201',
+//         text: 'Jasper',
+//     },
+//     2: {
+//         image: 'https://placekitten.com/200/202',
+//         text: 'Pepper',
+//     },
+//     3: {
+//         image: 'https://placekitten.com/200/203',
+//         text: 'Oscar',
+//     },
+//     4: {
+//         image: 'https://placekitten.com/200/204',
+//         text: 'Dusty',
+//     },
+//     5: {
+//         image: 'https://placekitten.com/200/205',
+//         text: 'Spooky',
+//     },
+//     6: {
+//         image: 'https://placekitten.com/200/210',
+//         text: 'Kiki',
+//     },
+//     7: {
+//         image: 'https://placekitten.com/200/215',
+//         text: 'Smokey',
+//     },
+//     8: {
+//         image: 'https://placekitten.com/200/220',
+//         text: 'Gizmo',
+//     },
+//     9: {
+//         image: 'https://placekitten.com/220/239',
+//         text: 'Kitty',
+//     },
+// };
 export default class MyMeditation extends Component {
 
     constructor(props) {

@@ -37,7 +37,9 @@ export default class SortablePlayList extends Component {
         const foundIndex = Object.values(this.state.musicList).findIndex(function (item, index) {
             return index === deleteIndex;
         });
+        console.log('foundIndex is ', foundIndex);
         musicData.splice(foundIndex, 1);
+        console.log('musicData is*********** ', musicData);
         this.setState({musicList: musicData});
     }
 
@@ -134,6 +136,10 @@ class Row extends Component {
         super(props);
 
         this._active = new Animated.Value(0);
+        this.state = {
+            musicItem: this.props.data,
+            musicItemIndex:this.props.index
+        }
 
         this._style = {
             ...Platform.select({
@@ -167,6 +173,7 @@ class Row extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.setState({musicItem: nextProps.data, musicItemIndex: nextProps.index})
         if (this.props.active !== nextProps.active) {
             Animated.timing(this._active, {
                 duration: 300,
@@ -213,8 +220,8 @@ class Row extends Component {
     }
 
     render() {
-        const {data, active, index} = this.props;
-        console.log('data is ', data);
+        const {musicItem, musicItemIndex} = this.state;
+        console.log('musicItem*********',musicItem);
         return (
             <Animated.View style={[
                 styles.row,
@@ -228,16 +235,16 @@ class Row extends Component {
                     type='ionicon'
                     color={colors.grey4}
                     onPress={() => console.log('hello')}/>
-                <Image source={{uri: data.image}} style={styles.image}/>
+                <Image source={{uri: musicItem.imageDownloadUrl}} style={styles.image}/>
                 <View style={{flex:1,flexGrow:3}}>
-                    <Text style={styles.text}>{data.text}'kkkkkkkkkkkk'</Text>
+                    <Text style={styles.text}>{musicItem.audioType}</Text>
                 </View>
                 <Icon
                     containerStyle={{flex: 1,}}
                     iconStyle={{alignSelf:'flex-end'}}
                     color={colors.grey4}
                     name='more-vert'
-                    onPress={this.showDropDownMenu(index)}/>
+                    onPress={this.showDropDownMenu(musicItemIndex)}/>
             </Animated.View>
         );
     }

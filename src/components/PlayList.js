@@ -166,6 +166,7 @@ export default class PlayList extends Component {
         console.log('audio list is*********** ', audio)
 
         console.log('audio is*********** ', audio[this.state.currentIndex])
+        console.log('music list is',audio);
         this.setState({musicList: audio})
 
     }
