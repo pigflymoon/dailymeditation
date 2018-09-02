@@ -51,48 +51,7 @@ const list2 = [
         linearGradientColors: ['#F44336', '#E91E63'],
     },
 ];
-const data = {
-    0: {
-        image: 'https://placekitten.com/200/240',
-        text: 'Chloe',
-    },
-    1: {
-        image: 'https://placekitten.com/200/201',
-        text: 'Jasper',
-    },
-    2: {
-        image: 'https://placekitten.com/200/202',
-        text: 'Pepper',
-    },
-    3: {
-        image: 'https://placekitten.com/200/203',
-        text: 'Oscar',
-    },
-    4: {
-        image: 'https://placekitten.com/200/204',
-        text: 'Dusty',
-    },
-    5: {
-        image: 'https://placekitten.com/200/205',
-        text: 'Spooky',
-    },
-    6: {
-        image: 'https://placekitten.com/200/210',
-        text: 'Kiki',
-    },
-    7: {
-        image: 'https://placekitten.com/200/215',
-        text: 'Smokey',
-    },
-    8: {
-        image: 'https://placekitten.com/200/220',
-        text: 'Gizmo',
-    },
-    9: {
-        image: 'https://placekitten.com/220/239',
-        text: 'Kitty',
-    },
-};
+
 
 export default class SortablePlayList extends Component {
     constructor(props) {
@@ -100,25 +59,41 @@ export default class SortablePlayList extends Component {
 
         this.state = {
             musicListVisible: false,
+            musicList: this.props.musicData,
+            deleteIndex: 0,
         };
     }
 
-    _renderRow = ({data, active}) => {
-        return <Row data={data} active={active} dropMenu={this.onHandleDropMenu}/>
+    deleteListItem = () => {
+        var musicData = Object.values(this.state.musicList);
+        var deleteIndex = this.state.deleteIndex;
+
+        const foundIndex = Object.values(this.state.musicList).findIndex(function (item, index) {
+            return index === deleteIndex;
+        });
+        musicData.splice(foundIndex, 1);
+        this.setState({musicList: musicData});
     }
 
-    onHandleDropMenu = (value) => {
-        this.setState({musicListVisible: value});
+    _renderRow = ({data, active, index}) => {
+        // console.log('index is ', index);
+        return <Row data={data} index={index} active={active} dropMenu={this.onHandleDropMenu}/>
+    }
+
+    onHandleDropMenu = (value, deleteIndex) => {
+        this.setState({musicListVisible: value, deleteIndex: deleteIndex});
     }
 
     render() {
+        const {musicList, musicListVisible} = this.state;
+
         return (
             <View style={styles.container}>
 
                 <SortableList
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
-                    data={data}
+                    data={musicList}
                     renderRow={this._renderRow}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
@@ -162,17 +137,19 @@ export default class SortablePlayList extends Component {
                                 bottomDivider
                             />
                             <ListItem
-                                leftIcon={{name: 'ios-remove-outline',type: 'ionicon',color: colors.purple3}}
+                                leftIcon={{name: 'ios-remove-circle-outline',type: 'ionicon',color: colors.purple3}}
                                 title={`Delete`}
                                 titleStyle={{color: colors.purple3,}}
                                 containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
                                 bottomDivider
+                                onPress={this.deleteListItem}
                             />
                         </View>
 
 
                     </View>
                 </Overlay>
+
             </View>
         );
     }
@@ -228,8 +205,9 @@ class Row extends Component {
     }
 
 
-    showDropDownMenu = () => {
-        this.props.dropMenu(true);
+    showDropDownMenu = (index) => (e) => {
+        console.log('index pass to menu', index);
+        this.props.dropMenu(true, index);
         // this.setState({musicListVisible: true})
     }
 
@@ -263,8 +241,8 @@ class Row extends Component {
     }
 
     render() {
-        const {data, active} = this.props;
-
+        const {data, active, index} = this.props;
+        console.log('data is ', data);
         return (
             <Animated.View style={[
                 styles.row,
@@ -287,7 +265,7 @@ class Row extends Component {
                     iconStyle={{alignSelf:'flex-end'}}
                     color={colors.grey4}
                     name='more-vert'
-                    onPress={this.showDropDownMenu}/>
+                    onPress={this.showDropDownMenu(index)}/>
             </Animated.View>
         );
     }

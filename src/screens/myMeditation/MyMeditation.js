@@ -14,7 +14,7 @@ import {
     ScrollView
 } from 'react-native'
 import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
-import Video from 'react-native-video';
+// import Video from 'react-native-video';
 import {VibrancyView, BlurView} from 'react-native-blur';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -116,7 +116,48 @@ const list2 = [
         linearGradientColors: ['#F44336', '#E91E63'],
     },
 ];
-
+const musicData = {
+    0: {
+        image: 'https://placekitten.com/200/240',
+        text: 'Chloe',
+    },
+    1: {
+        image: 'https://placekitten.com/200/201',
+        text: 'Jasper',
+    },
+    2: {
+        image: 'https://placekitten.com/200/202',
+        text: 'Pepper',
+    },
+    3: {
+        image: 'https://placekitten.com/200/203',
+        text: 'Oscar',
+    },
+    4: {
+        image: 'https://placekitten.com/200/204',
+        text: 'Dusty',
+    },
+    5: {
+        image: 'https://placekitten.com/200/205',
+        text: 'Spooky',
+    },
+    6: {
+        image: 'https://placekitten.com/200/210',
+        text: 'Kiki',
+    },
+    7: {
+        image: 'https://placekitten.com/200/215',
+        text: 'Smokey',
+    },
+    8: {
+        image: 'https://placekitten.com/200/220',
+        text: 'Gizmo',
+    },
+    9: {
+        image: 'https://placekitten.com/220/239',
+        text: 'Kitty',
+    },
+};
 export default class MyMeditation extends Component {
 
     constructor(props) {
@@ -136,7 +177,7 @@ export default class MyMeditation extends Component {
             playIcon: 'ios-pause',
             playModeIcon: 'ios-shuffle',
             musicInfo: {},
-            musicList: [],
+            musicList: musicData,
             deleteListVisible: false,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
@@ -145,6 +186,9 @@ export default class MyMeditation extends Component {
             easing: Easing.inOut(Easing.linear)
         })
     }
+
+
+
 
     renderCard(item, index) {
         const {name, imageDownloadUrl} = item;
@@ -318,7 +362,7 @@ export default class MyMeditation extends Component {
                         size={26}
                     />
                 </View>
-                <SortablePlayList/>
+                <SortablePlayList musicData={this.state.musicList}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
