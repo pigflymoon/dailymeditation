@@ -137,7 +137,7 @@ export default class MyMeditation extends Component {
             playModeIcon: 'ios-shuffle',
             musicInfo: {},
             musicList: [],
-            musicListVisible: false,
+            deleteListVisible: false,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
             toValue: 1,
@@ -145,24 +145,6 @@ export default class MyMeditation extends Component {
             easing: Easing.inOut(Easing.linear)
         })
     }
-
-    //right  header
-    static navigationOptions = ({navigation}) => {
-        return ({
-            headerRight: (
-                <Icon
-                    containerStyle={{marginRight:10}}
-                    name='queue-music'
-                    color={colors.grey6}
-                    onPress={() => console.log('hello')}/>
-
-            )
-        });
-
-
-    };
-
-
 
     renderCard(item, index) {
         const {name, imageDownloadUrl} = item;
@@ -314,7 +296,47 @@ export default class MyMeditation extends Component {
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
+                <View style={{ flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingBottom: 5,
+       }}>
+                    <Icon
+                        containerStyle={{marginRight:10}}
+                        name='queue-music'
+                        color={colors.grey6}
+                        onPress={() => console.log('hello')}/>
+                    <Icon
+                        containerStyle={{marginRight:10}}
+                        name='delete-forever'
+                        color={colors.grey4}
+                        size={26}
+                    />
+                </View>
                 <SortablePlayList/>
+                <Overlay
+                    overlayBackgroundColor='rgba(255, 255, 255, .9)'
+                    overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
+                    isVisible={this.state.deleteListVisible}
+                    borderRadius={0}
+                    onBackdropPress={() => this.setState({deleteListVisible: false})}
+                >
+                    <View style={{flex: 1,}}>
+                        <View style={[styles.navBarWrapper]}>
+                            <Ionicons
+                                name='ios-close'
+                                color='gray'
+                                size={30}
+                                onPress={() => this.setState({deleteListVisible: false})}
+                            />
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={styles.title}>{`Play List`}</Text>
+                            </View>
+                        </View>
+
+
+                    </View>
+                </Overlay>
             </View>
         )
     }
