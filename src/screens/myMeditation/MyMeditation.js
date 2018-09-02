@@ -11,7 +11,8 @@ import {
     Platform,
     findNodeHandle,
     Dimensions,
-    ScrollView
+    ScrollView,
+    Alert,
 } from 'react-native'
 import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
 // import Video from 'react-native-video';
@@ -188,7 +189,24 @@ export default class MyMeditation extends Component {
     }
 
 
+    deleteAllList = () => {
+        Alert.alert(
+            'Delete all list',
+            `Are you sure to delete all list?`,
+            [
+                {
+                    text: 'OK', onPress: () => {
+                    this.setState({
+                        musicList: []
+                    })
+                },
+                },
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+            ],
+            {cancelable: false}
+        )
 
+    }
 
     renderCard(item, index) {
         const {name, imageDownloadUrl} = item;
@@ -360,6 +378,7 @@ export default class MyMeditation extends Component {
                         name='delete-forever'
                         color={colors.grey4}
                         size={26}
+                        onPress={this.deleteAllList}
                     />
                 </View>
                 <SortablePlayList musicData={this.state.musicList}/>
