@@ -203,6 +203,10 @@ export default class MyMeditation extends Component {
     }
 
 
+    playAllList = () => {
+        this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
+
+    }
     deleteAllList = () => {
         Alert.alert(
             'Delete all list',
@@ -221,6 +225,7 @@ export default class MyMeditation extends Component {
         )
 
     }
+
 
     renderCard(item, index) {
         const {name, imageDownloadUrl} = item;
@@ -369,7 +374,7 @@ export default class MyMeditation extends Component {
         // const musicList = this.state.musicList || [];
         // const musicData = musicList[this.state.currentIndex]
         //  {this.renderPlayList()}
-        console.log('this.props.navigate is',this.props);
+        console.log('this.props.navigate is', this.props);
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
@@ -387,7 +392,7 @@ export default class MyMeditation extends Component {
                         containerStyle={{marginRight:10}}
                         name='play-circle-outline'
                         color={colors.grey6}
-                        onPress={() => console.log('hello')}/>
+                        onPress={this.playAllList}/>
                     <Icon
                         containerStyle={{marginRight:10}}
                         name='delete-forever'
@@ -396,7 +401,7 @@ export default class MyMeditation extends Component {
                         onPress={this.deleteAllList}
                     />
                 </View>
-                <SortablePlayList musicData={this.state.musicList} navigate={this.props.navigation} />
+                <SortablePlayList musicData={this.state.musicList} navigate={this.props.navigation}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
