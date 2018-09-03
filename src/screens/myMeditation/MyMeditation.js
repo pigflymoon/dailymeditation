@@ -369,6 +369,7 @@ export default class MyMeditation extends Component {
         // const musicList = this.state.musicList || [];
         // const musicData = musicList[this.state.currentIndex]
         //  {this.renderPlayList()}
+        console.log('this.props.navigate is',this.props);
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
@@ -395,7 +396,7 @@ export default class MyMeditation extends Component {
                         onPress={this.deleteAllList}
                     />
                 </View>
-                <SortablePlayList musicData={this.state.musicList}/>
+                <SortablePlayList musicData={this.state.musicList} navigate={this.props.navigation} />
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}

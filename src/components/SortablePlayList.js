@@ -44,8 +44,10 @@ export default class SortablePlayList extends Component {
     }
 
     _renderRow = ({data, active, index}) => {
+        const navigate = this.props.navigate;
+        console.log('navigation is ', this.props);
         // console.log('index is ', index);
-        return <Row data={data} index={index} active={active} dropMenu={this.onHandleDropMenu}/>
+        return <Row data={data} index={index} active={active} navigate={navigate} dropMenu={this.onHandleDropMenu}/>
     }
 
     onHandleDropMenu = (value, deleteIndex) => {
@@ -138,7 +140,7 @@ class Row extends Component {
         this._active = new Animated.Value(0);
         this.state = {
             musicItem: this.props.data,
-            musicItemIndex:this.props.index
+            musicItemIndex: this.props.index
         }
 
         this._style = {
@@ -190,6 +192,14 @@ class Row extends Component {
         // this.setState({musicListVisible: true})
     }
 
+    showMusicPlayer = () => {
+        console.log('this.state.musicItem is ', this.state.musicItem);
+        var musicData = [];
+        musicData.push(this.state.musicItem);
+        this.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
+
+    }
+
     renderListCards() {
         return list2.map((l, i) => (
             <ListItem
@@ -221,7 +231,7 @@ class Row extends Component {
 
     render() {
         const {musicItem, musicItemIndex} = this.state;
-        console.log('musicItem*********',musicItem);
+        console.log('musicItem*********', musicItem);
         return (
             <Animated.View style={[
                 styles.row,
@@ -234,7 +244,7 @@ class Row extends Component {
                     name='ios-musical-note'
                     type='ionicon'
                     color={colors.grey4}
-                    onPress={() => console.log('hello')}/>
+                    onPress={this.showMusicPlayer}/>
                 <Image source={{uri: musicItem.imageDownloadUrl}} style={styles.image}/>
                 <View style={{flex:1,flexGrow:3}}>
                     <Text style={styles.text}>{musicItem.audioType}</Text>
