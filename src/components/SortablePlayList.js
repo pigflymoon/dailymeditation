@@ -53,14 +53,15 @@ export default class SortablePlayList extends Component {
     }
 
     _renderRow = ({data, active, index}) => {
-        const navigate = this.props.navigate;
-
+        // const navigate = this.props.navigate;
+        const {navigate} = this.props;
         let isCurrentIndex = (index === this.state.activeIndex) ? true : false;
         return <Row data={data} index={index} active={active} isCurrentIndex={isCurrentIndex} navigate={navigate}
                     dropMenu={this.onHandleDropMenu}/>
     }
 
     onHandleDropMenu = (value, deleteIndex) => {
+
         this.setState({musicListVisible: value, deleteIndex: deleteIndex});
     }
 
@@ -71,7 +72,8 @@ export default class SortablePlayList extends Component {
 
     render() {
         const {musicList, musicListVisible} = this.state;
-
+        const {type} = this.props;
+        console.log('type is',type);
         return (
             <View style={styles.container}>
 
@@ -122,14 +124,15 @@ export default class SortablePlayList extends Component {
                                 containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
                                 bottomDivider
                             />
-                            <ListItem
-                                leftIcon={{name: 'ios-remove-circle-outline',type: 'ionicon',color: colors.purple3}}
-                                title={`Delete`}
-                                titleStyle={{color: colors.purple3,}}
-                                containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
-                                bottomDivider
-                                onPress={this.deleteListItem}
-                            />
+                            {type != 'playlist' ? <ListItem
+                                    leftIcon={{name: 'ios-remove-circle-outline',type: 'ionicon',color: colors.purple3}}
+                                    title={`Delete`}
+                                    titleStyle={{color: colors.purple3,}}
+                                    containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
+                                    bottomDivider
+                                    onPress={this.deleteListItem}
+                                /> : null}
+
                         </View>
 
 

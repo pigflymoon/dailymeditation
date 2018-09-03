@@ -19,17 +19,9 @@ export default class GridCardView extends Component {
     }
 
     openAudioModal = (e, audioData, item) => {
-        console.log('item is ', item);
-        // var audioArray = [];
-        // if (this.state.category == 'beginner') {
-        //     // audioArray.push(item);//
-        //     audioArray = audioData;
-        //
-        // } else {
-        //     audioArray = audioData;
-        // }
-        // console.log('audioArray is ', audioArray)
-        this.props.navigation.push("PlayList", {audio: audioData, category: this.state.category});//audioArray
+        console.log('audioData is ', audioData);
+
+        this.props.navigation.push("PlayList", {audio: audioData});//audioArray
 
     }
 

@@ -16,14 +16,14 @@ import {
 } from 'react-native'
 import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
 // import Video from 'react-native-video';
-import {VibrancyView, BlurView} from 'react-native-blur';
+// import {VibrancyView, BlurView} from 'react-native-blur';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
-import musicPlayerStyle from '../../styles/musicPlayer';
+// import musicPlayerStyle from '../../styles/musicPlayer';
 import meditationStyle from '../../styles/meditation';
 
 import colors from '../../styles/colors';

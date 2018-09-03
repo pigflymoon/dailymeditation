@@ -61,7 +61,7 @@ const MeditationTab = createStackNavigator({
         PlayList: {
             screen: PlayListScreen,
             navigationOptions: ({navigation, screenProps}) => ({
-                title: 'My Play List',
+                title: 'Play List',
                 headerStyle: {backgroundColor: screenProps.tabBg},
                 headerTitleStyle: {color: colors.grey6},
                 headerTintColor: colors.grey6,
@@ -97,7 +97,7 @@ const StacksInTabs = createBottomTabNavigator(
         MyMeditationTab:{
             screen: MyMeditationTab,
             navigationOptions: {
-                tabBarLabel: 'My Meditation',
+                tabBarLabel: 'My Meditation List',
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
                         name={focused ? 'ios-flower' : 'ios-flower-outline'}
