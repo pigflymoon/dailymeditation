@@ -1,8 +1,10 @@
-/**
- * Created by guangqiang on 2017/8/27.
- */
+import {Platform, Dimensions} from 'react-native';
+const deviceInfo = {
+    deviceWidth: Dimensions.get('window').width,
+    deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
+}
+import colors from './colors';
 
-import {Platform} from 'react-native'
 export default {
 
     /** color **/
@@ -110,11 +112,102 @@ export default {
     taOpacity: 0.1,
 
     /** 定位 **/
-    absolute: 'absolute',
+    // absolute: 'absolute',
 
     /** flex **/
     around: 'space-around',
     between: 'space-between',
     center: 'center',
-    row: 'row'
+    row: 'row',
+    container: {
+        flex: 1,
+        backgroundColor: 'transparent',
+    },
+    absolute: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    },
+    bgContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        height: deviceInfo.deviceHeight,
+        width: deviceInfo.deviceWidth
+    },
+    toolBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 10,
+        position: 'absolute',
+        bottom: 50,
+        marginVertical: 30
+    },
+    topNavBar: {
+        marginTop: 25,
+        marginHorizontal: 10
+    },
+    navBarStyle: {
+        position: 'absolute',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        width: deviceInfo.deviceWidth,
+        height: 64,
+        borderBottomWidth: 0.5,
+        borderColor: '#E6E6E6',
+    },
+    navBarWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    title: {
+        color: colors.grey0,
+        fontSize: 14
+    },
+    progressStyle: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 220
+    },
+    slider: {
+        flex: 1,
+        marginHorizontal: 5,
+    },
+    djCard: {
+        width: 270,
+        height: 270,
+        marginTop: 185,
+        borderColor: colors.gray,
+        borderWidth: 10,
+        borderRadius: 190,
+        alignSelf: 'center',
+        opacity: 0.2
+    },
+    cdImage: {
+        position: 'absolute',
+        top: 190,
+        width: 260,
+        height: 260,
+        alignSelf: 'center',
+
+    },
+    cdStyle: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+    iconsContainer:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 50,
+        justifyContent: 'space-around',
+        bottom: -60
+    }
 }

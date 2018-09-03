@@ -22,66 +22,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import musicPlayerStyle from '../styles/musicPlayer';
 import colors from '../styles/colors';
-import mockData from '../config/musicList.json';
+// import mockData from '../config/musicList.json';
 import bgCD from '../assets/images/bgCD.png';
-
-const deviceInfo = {
-    deviceWidth: Dimensions.get('window').width,
-    deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
-}
-
-const header = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-}
-
-const musicListUrl = 'http://v3.wufazhuce.com:8000/api/music/bymonth/2017-10'
-const musicDetail = 'http://xiamirun.avosapps.com/run?song=http://www.xiami.com/song/'
-
-const USERS = [
-    {
-        name: 'How to breathe',
-        avatar: 'https://images.unsplash.com/photo-1483127299475-15dad2a69465?ixlib=rb-0.3.5&s=64b764ab6649b4217350cb39c6bc4944&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '- 164'
-    },
-    {
-        name: 'Being in Present',
-        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '+ 203',
-        positive: true
-    },
-    {
-        name: 'Paying Attention',
-        avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
-        value: '+ 464',
-        positive: true
-    },
-    {
-        name: 'Patience',
-        avatar: 'https://images.unsplash.com/photo-1532528791647-87400fc51288?ixlib=rb-0.3.5&s=815620d4ddfa6874ddd43b71997f45b9&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '- 80',
-        positive: false
-    },
-    {
-        name: 'Awareness',
-        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '+ 203',
-        positive: true
-    },
-    {
-        name: 'Relax',
-        avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
-        value: '+ 464',
-        positive: true
-    },
-    {
-        name: 'Sleep',
-        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '+ 203',
-        positive: true
-    },
-];
-
 
 export default class MusicPlayer extends Component {
 
@@ -404,9 +346,9 @@ export default class MusicPlayer extends Component {
         let musicData = this.state.musicList[this.state.currentIndex]
         console.log('render Player is called~~~~~~~~~~~musicData is : ', musicData)
         return (
-            <View style={styles.bgContainer}>
-                <View style={styles.navBarStyle}>
-                    <View style={[styles.topNavBar, styles.navBarWrapper]}>
+            <View style={musicPlayerStyle.bgContainer}>
+                <View style={musicPlayerStyle.navBarStyle}>
+                    <View style={[musicPlayerStyle.topNavBar, musicPlayerStyle.navBarWrapper]}>
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-close'}
@@ -415,8 +357,8 @@ export default class MusicPlayer extends Component {
                             onPress={this.goBack}
                         />
                         <View style={{alignItems: 'center'}}>
-                            <Text style={styles.title}>{musicData.audioType}</Text>
-                            <Text style={styles.subTitle}>{musicData.name}</Text>
+                            <Text style={musicPlayerStyle.title}>{musicData.audioType}</Text>
+                            <Text style={musicPlayerStyle.subTitle}>{musicData.name}</Text>
                         </View>
                         <Ionicons
                             style={{marginTop: 5}}
@@ -428,10 +370,10 @@ export default class MusicPlayer extends Component {
                     </View>
                 </View>
                 <View
-                    style={styles.djCard}>
+                    style={musicPlayerStyle.djCard}>
                 </View>
                 <Image
-                    style={{width: 260, height: 260, alignSelf: 'center', position: 'absolute', top: 190}}
+                    style={musicPlayerStyle.cdImage}
                     source={bgCD}
                 />
                 <Animated.Image
@@ -451,13 +393,7 @@ export default class MusicPlayer extends Component {
                     source={{uri: musicData.imageDownloadUrl}}/>
                 <View style={{flex: 1}}>
                     <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginHorizontal: 50,
-                            justifyContent: 'space-around',
-                            bottom: -60
-                        }}>
+                        style={musicPlayerStyle.iconsContainer}>
                         <Ionicons
                             style={{marginTop: 5}}
                             name={'ios-heart-outline'}
@@ -472,7 +408,7 @@ export default class MusicPlayer extends Component {
                         />
 
                     </View>
-                    <View style={styles.progressStyle}>
+                    <View style={musicPlayerStyle.progressStyle}>
                         <Text
                             style={{
                                 width: 35,
@@ -481,7 +417,7 @@ export default class MusicPlayer extends Component {
                                 marginLeft: 5
                             }}>{this.formatMediaTime(Math.floor(this.state.currentTime))}</Text>
                         <Slider
-                            style={styles.slider}
+                            style={musicPlayerStyle.slider}
                             value={this.state.slideValue}
                             maximumValue={this.state.duration}
                             minimumTrackTintColor={musicPlayerStyle.themeColor}
@@ -498,7 +434,7 @@ export default class MusicPlayer extends Component {
                                 }}>{this.formatMediaTime(Math.floor(this.state.duration))}</Text>
                         </View>
                     </View>
-                    <View style={styles.toolBar}>
+                    <View style={musicPlayerStyle.toolBar}>
                         {this.state.playMode == 1 ?
                             <MaterialIcons
                                 style={{width: 50, marginLeft: 5}}
@@ -517,7 +453,7 @@ export default class MusicPlayer extends Component {
                         }
 
 
-                        <View style={styles.cdStyle}>
+                        <View style={musicPlayerStyle.cdStyle}>
                             <Ionicons
                                 style={{width: 50, marginLeft: 5}}
                                 name={'ios-skip-backward'}
@@ -571,7 +507,7 @@ export default class MusicPlayer extends Component {
                     onBackdropPress={() => this.setState({musicListVisible: false})}
                 >
                     <View style={{flex: 1, padding: 10,}}>
-                        <View style={[styles.navBarWrapper]}>
+                        <View style={[musicPlayerStyle.navBarWrapper]}>
                             <Ionicons
                                 name='ios-close'
                                 color='gray'
@@ -579,7 +515,7 @@ export default class MusicPlayer extends Component {
                                 onPress={() => this.setState({musicListVisible: false})}
                             />
                             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={styles.title}>{`Play List`}</Text>
+                                <Text style={musicPlayerStyle.title}>{`Play List`}</Text>
                             </View>
                         </View>
 
@@ -605,25 +541,25 @@ export default class MusicPlayer extends Component {
 
         return (
             musicData.downloadUrl ?
-                <View style={styles.container}>
+                <View style={musicPlayerStyle.container}>
                     <Image
                         ref={(img) => {
                             this.backgroundImage = img
                         }}
-                        style={styles.bgContainer}
+                        style={musicPlayerStyle.bgContainer}
                         source={{uri: musicData.imageDownloadUrl}}
                         resizeMode='cover'
                         onLoadEnd={this.imageLoaded}
                     />
-                    <View style={styles.bgContainer}>
+                    <View style={musicPlayerStyle.bgContainer}>
                         {
                             Platform.OS === 'ios' ?
                                 <VibrancyView
                                     blurType={'light'}
                                     blurAmount={20}
-                                    style={styles.container}/> :
+                                    style={musicPlayerStyle.container}/> :
                                 <BlurView
-                                    style={styles.absolute}
+                                    style={musicPlayerStyle.absolute}
                                     viewRef={this.state.viewRef}
                                     blurType="light"
                                     blurAmount={10}
@@ -636,91 +572,3 @@ export default class MusicPlayer extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
-    },
-    bgContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        height: deviceInfo.deviceHeight,
-        width: deviceInfo.deviceWidth
-    },
-    navBarStyle: {
-        position: 'absolute',
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        width: deviceInfo.deviceWidth,
-        height: 64,
-        borderWidth: 0.5,
-        borderColor: musicPlayerStyle.lineColor
-    },
-    topNavBar: {
-        marginTop: 25,
-        marginHorizontal: 10
-    },
-    navBarWrapper: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    title: {
-        color: colors.grey0,
-        fontSize: 14
-    },
-    subTitle: {
-        color: colors.grey0,
-        fontSize: 11,
-        marginTop: 5
-    },
-    djCard: {
-        width: 270,
-        height: 270,
-        marginTop: 185,
-        borderColor: musicPlayerStyle.gray,
-        borderWidth: 10,
-        borderRadius: 190,
-        alignSelf: 'center',
-        opacity: 0.2
-    },
-    playerStyle: {
-        position: 'absolute',
-        width: deviceInfo.deviceWidth,
-    },
-    progressStyle: {
-        flexDirection: 'row',
-        marginHorizontal: 10,
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 220
-    },
-    slider: {
-        flex: 1,
-        marginHorizontal: 5,
-    },
-    toolBar: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 10,
-        position: 'absolute',
-        bottom: 50,
-        marginVertical: 30
-    },
-    cdStyle: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around'
-    },
-    absolute: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    }
-})

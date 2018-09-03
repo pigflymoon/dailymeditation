@@ -24,9 +24,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
 import musicPlayerStyle from '../../styles/musicPlayer';
+import meditationStyle from '../../styles/meditation';
+
 import colors from '../../styles/colors';
-import mockData from '../../config/musicList.json';
-import bg from '../../assets/images/1.jpg';
+
 
 import SortablePlayList from '../../components/SortablePlayList';
 const deviceInfo = {
@@ -34,89 +35,7 @@ const deviceInfo = {
     deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
 }
 
-const header = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-}
 
-const musicListUrl = 'http://v3.wufazhuce.com:8000/api/music/bymonth/2017-10'
-const musicDetail = 'http://xiamirun.avosapps.com/run?song=http://www.xiami.com/song/'
-
-const USERS = [
-    {
-        name: 'How to breathe',
-        avatar: 'https://images.unsplash.com/photo-1483127299475-15dad2a69465?ixlib=rb-0.3.5&s=64b764ab6649b4217350cb39c6bc4944&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '- 164'
-    },
-    {
-        name: 'Being in Present',
-        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '+ 203',
-        positive: true
-    },
-    {
-        name: 'Paying Attention',
-        avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
-        value: '+ 464',
-        positive: true
-    },
-    {
-        name: 'Patience',
-        avatar: 'https://images.unsplash.com/photo-1532528791647-87400fc51288?ixlib=rb-0.3.5&s=815620d4ddfa6874ddd43b71997f45b9&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '- 80',
-        positive: false
-    },
-    {
-        name: 'Awareness',
-        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '+ 203',
-        positive: true
-    },
-    {
-        name: 'Relax',
-        avatar: 'https://images.unsplash.com/photo-1454105511235-eda89ad84214?ixlib=rb-0.3.5&s=f9fdc3a8d077203f109129f951e18beb&auto=format&fit=crop&w=800&q=60',
-        value: '+ 464',
-        positive: true
-    },
-    {
-        name: 'Sleep',
-        avatar: 'https://images.unsplash.com/photo-1524760205704-aaeb1d185ed8?ixlib=rb-0.3.5&s=45f0787083c73ffeabb56dbf3b0139a2&dpr=2&auto=format&fit=crop&w=225&q=60',
-        value: '+ 203',
-        positive: true
-    },
-];
-const list2 = [
-    {
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President',
-        linearGradientColors: ['#FF9800', '#F44336'],
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman',
-        linearGradientColors: ['#3F51B5', '#2196F3'],
-    },
-    {
-        name: 'Amanda Martin',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-        subtitle: 'CEO',
-        linearGradientColors: ['#FFD600', '#FF9800'],
-    },
-    {
-        name: 'Christy Thomas',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg',
-        subtitle: 'Lead Developer',
-        linearGradientColors: ['#4CAF50', '#8BC34A'],
-    },
-    {
-        name: 'Melissa Jones',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg',
-        subtitle: 'CTO',
-        linearGradientColors: ['#F44336', '#E91E63'],
-    },
-];
 const musicData = [{
     audioType: "being present",
     downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb",
@@ -131,55 +50,13 @@ const musicData = [{
     }
 
 ];
-// const musicData = {
-//     0: {
-//         image: 'https://placekitten.com/200/240',
-//         text: 'Chloe',
-//     },
-//     1: {
-//         image: 'https://placekitten.com/200/201',
-//         text: 'Jasper',
-//     },
-//     2: {
-//         image: 'https://placekitten.com/200/202',
-//         text: 'Pepper',
-//     },
-//     3: {
-//         image: 'https://placekitten.com/200/203',
-//         text: 'Oscar',
-//     },
-//     4: {
-//         image: 'https://placekitten.com/200/204',
-//         text: 'Dusty',
-//     },
-//     5: {
-//         image: 'https://placekitten.com/200/205',
-//         text: 'Spooky',
-//     },
-//     6: {
-//         image: 'https://placekitten.com/200/210',
-//         text: 'Kiki',
-//     },
-//     7: {
-//         image: 'https://placekitten.com/200/215',
-//         text: 'Smokey',
-//     },
-//     8: {
-//         image: 'https://placekitten.com/200/220',
-//         text: 'Gizmo',
-//     },
-//     9: {
-//         image: 'https://placekitten.com/220/239',
-//         text: 'Kitty',
-//     },
-// };
+
 export default class MyMeditation extends Component {
 
     constructor(props) {
         super(props)
         this.player = ''
         this.rotation = false
-        // this.musicList = []
         this.state = {
             viewRef: null,
             paused: false, // false: 表示播放，true: 表示暂停
@@ -202,11 +79,10 @@ export default class MyMeditation extends Component {
         })
     }
 
-
     playAllList = () => {
         this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
-
     }
+
     deleteAllList = () => {
         Alert.alert(
             'Delete all list',
@@ -227,163 +103,15 @@ export default class MyMeditation extends Component {
     }
 
 
-    renderCard(item, index) {
-        const {name, imageDownloadUrl} = item;
-        let currentIndex = this.state.currentIndex;
-        let isCurrentIndex = (currentIndex === index) ? true : false;
-//                    {isCurrentIndex ? color:colors.purple:colors.grey3}
-
-        return (
-
-            <ListItem
-                leftIcon={{
-            name: 'ios-musical-note',
-                type: 'ionicon',
-                color: colors.grey4
-        }
-    }
-
-                leftAvatar={{size: 'medium', source: {uri: imageDownloadUrl}}}
-                rightIcon={{
-            name: 'ios-lock-outline',
-                type: 'ionicon',
-                color: colors.grey4
-        }}
-                key={index}
-                title={name}
-                titleStyle={{color: colors.grey4,}}
-                containerStyle={{
-                    backgroundColor:'transparent',
-                    paddingVertical: 10,
-                    marginVertical: 4,
-        }}
-                bottomDivider
-            />
-
-
-        );
-    }
-
-    renderListCards() {
-        return list2.map((l, i) => (
-
-
-            <ListItem
-                leftIcon={{
-            name: 'ios-musical-note',
-                type: 'ionicon',
-                color: colors.grey4
-        }
-    }
-
-                leftAvatar={{size: 'medium', source: {uri: l.avatar_url}}}
-                rightIcon={{
-            name: 'ios-lock-outline',
-                type: 'ionicon',
-                color: colors.grey4
-        }}
-                key={i}
-                title={l.name}
-                titleStyle={{color: colors.grey4,}}
-                containerStyle={{
-                    backgroundColor:'transparent',
-                    paddingVertical: 10,
-                    marginVertical: 4,
-        }}
-                bottomDivider
-            />
-        ))
-        // let musicList = this.state.musicList;
-        //
-        // return musicList.map((item, index) => {
-        //     return this.renderCard(item, index);
-        //
-        // })
-    }
-
-    renderPlayList = () => {
-        // let musicData = this.state.musicList[this.state.currentIndex]
-        return (
-            <View style={styles.bgContainer}>
-                <ScrollView style={{flex: 1, marginBottom: 20}}>
-                    <View
-                        style={{flex: 1, flexDirection: 'column', backgroundColor:'rgba(7,18,50, 0.8)', alignItems: 'center', height: 160, marginBottom: 10}}>
-                        <View style={{flex: 3, flexDirection: 'row'}}>
-                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                <Avatar
-                                    size="large"
-                                    rounded
-                                    source={bg}
-                                    onPress={() => console.log("Works!")}
-                                    activeOpacity={0.7}
-                                />
-                            </View>
-                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{ flex: 1, marginTop: 10, justifyContent: 'center'}}>
-                                    <Text
-                                        style={{fontSize: 16, color: colors.grey4, marginLeft: -15}}>
-                                        Paul Allen
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View
-                            style={{width: 300, borderWidth: 0.5, borderColor: 'rgba(222, 223, 226, 1)', marginHorizontal: 20, height: 1, marginVertical: 10}}/>
-
-                        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                            <View style={{flex: 1,}}>
-                                <Icon
-                                    name='share'
-                                    color={colors.grey4}
-                                    onPress={() => console.log('hello')}/>
-                            </View>
-
-                            <View style={{flex: 1,}}>
-                                <Icon
-                                    name='file-download'
-                                    color={colors.grey4}
-                                    onPress={() => console.log('hello')}/>
-                            </View>
-
-                        </View>
-                    </View>
-                    <View style={{flex: 1, padding: 10,}}>
-                        <View style={[styles.navBarWrapper]}>
-                            <MaterialIcons
-                                name='play-circle-outline'
-                                color={colors.grey4}
-                                size={26}
-                            />
-                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={styles.title}>{`Play All`}</Text>
-                            </View>
-                        </View>
-
-                        <View style={{flex: 1, marginTop: 10, flexDirection: 'column'}}>
-                            {this.renderListCards()}
-                        </View>
-
-                    </View>
-                </ScrollView>
-
-            </View>
-        )
-    }
-
     render() {
-        // const musicList = this.state.musicList || [];
-        // const musicData = musicList[this.state.currentIndex]
-        //  {this.renderPlayList()}
-        console.log('this.props.navigate is', this.props);
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
                 <View style={{ flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingVertical: 5,
-       }}>
-
+                                alignItems: 'center',
+                                justifyContent: 'flex-end',
+                                paddingVertical: 5,
+                }}>
                     <Icon
                         containerStyle={{marginRight:10}}
                         name='play-circle-outline'
@@ -400,13 +128,13 @@ export default class MyMeditation extends Component {
                 <SortablePlayList musicData={this.state.musicList} navigate={this.props.navigation}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
-                    overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
+                    overlayStyle={meditationStyle.overlay}
                     isVisible={this.state.deleteListVisible}
                     borderRadius={0}
                     onBackdropPress={() => this.setState({deleteListVisible: false})}
                 >
                     <View style={{flex: 1,}}>
-                        <View style={[styles.navBarWrapper]}>
+                        <View style={meditationStyle.navBarWrapper}>
                             <Ionicons
                                 name='ios-close'
                                 color='gray'
@@ -414,105 +142,12 @@ export default class MyMeditation extends Component {
                                 onPress={() => this.setState({deleteListVisible: false})}
                             />
                             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={styles.title}>{`Play List`}</Text>
+                                <Text style={meditationStyle.title}>{`Play List`}</Text>
                             </View>
                         </View>
-
-
                     </View>
                 </Overlay>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
-    },
-    bgContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        height: deviceInfo.deviceHeight,
-        width: deviceInfo.deviceWidth
-    },
-    navBarStyle: {
-        position: 'absolute',
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        width: deviceInfo.deviceWidth,
-        height: 64,
-        borderWidth: 0.5,
-        borderColor: musicPlayerStyle.lineColor
-    },
-    topNavBar: {
-        marginTop: 25,
-        marginHorizontal: 10
-    },
-    navBarWrapper: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingBottom: 5,
-        borderBottomWidth: 0.5,
-        borderColor: colors.grey4
-    },
-    title: {
-        color: colors.grey4,
-        fontSize: 14
-    },
-    subTitle: {
-        color: colors.grey0,
-        fontSize: 11,
-        marginTop: 5
-    },
-    djCard: {
-        width: 270,
-        height: 270,
-        marginTop: 185,
-        borderColor: musicPlayerStyle.gray,
-        borderWidth: 10,
-        borderRadius: 190,
-        alignSelf: 'center',
-        opacity: 0.2
-    },
-    playerStyle: {
-        position: 'absolute',
-        width: deviceInfo.deviceWidth,
-    },
-    progressStyle: {
-        flexDirection: 'row',
-        marginHorizontal: 10,
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 220
-    },
-    slider: {
-        flex: 1,
-        marginHorizontal: 5,
-    },
-    toolBar: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 10,
-        position: 'absolute',
-        bottom: 50,
-        marginVertical: 30
-    },
-    cdStyle: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around'
-    },
-    absolute: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    }
-})
