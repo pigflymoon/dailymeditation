@@ -16,8 +16,8 @@ import {Overlay, ListItem, Icon} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import colors from '../styles/colors';
+import sortableListStyle from '../styles/sortableList';
 
-const window = Dimensions.get('window');
 
 export default class SortablePlayList extends Component {
     constructor(props) {
@@ -71,13 +71,13 @@ export default class SortablePlayList extends Component {
     render() {
         const {musicList, musicListVisible} = this.state;
         const {type} = this.props;
-        console.log('type is',type);
+        console.log('type is', type);
         return (
-            <View style={styles.container}>
+            <View style={sortableListStyle.container}>
 
                 <SortableList
-                    style={styles.list}
-                    contentContainerStyle={styles.contentContainer}
+                    style={sortableListStyle.list}
+                    contentContainerStyle={sortableListStyle.contentContainer}
                     data={musicList}
                     onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
                     renderRow={this._renderRow}/>
@@ -89,7 +89,7 @@ export default class SortablePlayList extends Component {
                     onBackdropPress={() => this.setState({musicListVisible: false})}
                 >
                     <View style={{flex: 1,}}>
-                        <View style={[styles.navBarWrapper]}>
+                        <View style={[sortableListStyle.navBarWrapper]}>
                             <Ionicons
                                 name='ios-close'
                                 color='gray'
@@ -97,7 +97,7 @@ export default class SortablePlayList extends Component {
                                 onPress={() => this.setState({musicListVisible: false})}
                             />
                             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={styles.title}>{`Play List`}</Text>
+                                <Text style={sortableListStyle.title}>{`Play List`}</Text>
                             </View>
                         </View>
                         <View style={{flex: 1,  flexDirection: 'column'}}>
@@ -239,7 +239,7 @@ class Row extends Component {
 
         return (
             <Animated.View style={[
-                styles.row,
+                sortableListStyle.row,
                 this._style,
             ]}>
                 <Icon
@@ -248,11 +248,11 @@ class Row extends Component {
                     style={{width:30}}
                     name='ios-musical-note'
                     type='ionicon'
-                    color={isCurrentIndex?colors.green:colors.grey4}
+                    color={isCurrentIndex ? colors.green : colors.grey4}
                 />
-                <Image source={{uri: musicItem.imageDownloadUrl}} style={styles.image}/>
+                <Image source={{uri: musicItem.imageDownloadUrl}} style={sortableListStyle.image}/>
                 <View style={{flex:1,flexGrow:3}}>
-                    <Text style={styles.text}>{musicItem.audioType}-{musicItem.name}</Text>
+                    <Text style={sortableListStyle.text}>{musicItem.audioType}-{musicItem.name}</Text>
                 </View>
                 <Icon
                     containerStyle={{flex: 1,}}
@@ -264,85 +264,3 @@ class Row extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: '#eee',
-
-        ...Platform.select({
-            ios: {
-                paddingTop: 20,
-            },
-        }),
-    },
-
-    title: {
-        fontSize: 20,
-        // paddingVertical: 20,
-        // color: '#999999',
-        color: colors.purple3,
-    },
-
-    list: {
-        flex: 1,
-    },
-
-    contentContainer: {
-        width: window.width,
-
-        ...Platform.select({
-            ios: {
-                paddingHorizontal: 10,
-            },
-
-            android: {
-                paddingHorizontal: 0,
-            }
-        })
-    },
-
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        // backgroundColor: '#fff',
-        padding: 5,
-        // height: 80,
-        flex: 1,
-        marginTop: 7,
-        marginBottom: 12,
-        // borderRadius: 4,
-        borderBottomWidth: 0.5, borderColor: 'rgba(222, 223, 226, 1)',
-
-        ...Platform.select({
-            ios: {
-                // width: window.width - 30 * 2,
-
-                // shadowColor: 'rgba(0,0,0,0.2)',
-                // shadowOpacity: 1,
-                // shadowOffset: {height: 2, width: 2},
-                // shadowRadius: 2,
-            },
-
-            android: {
-                width: window.width - 30 * 2,
-                elevation: 0,
-                marginHorizontal: 30,
-            },
-        })
-    },
-
-    image: {
-        width: 50,
-        height: 50,
-        marginRight: 5,
-        borderRadius: 25,
-    },
-
-    text: {
-        // fontSize: 24,
-        color: colors.grey4
-    },
-});
