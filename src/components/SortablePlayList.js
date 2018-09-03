@@ -47,9 +47,7 @@ export default class SortablePlayList extends Component {
         this.setState({activeIndex: parseInt(index)})
         var musicData = [];
         musicData.push(data);
-
         this.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
-
     }
 
     _renderRow = ({data, active, index}) => {
@@ -251,11 +249,10 @@ class Row extends Component {
                     name='ios-musical-note'
                     type='ionicon'
                     color={isCurrentIndex?colors.green:colors.grey4}
-
                 />
                 <Image source={{uri: musicItem.imageDownloadUrl}} style={styles.image}/>
                 <View style={{flex:1,flexGrow:3}}>
-                    <Text style={styles.text}>{musicItem.audioType}</Text>
+                    <Text style={styles.text}>{musicItem.audioType}-{musicItem.name}</Text>
                 </View>
                 <Icon
                     containerStyle={{flex: 1,}}
