@@ -381,13 +381,9 @@ export default class MyMeditation extends Component {
                 <View style={{ flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        paddingBottom: 5,
+        paddingVertical: 5,
        }}>
-                    <Icon
-                        containerStyle={{marginRight:10}}
-                        name='playlist-play'
-                        color={colors.grey6}
-                        onPress={() => console.log('hello')}/>
+
                     <Icon
                         containerStyle={{marginRight:10}}
                         name='play-circle-outline'

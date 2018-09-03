@@ -26,7 +26,8 @@ export default class SortablePlayList extends Component {
         this.state = {
             musicListVisible: false,
             musicList: this.props.musicData,
-            deleteIndex: 0,
+            // currentIndex: 0,
+            activeIndex: 0
         };
     }
 
@@ -37,17 +38,26 @@ export default class SortablePlayList extends Component {
         const foundIndex = Object.values(this.state.musicList).findIndex(function (item, index) {
             return index === deleteIndex;
         });
-        console.log('foundIndex is ', foundIndex);
+
         musicData.splice(foundIndex, 1);
-        console.log('musicData is*********** ', musicData);
         this.setState({musicList: musicData});
+    }
+
+    showMusicPlayer = (data, index) => {
+        this.setState({activeIndex: parseInt(index)})
+        var musicData = [];
+        musicData.push(data);
+
+        this.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
+
     }
 
     _renderRow = ({data, active, index}) => {
         const navigate = this.props.navigate;
-        console.log('navigation is ', this.props);
-        // console.log('index is ', index);
-        return <Row data={data} index={index} active={active} navigate={navigate} dropMenu={this.onHandleDropMenu}/>
+
+        let isCurrentIndex = (index === this.state.activeIndex) ? true : false;
+        return <Row data={data} index={index} active={active} isCurrentIndex={isCurrentIndex} navigate={navigate}
+                    dropMenu={this.onHandleDropMenu}/>
     }
 
     onHandleDropMenu = (value, deleteIndex) => {
@@ -56,7 +66,6 @@ export default class SortablePlayList extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {musicData} = nextProps;
-        console.log('musicData', musicData);
         this.setState({musicList: musicData})
     }
 
@@ -70,6 +79,7 @@ export default class SortablePlayList extends Component {
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
                     data={musicList}
+                    onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
                     renderRow={this._renderRow}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
@@ -140,7 +150,8 @@ class Row extends Component {
         this._active = new Animated.Value(0);
         this.state = {
             musicItem: this.props.data,
-            musicItemIndex: this.props.index
+            musicItemIndex: this.props.index,
+            isCurrentIndex: false,
         }
 
         this._style = {
@@ -175,7 +186,8 @@ class Row extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({musicItem: nextProps.data, musicItemIndex: nextProps.index})
+        console.log('nextProps isCurrentIndex is ', nextProps.isCurrentIndex);
+        this.setState({musicItem: nextProps.data, isCurrentIndex: nextProps.isCurrentIndex})//musicItemIndex: nextProps.index
         if (this.props.active !== nextProps.active) {
             Animated.timing(this._active, {
                 duration: 300,
@@ -189,16 +201,8 @@ class Row extends Component {
     showDropDownMenu = (index) => (e) => {
         console.log('index pass to menu', index);
         this.props.dropMenu(true, index);
-        // this.setState({musicListVisible: true})
     }
 
-    showMusicPlayer = () => {
-        console.log('this.state.musicItem is ', this.state.musicItem);
-        var musicData = [];
-        musicData.push(this.state.musicItem);
-        this.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
-
-    }
 
     renderListCards() {
         return list2.map((l, i) => (
@@ -230,8 +234,8 @@ class Row extends Component {
     }
 
     render() {
-        const {musicItem, musicItemIndex} = this.state;
-        console.log('musicItem*********', musicItem);
+        const {musicItem, musicItemIndex, isCurrentIndex} = this.state;
+
         return (
             <Animated.View style={[
                 styles.row,
@@ -243,8 +247,9 @@ class Row extends Component {
                     style={{width:30}}
                     name='ios-musical-note'
                     type='ionicon'
-                    color={colors.grey4}
-                    onPress={this.showMusicPlayer}/>
+                    color={isCurrentIndex?colors.green:colors.grey4}
+
+                />
                 <Image source={{uri: musicItem.imageDownloadUrl}} style={styles.image}/>
                 <View style={{flex:1,flexGrow:3}}>
                     <Text style={styles.text}>{musicItem.audioType}</Text>
