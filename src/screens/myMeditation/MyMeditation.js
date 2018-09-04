@@ -21,6 +21,7 @@ import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import Spinner from 'react-native-spinkit';
 
 import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
@@ -88,6 +89,9 @@ export default class MyMeditation extends Component {
             musicInfo: {},
             musicList: [],
             deleteListVisible: false,
+            isLoading: true,
+            color: "#FFFFFF",
+            size: 100,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
             toValue: 1,
@@ -131,7 +135,7 @@ export default class MyMeditation extends Component {
                     console.log('my list is ', myList);
                     self.setState({
                         musicList: myList,
-                        isLoading: false,
+                        // isLoading: false,
                     })
                 }
             })
@@ -162,7 +166,12 @@ export default class MyMeditation extends Component {
                         onPress={this.deleteAllList}
                     />
                 </View>
-                {this.state.isLoading ? <View><Text>Loading...</Text></View> :
+                {this.state.isLoading ?
+                    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner style={{ marginBottom: 50}}
+                                                                             isVisible={this.state.isLoading}
+                                                                             size={this.state.size}
+                                                                             type="ThreeBounce"
+                                                                             color={this.state.color}/></View> :
                     <SortablePlayList isLoading={isLoading} musicData={musicList} navigate={this.props.navigation}/>}
 
 

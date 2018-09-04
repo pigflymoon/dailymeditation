@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 import {Overlay, ListItem, Icon} from 'react-native-elements';
-
+import Spinner from 'react-native-spinkit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import colors from '../styles/colors';
@@ -30,6 +30,8 @@ export default class SortablePlayList extends Component {
             // currentIndex: 0,
             activeIndex: 0,
             isLoading: true,
+            color: "#FFFFFF",
+            size: 100,
 
         };
     }
@@ -82,7 +84,11 @@ export default class SortablePlayList extends Component {
         console.log('music data is :', musicList);
         return (
             <View style={sortableListStyle.container}>
-                {isLoading ? null : <SortableList
+                {isLoading ?
+                    <Spinner style={{ marginBottom: 50}} isVisible={this.state.isLoading} size={this.state.size}
+                             type="CircleFlip"
+                             color={this.state.color}/>
+                    : <SortableList
                         style={sortableListStyle.list}
                         contentContainerStyle={sortableListStyle.contentContainer}
                         data={musicList}
