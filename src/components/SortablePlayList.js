@@ -23,12 +23,14 @@ import sortableListStyle from '../styles/sortableList';
 export default class SortablePlayList extends Component {
     constructor(props) {
         super(props);
-
+        console.log('pass props is :', this.props.musicData);
         this.state = {
             musicListVisible: false,
             musicList: this.props.musicData,
             // currentIndex: 0,
-            activeIndex: 0
+            activeIndex: 0,
+            isLoading: true,
+
         };
     }
 
@@ -56,7 +58,8 @@ export default class SortablePlayList extends Component {
         const {navigate, type} = this.props;
         let isCurrentIndex = (index === this.state.activeIndex) ? true : false;
         let showAddToMylist = (type === 'playlist') ? true : false;
-        return <Row data={data} index={index} active={active} isCurrentIndex={isCurrentIndex}
+        console.log('data is ', data);
+        return <Row key={index} data={data} index={index} active={active} isCurrentIndex={isCurrentIndex}
                     showAddTo={showAddToMylist}
                     navigate={navigate}
                     dropMenu={this.onHandleDropMenu}/>
@@ -68,24 +71,25 @@ export default class SortablePlayList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {musicData} = nextProps;
-        this.setState({musicList: musicData})
+        const {musicData, isLoading} = nextProps;
+        // console.log('music data is :', musicData);
+        this.setState({musicList: musicData, isLoading: isLoading})
     }
 
     render() {
-        const {musicList, musicListVisible} = this.state;
+        const {musicList, musicListVisible, isLoading} = this.state;
         const {type} = this.props;
-        console.log('type is', type);
+        console.log('music data is :', musicList);
         return (
             <View style={sortableListStyle.container}>
+                {isLoading ? null : <SortableList
+                        style={sortableListStyle.list}
+                        contentContainerStyle={sortableListStyle.contentContainer}
+                        data={musicList}
+                        onChangeOrder={(nextOrder)=>{console.log('next order is :',nextOrder)}}
+                        onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
+                        renderRow={this._renderRow}/>}
 
-                <SortableList
-                    style={sortableListStyle.list}
-                    contentContainerStyle={sortableListStyle.contentContainer}
-                    data={musicList}
-                    onChangeOrder={(nextOrder)=>{console.log('next order is :',nextOrder)}}
-                    onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
-                    renderRow={this._renderRow}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
@@ -143,7 +147,9 @@ export default class SortablePlayList extends Component {
                 </Overlay>
 
             </View>
-        );
+        )
+
+
     }
 
 }
@@ -233,7 +239,7 @@ class Row extends Component {
                     var myList = [];
                     myList.push(musicItem)
                 }
-                AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(this.setState({myPlayList: myList}));
+                AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({myPlayList: myList}));
 
             });
 

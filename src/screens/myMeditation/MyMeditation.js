@@ -13,6 +13,7 @@ import {
     Dimensions,
     ScrollView,
     Alert,
+    AsyncStorage
 } from 'react-native'
 import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
 // import Video from 'react-native-video';
@@ -36,27 +37,43 @@ const deviceInfo = {
 }
 
 
-const musicData = [{
-    audioType: "being present",
-    downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb",
-    imageDownloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F1?alt=media&token=6f3fd8d3-a0b4-4e62-a706-17fdf8524edb",
-    name: "1"
-}
-    , {
-        audioType: "being present",
-        downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F2?alt=media&token=d5c91eaa-d126-45c4-9ffa-3757f2506648",
-        imageDownloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F2?alt=media&token=9f6d1d22-0e93-475b-a8a5-1c20ee6450f8",
-        name: "2"
-    }
+// const musicData = [{
+//     "audioType": "being present",
+//     "downloadUrl": "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb",
+//     "imageDownloadUrl": "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F1?alt=media&token=6f3fd8d3-a0b4-4e62-a706-17fdf8524edb",
+//     "name": "1"
+// }
+//     , {
+//         "audioType": "being present",
+//         "downloadUrl": "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F2?alt=media&token=d5c91eaa-d126-45c4-9ffa-3757f2506648",
+//         "imageDownloadUrl": "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F2?alt=media&token=9f6d1d22-0e93-475b-a8a5-1c20ee6450f8",
+//         "name": "2"
+//     }
+//
+// ];
 
-];
 
+// const musicData = [{
+//     audioType: "being present",
+//     downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb",
+//     imageDownloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F1?alt=media&token=6f3fd8d3-a0b4-4e62-a706-17fdf8524edb",
+//     name: "1"
+// }
+//     , {
+//         audioType: "being present",
+//         downloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F2?alt=media&token=d5c91eaa-d126-45c4-9ffa-3757f2506648",
+//         imageDownloadUrl: "https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginnerImage%2FbeingPresent%2F2?alt=media&token=9f6d1d22-0e93-475b-a8a5-1c20ee6450f8",
+//         name: "2"
+//     }
+//
+// ];
 export default class MyMeditation extends Component {
 
     constructor(props) {
         super(props)
-        this.player = ''
-        this.rotation = false
+        this.player = '';
+        this.rotation = false;
+
         this.state = {
             viewRef: null,
             paused: false, // false: 表示播放，true: 表示暂停
@@ -69,7 +86,7 @@ export default class MyMeditation extends Component {
             playIcon: 'ios-pause',
             playModeIcon: 'ios-shuffle',
             musicInfo: {},
-            musicList: musicData,
+            musicList: [],
             deleteListVisible: false,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
@@ -102,8 +119,28 @@ export default class MyMeditation extends Component {
 
     }
 
+    componentWillMount() {
+        var self = this;
+        AsyncStorage.getItem("myPlayList")
+            .then(req => {
+                console.log('req is :', req);
+                return JSON.parse(req)
+            })
+            .then((myList) => {
+                if (myList) {
+                    console.log('my list is ', myList);
+                    self.setState({
+                        musicList: myList,
+                        isLoading: false,
+                    })
+                }
+            })
+    }
+
 
     render() {
+        console.log('music list is :', this.state.musicList);
+        const {isLoading, musicList} = this.state;
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
@@ -125,7 +162,10 @@ export default class MyMeditation extends Component {
                         onPress={this.deleteAllList}
                     />
                 </View>
-                <SortablePlayList musicData={this.state.musicList} navigate={this.props.navigation}/>
+                {this.state.isLoading ? <View><Text>Loading...</Text></View> :
+                    <SortablePlayList isLoading={isLoading} musicData={musicList} navigate={this.props.navigation}/>}
+
+
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={meditationStyle.overlay}
