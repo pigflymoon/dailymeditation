@@ -9,6 +9,7 @@ import {
     Dimensions,
     Platform,
     ScrollView,
+    AsyncStorage
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 import {Overlay, ListItem, Icon} from 'react-native-elements';
@@ -52,9 +53,12 @@ export default class SortablePlayList extends Component {
 
     _renderRow = ({data, active, index}) => {
         // const navigate = this.props.navigate;
-        const {navigate} = this.props;
+        const {navigate, type} = this.props;
         let isCurrentIndex = (index === this.state.activeIndex) ? true : false;
-        return <Row data={data} index={index} active={active} isCurrentIndex={isCurrentIndex} navigate={navigate}
+        let showAddToMylist = (type === 'playlist') ? true : false;
+        return <Row data={data} index={index} active={active} isCurrentIndex={isCurrentIndex}
+                    showAddTo={showAddToMylist}
+                    navigate={navigate}
                     dropMenu={this.onHandleDropMenu}/>
     }
 
@@ -79,6 +83,7 @@ export default class SortablePlayList extends Component {
                     style={sortableListStyle.list}
                     contentContainerStyle={sortableListStyle.contentContainer}
                     data={musicList}
+                    onChangeOrder={(nextOrder)=>{console.log('next order is :',nextOrder)}}
                     onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
                     renderRow={this._renderRow}/>
                 <Overlay
@@ -153,6 +158,7 @@ class Row extends Component {
             musicItem: this.props.data,
             musicItemIndex: this.props.index,
             isCurrentIndex: false,
+            showAddTo: this.props.showAddTo
         }
 
         this._style = {
@@ -204,6 +210,35 @@ class Row extends Component {
         this.props.dropMenu(true, index);
     }
 
+    addToMyList = (musicItem) => (e) => {
+        //
+        var self = this;
+        AsyncStorage.getItem("myPlayList")
+            .then(req => {
+                console.log('req is :', req);
+                return JSON.parse(req)
+            })
+            .then((myList) => {
+                console.log('save in storage :', myList);
+                // myList = myList
+                if (myList) {
+                    if (myList.some(e => e.downloadUrl === musicItem.downloadUrl)) {
+                        console.log('already have item');
+                        return;
+                    } else {
+                        myList.push(musicItem);
+                    }
+
+                } else {
+                    var myList = [];
+                    myList.push(musicItem)
+                }
+                AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(this.setState({myPlayList: myList}));
+
+            });
+
+
+    }
 
     renderListCards() {
         return list2.map((l, i) => (
@@ -235,7 +270,8 @@ class Row extends Component {
     }
 
     render() {
-        const {musicItem, musicItemIndex, isCurrentIndex} = this.state;
+        const {musicItem, musicItemIndex, isCurrentIndex, showAddTo} = this.state;
+
 
         return (
             <Animated.View style={[
@@ -254,6 +290,12 @@ class Row extends Component {
                 <View style={{flex:1,flexGrow:3}}>
                     <Text style={sortableListStyle.text}>{musicItem.audioType}-{musicItem.name}</Text>
                 </View>
+                {showAddTo ? <Icon
+                        containerStyle={{flex: 1,}}
+                        iconStyle={{alignSelf:'flex-end'}}
+                        color={colors.grey4}
+                        name='favorite'
+                        onPress={this.addToMyList(musicItem)}/> : null}
                 <Icon
                     containerStyle={{flex: 1,}}
                     iconStyle={{alignSelf:'flex-end'}}
