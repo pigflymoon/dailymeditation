@@ -101,6 +101,33 @@ export default class MyMeditation extends Component {
         })
     }
 
+    getDataFromLocalStorage = () => {
+        var self = this;
+        AsyncStorage.getItem("myPlayList")
+            .then(req => {
+                console.log('req is :', req);
+                return JSON.parse(req)
+            })
+            .then((myList) => {
+                if (myList) {
+                    console.log('my list is ', myList);
+                    self.setState({
+                        musicList: myList,
+                        isLoading: false,
+                    })
+                } else {
+                    self.setState({
+                        musicList: myList,
+                        isLoading: false,
+                    })
+                }
+            })
+    }
+
+    refreshList = () => {
+        this.getDataFromLocalStorage();
+    }
+
     playAllList = () => {
         this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
     }
@@ -125,26 +152,8 @@ export default class MyMeditation extends Component {
     }
 
     componentWillMount() {
-        var self = this;
-        AsyncStorage.getItem("myPlayList")
-            .then(req => {
-                console.log('req is :', req);
-                return JSON.parse(req)
-            })
-            .then((myList) => {
-                if (myList) {
-                    console.log('my list is ', myList);
-                    self.setState({
-                        musicList: myList,
-                        isLoading: false,
-                    })
-                } else {
-                    self.setState({
-                        musicList: myList,
-                        isLoading: false,
-                    })
-                }
-            })
+        this.getDataFromLocalStorage();
+
     }
 
 
@@ -167,6 +176,11 @@ export default class MyMeditation extends Component {
                                 justifyContent: 'flex-end',
                                 paddingVertical: 5,
                 }}>
+                    <Icon
+                        containerStyle={{marginRight:10}}
+                        name='refresh'
+                        color={colors.grey6}
+                        onPress={this.refreshList}/>
                     <Icon
                         containerStyle={{marginRight:10}}
                         name='play-circle-outline'
