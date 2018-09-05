@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, ImageBackground, TouchableHighlight} from 'react-native';
 import GridView from 'react-native-super-grid';
 import LinearGradient from 'react-native-linear-gradient';
+import Spinner from 'react-native-spinkit';
 
 import imageStyle from '../styles/image'
 
@@ -15,6 +16,9 @@ export default class GridCardView extends Component {
         this.state = {
             audiosData: [],
             category: this.props.category,
+            isLoading: true,
+            color: "#FFFFFF",
+            size: 100,
         }
     }
 
@@ -54,7 +58,8 @@ export default class GridCardView extends Component {
 
         this.fetchData(category, type, isPaidUser).then(function (audios) {
             self.setState({
-                audiosData: audios
+                audiosData: audios,
+                isLoading: false
             });
         });
 
@@ -64,16 +69,24 @@ export default class GridCardView extends Component {
     render() {
         return (
             <View>
-                {Object.keys(this.state.audiosData).map(key => {
-                    const items = (this.state.audiosData)[key];
-                    console.log('items are **********',items)
-                    return (
-                        <GridView
-                            key={key}
-                            itemDimension={130}
-                            items={items}
-                            style={imageStyle.gridView}
-                            renderItem={item => (
+                {this.state.isLoading ?
+                    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner
+                        style={{ marginBottom: 50}}
+                        isVisible={this.state.isLoading}
+                        size={this.state.size}
+                        type="ThreeBounce"
+                        color={this.state.color}/>
+                    </View> : <View>
+                        {Object.keys(this.state.audiosData).map(key => {
+                            const items = (this.state.audiosData)[key];
+                            console.log('items are **********', items)
+                            return (
+                                <GridView
+                                    key={key}
+                                    itemDimension={130}
+                                    items={items}
+                                    style={imageStyle.gridView}
+                                    renderItem={item => (
                                 <TouchableHighlight
                                     onPress={(e) => this.openAudioModal(e, items, item)}
                                 >
@@ -93,10 +106,12 @@ export default class GridCardView extends Component {
 
 
                             )}
-                        />
-                    )
+                                />
+                            )
 
-                })}
+                        })}
+                    </View>
+                }
             </View>
 
         );

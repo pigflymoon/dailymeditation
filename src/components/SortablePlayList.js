@@ -13,8 +13,9 @@ import {
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 import {Overlay, ListItem, Icon} from 'react-native-elements';
-import Spinner from 'react-native-spinkit';
+// import Spinner from 'react-native-spinkit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+// import  Utils from '../utils/utils';
 
 import colors from '../styles/colors';
 import sortableListStyle from '../styles/sortableList';
@@ -30,8 +31,8 @@ export default class SortablePlayList extends Component {
             // currentIndex: 0,
             activeIndex: 0,
             isLoading: true,
-            color: "#FFFFFF",
-            size: 100,
+            // color: "#FFFFFF",
+            // size: 100,
 
         };
     }
@@ -82,20 +83,16 @@ export default class SortablePlayList extends Component {
         const {musicList, musicListVisible, isLoading} = this.state;
         const {type} = this.props;
         console.log('music data is :', musicList);
+
         return (
             <View style={sortableListStyle.container}>
-                {isLoading ?
-                    <Spinner style={{ marginBottom: 50}} isVisible={this.state.isLoading} size={this.state.size}
-                             type="CircleFlip"
-                             color={this.state.color}/>
-                    : <SortableList
-                        style={sortableListStyle.list}
-                        contentContainerStyle={sortableListStyle.contentContainer}
-                        data={musicList}
-                        onChangeOrder={(nextOrder)=>{console.log('next order is :',nextOrder)}}
-                        onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
-                        renderRow={this._renderRow}/>}
-
+                <SortableList
+                    style={sortableListStyle.list}
+                    contentContainerStyle={sortableListStyle.contentContainer}
+                    data={musicList}
+                    onChangeOrder={(nextOrder)=>{console.log('next order is :',nextOrder)}}
+                    onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
+                    renderRow={this._renderRow}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}

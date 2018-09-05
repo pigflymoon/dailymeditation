@@ -22,6 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import Spinner from 'react-native-spinkit';
+import  Utils from '../../utils/utils';
 
 import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
@@ -135,7 +136,12 @@ export default class MyMeditation extends Component {
                     console.log('my list is ', myList);
                     self.setState({
                         musicList: myList,
-                        // isLoading: false,
+                        isLoading: false,
+                    })
+                } else {
+                    self.setState({
+                        musicList: myList,
+                        isLoading: false,
                     })
                 }
             })
@@ -145,9 +151,17 @@ export default class MyMeditation extends Component {
     render() {
         console.log('music list is :', this.state.musicList);
         const {isLoading, musicList} = this.state;
+        if (!musicList) {
 
+            return (
+                <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
+                    {Utils.renderNoData()}
+                </View>
+            )
+        }
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
+
                 <View style={{ flexDirection: 'row',
                                 alignItems: 'center',
                                 justifyContent: 'flex-end',
@@ -167,11 +181,12 @@ export default class MyMeditation extends Component {
                     />
                 </View>
                 {this.state.isLoading ?
-                    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner style={{ marginBottom: 50}}
-                                                                             isVisible={this.state.isLoading}
-                                                                             size={this.state.size}
-                                                                             type="ThreeBounce"
-                                                                             color={this.state.color}/></View> :
+                    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner
+                        style={{ marginBottom: 50}}
+                        isVisible={this.state.isLoading}
+                        size={this.state.size}
+                        type="ThreeBounce"
+                        color={this.state.color}/></View> :
                     <SortablePlayList isLoading={isLoading} musicData={musicList} navigate={this.props.navigation}/>}
 
 
