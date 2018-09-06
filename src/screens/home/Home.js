@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, Image} from 'react-native';
+import {Icon} from 'react-native-elements';
+
 import reactFirebase, {Notification, NotificationOpen} from 'react-native-firebase';
 // Optional: Flow type
 import type {RemoteMessage} from 'react-native-firebase';
+import RNFS from 'react-native-fs';
+import Video from 'react-native-video';
+
 import baseStyle from '../../styles/base';
 import screenStyle from '../../styles/screen';
 
@@ -13,8 +18,22 @@ export default class Home extends Component {
         super(props);
 
         this.state = {
-            badgeNumber: 0
+            badgeNumber: 0,
+            isDone: false,
         };
+    }
+
+
+    onDownloadImagePress = () => {
+        RNFS.downloadFile({
+            fromUrl: 'https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb',
+            toFile: `${RNFS.DocumentDirectoryPath}/test.mp3`,
+        }).promise.then((r) => {
+            console.log('response is :',r);
+            this.setState({isDone: true})
+        }).catch((err) => {
+            console.log(err.message);
+        });
     }
 
     componentDidMount() {
@@ -68,8 +87,6 @@ export default class Home extends Component {
             // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
             console.log('***********  onNotificationDisplayed get notification ***********???', notification);
         });
-
-
 
 
         this.notificationOpenedListener = reactFirebase.notifications().onNotificationOpened((notificationOpen: NotificationOpen) => {
@@ -127,17 +144,33 @@ export default class Home extends Component {
 
 
     render() {
+        const preview = this.state.isDone ? (<View>
 
-        return (
-            <View style={[baseStyle.container, screenStyle.screenBgBlue]}>
-                <Image
-                    style={{width: 300, height: 200}}
-                    source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}/>
-                <View style={baseStyle.container}>
-                    <Text>Hello</Text>
+                    <Video
+                        ref={video => this.player = video}
+                        source={{ uri: `file://${RNFS.DocumentDirectoryPath}/test.mp3`}}
+                        volume={1.0}
+                        paused={this.state.paused}
+                        playInBackground={true}
+                        onLoadStart={this.loadStart}
+                        onLoad={this.setDuration}
+                        onProgress={this.setTime}
+                        onEnd={this.onEnd}
+                        onError={this.videoError}
+                        onBuffer={this.onBuffer}
+                        onTimedMetadata={this.onTimedMetadata}/>
                 </View>
-
+            ) : <View><Text>downloding...</Text></View>;
+        return (
+            <View>
+                <Icon
+                    containerStyle={{marginRight:10}}
+                    name='cloud-download'
+                    onPress={this.onDownloadImagePress}/>
+                {preview}
             </View>
-        )
+        );
+
+
     }
 }

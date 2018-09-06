@@ -38,6 +38,7 @@ const MyMeditationTab = createStackNavigator({
     },
 });
 const HomeTab = createStackNavigator({
+
     Home: {
         screen: HomeScreen,
         navigationOptions: ({navigation, screenProps}) => ({
@@ -94,7 +95,20 @@ const SettingsTab = createStackNavigator({
 
 const StacksInTabs = createBottomTabNavigator(
     {
-        MyMeditationTab:{
+        HomeTab: {
+            screen: HomeTab,
+            navigationOptions: {
+                tabBarLabel: 'Home',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-home' : 'ios-home-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
+        MyMeditationTab: {
             screen: MyMeditationTab,
             navigationOptions: {
                 tabBarLabel: 'My Meditation List',
@@ -120,19 +134,7 @@ const StacksInTabs = createBottomTabNavigator(
                 ),
             },
         },
-        HomeTab: {
-            screen: HomeTab,
-            navigationOptions: {
-                tabBarLabel: 'Home',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-home' : 'ios-home-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-        },
+
         SettingsTab: {
             screen: SettingsTab,
             navigationOptions: {
