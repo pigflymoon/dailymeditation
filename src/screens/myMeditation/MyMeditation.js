@@ -29,7 +29,6 @@ import screenStyle from '../../styles/screen';
 import meditationStyle from '../../styles/meditation';
 
 
-
 const deviceInfo = {
     deviceWidth: Dimensions.get('window').width,
     deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
@@ -99,7 +98,6 @@ export default class MyMeditation extends Component {
     }
 
 
-
     getDataFromLocalStorage = () => {
         var self = this;
         AsyncStorage.getItem("myPlayList")
@@ -138,6 +136,7 @@ export default class MyMeditation extends Component {
             [
                 {
                     text: 'OK', onPress: () => {
+                    AsyncStorage.setItem('myPlayList', '');
                     this.setState({
                         musicList: []
                     })

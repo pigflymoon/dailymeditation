@@ -41,42 +41,6 @@ export default class SortablePlayList extends Component {
     }
 
 
-    downloadMusicItem = () => {
-        const {musicData} = this.state;
-        this.setState({downloadLoading: true,})
-        RNFS.downloadFile({
-            fromUrl: musicData.downloadUrl,
-            toFile: `${RNFS.DocumentDirectoryPath}/${musicData.id}.mp3`,
-        }).promise.then((r) => {
-            console.log('response is :', r, 'music id is: ', musicData.id);
-            // musicData.isDownloaded = true;
-            //
-            var self = this;
-            AsyncStorage.getItem("myPlayList")
-                .then(req => {
-                    console.log('req is :', req);
-                    return JSON.parse(req)
-                })
-                .then((myList) => {
-                    console.log('save in storage :', myList);
-                    // myList = myList
-                    if (myList) {
-                        //
-                        var listIndex = myList.findIndex(el => el.id === musicData.id)
-                        console.log('list is download? ', myList[listIndex].isDownloaded);
-                        // myList[myList.findIndex(el => el.id === musicData.id)] = item;
-                        myList[listIndex].isDownloaded = true;
-                        // console.log('changed myList is ',myList);
-                        AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({myPlayList: myList}));
-                    }
-                });
-            //
-            this.setState({downloadLoading: false})
-        }).catch((err) => {
-            console.log(err.message);
-        });
-    }
-
     deleteListItem = () => {
         var musicData = Object.values(this.state.musicList);
         var deleteIndex = this.state.deleteIndex;
@@ -104,8 +68,8 @@ export default class SortablePlayList extends Component {
         let showDownload = (type === 'playlist') ? false : true;
 
         let musicId = data.id;
-        console.log('data isDownloaded ', data.isDownloaded);
-        console.log('musicId is ', musicId);
+        console.log('data is', data);
+        // console.log('musicId is ', musicId);
         return <Row key={index} data={data} index={index} active={active}
                     isCurrentIndex={isCurrentIndex}
                     isDownloaded={data.isDownloaded}
@@ -128,7 +92,7 @@ export default class SortablePlayList extends Component {
     }
 
     render() {
-        const {musicList, musicListVisible, isLoading, downloadLoading} = this.state;
+        const {musicList, musicListVisible} = this.state;
         const {type} = this.props;
         console.log('music data is :', musicList);
 
@@ -144,7 +108,7 @@ export default class SortablePlayList extends Component {
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
-                    isVisible={this.state.musicListVisible}
+                    isVisible={musicListVisible}
                     borderRadius={0}
                     onBackdropPress={() => this.setState({musicListVisible: false})}
                 >
@@ -167,37 +131,6 @@ export default class SortablePlayList extends Component {
                                 titleStyle={{color: colors.purple3,}}
                                 containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
                                 bottomDivider
-                            />
-                            <ListItem
-                                leftIcon={{name: 'ios-download-outline',type: 'ionicon',color: colors.purple3}}
-                                title={`Download`}
-                                titleStyle={{color: colors.purple3,}}
-                                containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
-                                bottomDivider
-                                onPress={this.downloadMusicItem}
-                                rightElement={
-                                    <View style={{ flexDirection: 'row',paddingLeft: 10,paddingTop: 5}}>
-                                    {downloadLoading?  <Button
-                                          loading={downloadLoading}
-                                          title="test"
-                                           icon={
-                                            <Icon
-                                              name='ios-cloud-download'
-                                              type='ionicon'
-                                              size={26}
-                                              color={colors.purple3}
-                                            />
-                                          }
-                                          disabled={downloadLoading}
-                                        />:<Icon
-                                              name='ios-cloud-done'
-                                              type='ionicon'
-                                              size={26}
-                                              color={colors.purple3}
-                                            />}
-
-                                    </View>
-                                  }
                             />
                             <ListItem
                                 leftIcon={{name: 'ios-share-outline',type: 'ionicon',color: colors.purple3}}
@@ -242,6 +175,8 @@ class Row extends Component {
             showAddTo: this.props.showAddTo,
             showDownload: this.props.showDownload,
             isDownloaded: this.props.isDownloaded,
+            downloadLoading: false,
+
         }
 
         this._style = {
@@ -297,17 +232,49 @@ class Row extends Component {
         this.props.dropMenu(true, index);
     }
 
+    downloadMusicItem = () => {
+        const {musicItem} = this.state;
+        this.setState({downloadLoading: true,})
+        RNFS.downloadFile({
+            fromUrl: musicItem.downloadUrl,
+            toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`,
+        }).promise.then((r) => {
+            console.log('response is :', r, 'music id is: ', musicItem.id);
+            // musicData.isDownloaded = true;
+            //
+            var self = this;
+            AsyncStorage.getItem("myPlayList")
+                .then(req => {
+                    console.log('req is :', req);
+                    return JSON.parse(req)
+                })
+                .then((myList) => {
+                    console.log('save in storage :', myList);
+                    // myList = myList
+                    if (myList) {
+                        //
+                        var listIndex = myList.findIndex(el => el.id === musicItem.id)
+                        console.log('list is download? ', myList[listIndex].isDownloaded);
+                        myList[listIndex].isDownloaded = true;
+                        AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({isDownloaded: true}));
+                    }
+                });
+            //
+            this.setState({downloadLoading: false})
+        }).catch((err) => {
+            console.log(err.message);
+        });
+    }
+
     addToMyList = (musicItem) => (e) => {
         //
         var self = this;
         AsyncStorage.getItem("myPlayList")
             .then(req => {
-                // console.log('req is :', req);
                 return JSON.parse(req)
             })
             .then((myList) => {
-                // console.log('save in storage :', myList);
-                // myList = myList
+
                 if (myList) {
                     if (myList.some(e => e.downloadUrl === musicItem.downloadUrl)) {
                         console.log('already have item');
@@ -327,38 +294,11 @@ class Row extends Component {
 
     }
 
-    renderListCards() {
-        return list2.map((l, i) => (
-            <ListItem
-                leftIcon={{
-            name: 'ios-musical-note',
-                type: 'ionicon',
-                color: colors.grey4
-        }
-    }
-
-                leftAvatar={{size: 'medium', source: {uri: l.avatar_url}}}
-                rightIcon={{
-            name: 'ios-lock-outline',
-                type: 'ionicon',
-                color: colors.grey4
-        }}
-                key={i}
-                title={l.name}
-                titleStyle={{color: colors.grey4,}}
-                containerStyle={{
-                    backgroundColor:'transparent',
-                    paddingVertical: 10,
-                    marginVertical: 4,
-        }}
-                bottomDivider
-            />
-        ))
-    }
 
     render() {
-        const {musicItem, musicItemIndex, isCurrentIndex, showAddTo, showDownload, isDownloaded} = this.state;
+        const {musicItem, musicItemIndex, isCurrentIndex, showAddTo, showDownload, isDownloaded, downloadLoading} = this.state;
 
+        console.log(' music Item ', musicItem);
 
         return (
             <Animated.View style={[
@@ -383,14 +323,20 @@ class Row extends Component {
                             color={colors.grey4}
                             type='ionicon'
                             name='ios-cloud-done'
-                        /> : <Icon
-                            containerStyle={{flex: 1,}}
-                            iconStyle={{alignSelf:'flex-end'}}
-                            color={colors.grey4}
-                            type='ionicon'
-                            name='ios-cloud-download-outline'
+                        /> : <Button
+                            buttonStyle={{backgroundColor:'transparent'}}
+                            loading={downloadLoading}
+                            title={null}
+                            icon={<Icon
+                                  name='ios-cloud-download-outline'
+                                  type='ionicon'
+                                  color={colors.grey4}
+                                  />}
+                            disabled={downloadLoading}
+                            onPress={this.downloadMusicItem}
                         />
                     : null}
+
                 {showAddTo ? <Icon
                         containerStyle={{flex: 1,}}
                         iconStyle={{alignSelf:'flex-end'}}
