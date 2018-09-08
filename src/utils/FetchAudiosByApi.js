@@ -20,6 +20,7 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
                         // audioCategoryArray[key] = audios[subKey];
                         // audios[subKey].push({id: subKey});
                         audios[subKey].id = subKey;
+                        audios[subKey].isDownloaded = false;
                         childArray.push(audios[subKey]);
                     }
                     audioCategoryArray[key] = childArray;

@@ -14,7 +14,7 @@ import {
 import RNFS from 'react-native-fs';
 
 import SortableList from 'react-native-sortable-list';
-import {Overlay, ListItem, Icon} from 'react-native-elements';
+import {Overlay, ListItem, Icon, Button} from 'react-native-elements';
 // import Spinner from 'react-native-spinkit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import  Utils from '../utils/utils';
@@ -33,6 +33,7 @@ export default class SortablePlayList extends Component {
             // currentIndex: 0,
             activeIndex: 0,
             isLoading: true,
+            downloadLoading: false,
             // color: "#FFFFFF",
             // size: 100,
 
@@ -41,13 +42,36 @@ export default class SortablePlayList extends Component {
 
 
     downloadMusicItem = () => {
-        const {musicId}=this.state.musicId;
+        const {musicData} = this.state;
+        this.setState({downloadLoading: true,})
         RNFS.downloadFile({
-            fromUrl: musicId,
-            toFile: `${RNFS.DocumentDirectoryPath}/${musicId}.mp3`,
+            fromUrl: musicData.downloadUrl,
+            toFile: `${RNFS.DocumentDirectoryPath}/${musicData.id}.mp3`,
         }).promise.then((r) => {
-            console.log('response is :', r);
-            this.setState({isDone: true})
+            console.log('response is :', r, 'music id is: ', musicData.id);
+            // musicData.isDownloaded = true;
+            //
+            var self = this;
+            AsyncStorage.getItem("myPlayList")
+                .then(req => {
+                    console.log('req is :', req);
+                    return JSON.parse(req)
+                })
+                .then((myList) => {
+                    console.log('save in storage :', myList);
+                    // myList = myList
+                    if (myList) {
+                        //
+                        var listIndex = myList.findIndex(el => el.id === musicData.id)
+                        console.log('list is download? ', myList[listIndex].isDownloaded);
+                        // myList[myList.findIndex(el => el.id === musicData.id)] = item;
+                        myList[listIndex].isDownloaded = true;
+                        // console.log('changed myList is ',myList);
+                        AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({myPlayList: myList}));
+                    }
+                });
+            //
+            this.setState({downloadLoading: false})
         }).catch((err) => {
             console.log(err.message);
         });
@@ -77,20 +101,24 @@ export default class SortablePlayList extends Component {
         const {navigate, type} = this.props;
         let isCurrentIndex = (index === this.state.activeIndex) ? true : false;
         let showAddToMylist = (type === 'playlist') ? true : false;
+        let showDownload = (type === 'playlist') ? false : true;
+
         let musicId = data.id;
+        console.log('data isDownloaded ', data.isDownloaded);
         console.log('musicId is ', musicId);
         return <Row key={index} data={data} index={index} active={active}
                     isCurrentIndex={isCurrentIndex}
+                    isDownloaded={data.isDownloaded}
+                    showDownload={showDownload}
                     showAddTo={showAddToMylist}
                     navigate={navigate}
-                    dropMenu={this.onHandleDropMenu(musicId)}/>
+                    dropMenu={this.onHandleDropMenu(data)}/>
     }
 
 
-    onHandleDropMenu = (musicId) => (value, deleteIndex) => {//第一个参数是直接传给调用回调函数的，第二个括号里的参数是回调函数返回的值
-        console.log('musicId is ', musicId, 'value, deleteIndex',
-            value, deleteIndex);
-        this.setState({musicListVisible: value, deleteIndex: deleteIndex, musicId: musicId});
+    onHandleDropMenu = (data) => (value, deleteIndex) => {//第一个参数是直接传给调用回调函数的，第二个括号里的参数是回调函数返回的值
+        console.log('music data', data, 'value, deleteIndex', value, deleteIndex);
+        this.setState({musicListVisible: value, deleteIndex: deleteIndex, musicData: data});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -100,7 +128,7 @@ export default class SortablePlayList extends Component {
     }
 
     render() {
-        const {musicList, musicListVisible, isLoading} = this.state;
+        const {musicList, musicListVisible, isLoading, downloadLoading} = this.state;
         const {type} = this.props;
         console.log('music data is :', musicList);
 
@@ -147,6 +175,29 @@ export default class SortablePlayList extends Component {
                                 containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
                                 bottomDivider
                                 onPress={this.downloadMusicItem}
+                                rightElement={
+                                    <View style={{ flexDirection: 'row',paddingLeft: 10,paddingTop: 5}}>
+                                    {downloadLoading?  <Button
+                                          loading={downloadLoading}
+                                          title="test"
+                                           icon={
+                                            <Icon
+                                              name='ios-cloud-download'
+                                              type='ionicon'
+                                              size={26}
+                                              color={colors.purple3}
+                                            />
+                                          }
+                                          disabled={downloadLoading}
+                                        />:<Icon
+                                              name='ios-cloud-done'
+                                              type='ionicon'
+                                              size={26}
+                                              color={colors.purple3}
+                                            />}
+
+                                    </View>
+                                  }
                             />
                             <ListItem
                                 leftIcon={{name: 'ios-share-outline',type: 'ionicon',color: colors.purple3}}
@@ -188,7 +239,9 @@ class Row extends Component {
             musicItem: this.props.data,
             musicItemIndex: this.props.index,
             isCurrentIndex: false,
-            showAddTo: this.props.showAddTo
+            showAddTo: this.props.showAddTo,
+            showDownload: this.props.showDownload,
+            isDownloaded: this.props.isDownloaded,
         }
 
         this._style = {
@@ -223,8 +276,12 @@ class Row extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('nextProps isCurrentIndex is ', nextProps.isCurrentIndex);
-        this.setState({musicItem: nextProps.data, isCurrentIndex: nextProps.isCurrentIndex})//musicItemIndex: nextProps.index
+        // console.log('nextProps isCurrentIndex is ', nextProps.isCurrentIndex);
+        this.setState({
+            musicItem: nextProps.data,
+            isCurrentIndex: nextProps.isCurrentIndex,
+            isDownloaded: nextProps.isDownloaded
+        })//musicItemIndex: nextProps.index
         if (this.props.active !== nextProps.active) {
             Animated.timing(this._active, {
                 duration: 300,
@@ -245,11 +302,11 @@ class Row extends Component {
         var self = this;
         AsyncStorage.getItem("myPlayList")
             .then(req => {
-                console.log('req is :', req);
+                // console.log('req is :', req);
                 return JSON.parse(req)
             })
             .then((myList) => {
-                console.log('save in storage :', myList);
+                // console.log('save in storage :', myList);
                 // myList = myList
                 if (myList) {
                     if (myList.some(e => e.downloadUrl === musicItem.downloadUrl)) {
@@ -300,7 +357,7 @@ class Row extends Component {
     }
 
     render() {
-        const {musicItem, musicItemIndex, isCurrentIndex, showAddTo} = this.state;
+        const {musicItem, musicItemIndex, isCurrentIndex, showAddTo, showDownload, isDownloaded} = this.state;
 
 
         return (
@@ -320,6 +377,20 @@ class Row extends Component {
                 <View style={{flex:1,flexGrow:3}}>
                     <Text style={sortableListStyle.text}>{musicItem.audioType}-{musicItem.name}</Text>
                 </View>
+                {showDownload ? isDownloaded ? <Icon
+                            containerStyle={{flex: 1,}}
+                            iconStyle={{alignSelf:'flex-end'}}
+                            color={colors.grey4}
+                            type='ionicon'
+                            name='ios-cloud-done'
+                        /> : <Icon
+                            containerStyle={{flex: 1,}}
+                            iconStyle={{alignSelf:'flex-end'}}
+                            color={colors.grey4}
+                            type='ionicon'
+                            name='ios-cloud-download-outline'
+                        />
+                    : null}
                 {showAddTo ? <Icon
                         containerStyle={{flex: 1,}}
                         iconStyle={{alignSelf:'flex-end'}}
