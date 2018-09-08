@@ -11,6 +11,8 @@ import {
     ScrollView,
     AsyncStorage
 } from 'react-native';
+import RNFS from 'react-native-fs';
+
 import SortableList from 'react-native-sortable-list';
 import {Overlay, ListItem, Icon} from 'react-native-elements';
 // import Spinner from 'react-native-spinkit';
@@ -37,6 +39,20 @@ export default class SortablePlayList extends Component {
         };
     }
 
+
+    downloadMusicItem = () => {
+        const {musicId}=this.state.musicId;
+        RNFS.downloadFile({
+            fromUrl: musicId,
+            toFile: `${RNFS.DocumentDirectoryPath}/${musicId}.mp3`,
+        }).promise.then((r) => {
+            console.log('response is :', r);
+            this.setState({isDone: true})
+        }).catch((err) => {
+            console.log(err.message);
+        });
+    }
+
     deleteListItem = () => {
         var musicData = Object.values(this.state.musicList);
         var deleteIndex = this.state.deleteIndex;
@@ -61,16 +77,20 @@ export default class SortablePlayList extends Component {
         const {navigate, type} = this.props;
         let isCurrentIndex = (index === this.state.activeIndex) ? true : false;
         let showAddToMylist = (type === 'playlist') ? true : false;
-        console.log('data is ', data);
-        return <Row key={index} data={data} index={index} active={active} isCurrentIndex={isCurrentIndex}
+        let musicId = data.id;
+        console.log('musicId is ', musicId);
+        return <Row key={index} data={data} index={index} active={active}
+                    isCurrentIndex={isCurrentIndex}
                     showAddTo={showAddToMylist}
                     navigate={navigate}
-                    dropMenu={this.onHandleDropMenu}/>
+                    dropMenu={this.onHandleDropMenu(musicId)}/>
     }
 
-    onHandleDropMenu = (value, deleteIndex) => {
 
-        this.setState({musicListVisible: value, deleteIndex: deleteIndex});
+    onHandleDropMenu = (musicId) => (value, deleteIndex) => {//第一个参数是直接传给调用回调函数的，第二个括号里的参数是回调函数返回的值
+        console.log('musicId is ', musicId, 'value, deleteIndex',
+            value, deleteIndex);
+        this.setState({musicListVisible: value, deleteIndex: deleteIndex, musicId: musicId});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -126,6 +146,7 @@ export default class SortablePlayList extends Component {
                                 titleStyle={{color: colors.purple3,}}
                                 containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
                                 bottomDivider
+                                onPress={this.downloadMusicItem}
                             />
                             <ListItem
                                 leftIcon={{name: 'ios-share-outline',type: 'ionicon',color: colors.purple3}}

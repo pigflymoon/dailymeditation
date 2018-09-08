@@ -16,23 +16,20 @@ import {
     AsyncStorage
 } from 'react-native'
 import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
-// import Video from 'react-native-video';
-// import {VibrancyView, BlurView} from 'react-native-blur';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import Spinner from 'react-native-spinkit';
-import  Utils from '../../utils/utils';
 
-import baseStyle from '../../styles/base';
-import screenStyle from '../../styles/screen';
-// import musicPlayerStyle from '../../styles/musicPlayer';
-import meditationStyle from '../../styles/meditation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import  Utils from '../../utils/utils';
+import SortablePlayList from '../../components/SortablePlayList';
 
 import colors from '../../styles/colors';
+import baseStyle from '../../styles/base';
+import screenStyle from '../../styles/screen';
+import meditationStyle from '../../styles/meditation';
 
 
-import SortablePlayList from '../../components/SortablePlayList';
+
 const deviceInfo = {
     deviceWidth: Dimensions.get('window').width,
     deviceHeight: Platform.OS === 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 24
@@ -101,6 +98,8 @@ export default class MyMeditation extends Component {
         })
     }
 
+
+
     getDataFromLocalStorage = () => {
         var self = this;
         AsyncStorage.getItem("myPlayList")
@@ -164,6 +163,29 @@ export default class MyMeditation extends Component {
 
             return (
                 <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
+                    <View style={{ flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'flex-end',
+                                paddingVertical: 5,
+                }}>
+                        <Icon
+                            containerStyle={{marginRight:10}}
+                            name='refresh'
+                            color={colors.grey6}
+                            onPress={this.refreshList}/>
+                        <Icon
+                            containerStyle={{marginRight:10}}
+                            name='play-circle-outline'
+                            color={colors.grey6}
+                            onPress={this.playAllList}/>
+                        <Icon
+                            containerStyle={{marginRight:10}}
+                            name='delete-forever'
+                            color={colors.grey4}
+                            size={26}
+                            onPress={this.deleteAllList}
+                        />
+                    </View>
                     {Utils.renderNoData()}
                 </View>
             )
@@ -194,6 +216,7 @@ export default class MyMeditation extends Component {
                         onPress={this.deleteAllList}
                     />
                 </View>
+
                 {this.state.isLoading ?
                     <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner
                         style={{ marginBottom: 50}}

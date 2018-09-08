@@ -18,11 +18,13 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
                     for (const subKey of Object.keys(audios)) {
                         console.log('subKey: ', subKey, 'value is :', audios[subKey])
                         // audioCategoryArray[key] = audios[subKey];
+                        // audios[subKey].push({id: subKey});
+                        audios[subKey].id = subKey;
                         childArray.push(audios[subKey]);
                     }
                     audioCategoryArray[key] = childArray;
                 }
-
+                console.log('*******audioCategoryArray is********* ', audioCategoryArray);
                 resolve(audioCategoryArray);
             });
 
