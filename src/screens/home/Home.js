@@ -19,22 +19,11 @@ export default class Home extends Component {
 
         this.state = {
             badgeNumber: 0,
-            isDone: false,
         };
     }
 
 
-    onDownloadImagePress = () => {
-        RNFS.downloadFile({
-            fromUrl: 'https://firebasestorage.googleapis.com/v0/b/daily-meditation-dev.appspot.com/o/beginner%2FbeingPresent%2F1?alt=media&token=3edf6e51-a943-4888-b001-2da7d007d1bb',
-            toFile: `${RNFS.DocumentDirectoryPath}/test.mp3`,
-        }).promise.then((r) => {
-            console.log('response is :',r);
-            this.setState({isDone: true})
-        }).catch((err) => {
-            console.log(err.message);
-        });
-    }
+
 
     componentDidMount() {
         reactFirebase.messaging().hasPermission()
@@ -144,30 +133,9 @@ export default class Home extends Component {
 
 
     render() {
-        const preview = this.state.isDone ? (<View>
-
-                    <Video
-                        ref={video => this.player = video}
-                        source={{ uri: `file://${RNFS.DocumentDirectoryPath}/test.mp3`}}
-                        volume={1.0}
-                        paused={this.state.paused}
-                        playInBackground={true}
-                        onLoadStart={this.loadStart}
-                        onLoad={this.setDuration}
-                        onProgress={this.setTime}
-                        onEnd={this.onEnd}
-                        onError={this.videoError}
-                        onBuffer={this.onBuffer}
-                        onTimedMetadata={this.onTimedMetadata}/>
-                </View>
-            ) : <View><Text>downloding...</Text></View>;
         return (
             <View>
-                <Icon
-                    containerStyle={{marginRight:10}}
-                    name='cloud-download'
-                    onPress={this.onDownloadImagePress}/>
-                {preview}
+                <Text>Home</Text>
             </View>
         );
 
