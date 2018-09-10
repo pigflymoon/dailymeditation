@@ -154,10 +154,22 @@ export default class MyMeditation extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        const {isConnected} = nextProps.screenProps;
+        // console.log('music data is :', musicData);
+        if (!isConnected) {
+            this.getDataFromLocalStorage();
+
+        }
+
+    }
 
     render() {
         console.log('music list is :', this.state.musicList);
         const {isLoading, musicList} = this.state;
+        // const {isConnected} = this.props.screenProps;
+
+        // console.log('screenprops isConnected',this.props.screenProps.isConnected);
         if (!musicList) {
 
             return (
@@ -223,7 +235,8 @@ export default class MyMeditation extends Component {
                         size={this.state.size}
                         type="ThreeBounce"
                         color={this.state.color}/></View> :
-                    <SortablePlayList isLoading={isLoading} musicData={musicList} navigate={this.props.navigation}/>}
+                    <SortablePlayList isLoading={isLoading} musicData={musicList}
+                                      navigate={this.props.navigation}/>}
 
 
                 <Overlay

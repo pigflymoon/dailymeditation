@@ -88,7 +88,8 @@ export default class SortablePlayList extends Component {
     componentWillReceiveProps(nextProps) {
         const {musicData, isLoading} = nextProps;
         // console.log('music data is :', musicData);
-        this.setState({musicList: musicData, isLoading: isLoading})
+        this.setState({musicList: musicData, isLoading: isLoading});
+
     }
 
     render() {
@@ -235,25 +236,16 @@ class Row extends Component {
     downloadMusicItem = () => {
         const {musicItem} = this.state;
         this.setState({downloadLoading: true,})
-        ///
-
-
-
-
-
-        ///
         var self = this;
         RNFS.downloadFile({
             fromUrl: musicItem.downloadUrl,
             toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`,
         }).promise.then((r) => {
             console.log('response is :', r, 'music id is: ', musicItem.id);
-            // musicData.isDownloaded = true;
-            //
             RNFS.downloadFile({
                 fromUrl: musicItem.imageDownloadUrl,
                 toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.png`,
-            }).promise.then(()=>{
+            }).promise.then(() => {
 
                 AsyncStorage.getItem("myPlayList")
                     .then(req => {
@@ -270,7 +262,11 @@ class Row extends Component {
                             myList[listIndex].isDownloaded = true;
                             myList[listIndex].downloadUrl = `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`;
                             myList[listIndex].imageDownloadUrl = `${RNFS.DocumentDirectoryPath}/${musicItem.id}.png`;
-                            AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({isDownloaded: true}));
+                            console.log('myList[listIndex] is ', myList[listIndex]);
+                            AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({
+                                isDownloaded: true,
+                                musicItem: myList[listIndex]
+                            }));
                         }
                     });
                 //
@@ -303,6 +299,7 @@ class Row extends Component {
                     var myList = [];
                     myList.push(musicItem)
                 }
+
                 AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({myPlayList: myList}));
 
             });
@@ -314,7 +311,7 @@ class Row extends Component {
     render() {
         const {musicItem, musicItemIndex, isCurrentIndex, showAddTo, showDownload, isDownloaded, downloadLoading} = this.state;
 
-        console.log(' music Item ', musicItem);
+        console.log(' music Item ', musicItem, 'isDownloaded is :', isDownloaded);
 
         return (
             <Animated.View style={[
