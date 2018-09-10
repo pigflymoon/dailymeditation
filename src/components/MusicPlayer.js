@@ -25,6 +25,7 @@ import colors from '../styles/colors';
 // import mockData from '../config/musicList.json';
 import bgCD from '../assets/images/bgCD.png';
 
+
 export default class MusicPlayer extends Component {
 
     constructor(props) {
@@ -390,7 +391,7 @@ export default class MusicPlayer extends Component {
                             })
                         }]
                     }}
-                    source={{uri: musicData.imageDownloadUrl}}/>
+                    source={musicData.imageDownloadUrl}/>
                 <View style={{flex: 1}}>
                     <View
                         style={musicPlayerStyle.iconsContainer}>
@@ -488,7 +489,7 @@ export default class MusicPlayer extends Component {
                 </View>
                 <Video
                     ref={video => this.player = video}
-                    source={{uri: musicData.downloadUrl}}
+                    source={{uri:musicData.downloadUrl}}
                     volume={1.0}
                     paused={this.state.paused}
                     playInBackground={true}

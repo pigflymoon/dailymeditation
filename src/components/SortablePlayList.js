@@ -235,6 +235,14 @@ class Row extends Component {
     downloadMusicItem = () => {
         const {musicItem} = this.state;
         this.setState({downloadLoading: true,})
+        ///
+
+
+
+
+
+        ///
+        var self = this;
         RNFS.downloadFile({
             fromUrl: musicItem.downloadUrl,
             toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`,
@@ -242,25 +250,33 @@ class Row extends Component {
             console.log('response is :', r, 'music id is: ', musicItem.id);
             // musicData.isDownloaded = true;
             //
-            var self = this;
-            AsyncStorage.getItem("myPlayList")
-                .then(req => {
-                    console.log('req is :', req);
-                    return JSON.parse(req)
-                })
-                .then((myList) => {
-                    console.log('save in storage :', myList);
-                    // myList = myList
-                    if (myList) {
-                        //
-                        var listIndex = myList.findIndex(el => el.id === musicItem.id)
-                        console.log('list is download? ', myList[listIndex].isDownloaded);
-                        myList[listIndex].isDownloaded = true;
-                        AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({isDownloaded: true}));
-                    }
-                });
-            //
-            this.setState({downloadLoading: false})
+            RNFS.downloadFile({
+                fromUrl: musicItem.imageDownloadUrl,
+                toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.png`,
+            }).promise.then(()=>{
+
+                AsyncStorage.getItem("myPlayList")
+                    .then(req => {
+                        console.log('req is :', req);
+                        return JSON.parse(req)
+                    })
+                    .then((myList) => {
+                        console.log('save in storage :', myList);
+                        // myList = myList
+                        if (myList) {
+                            //
+                            var listIndex = myList.findIndex(el => el.id === musicItem.id)
+                            console.log('list is download? ', myList[listIndex].isDownloaded);
+                            myList[listIndex].isDownloaded = true;
+                            myList[listIndex].downloadUrl = `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`;
+                            myList[listIndex].imageDownloadUrl = `${RNFS.DocumentDirectoryPath}/${musicItem.id}.png`;
+                            AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({isDownloaded: true}));
+                        }
+                    });
+                //
+                this.setState({downloadLoading: false})
+            })
+
         }).catch((err) => {
             console.log(err.message);
         });
