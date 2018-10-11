@@ -64,7 +64,6 @@ export default class SliderEntry extends Component {
                 <View style={styles.shadow}/>
                 <View style={[styles.imageContainer]}>
                     { this.image }
-                    <View style={[styles.radiusMask]}/>
                 </View>
                 <View style={[styles.textContainer,]}>
                     { slideTitle }

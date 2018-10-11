@@ -21,7 +21,8 @@ import {
 import {sliderWidth, itemWidth} from '../../styles/sliderEntry';
 import unlockModalStyle from '../../styles/unlockModal';
 import colors from '../../styles/colors';
-import BG_IMAGE from '../../assets/images/gradient-bg.png';
+import BG_IMAGE from '../../assets/images/gradient-bg.jpg';
+import authStyle from '../../styles/auth';
 
 
 import layoutStyle from '../../styles/layout';
@@ -179,28 +180,35 @@ export  default class UnLockModal extends Component {
                         />
 
                     </View>
+
                     {this.renderSlide()}
-                    <View>
+
+                    <View style={{flex: 1,   alignItems:'center', justifyContent: 'center',}}>
                         <Button
-                            buttonStyle={unlockModalStyle.button}
-                            containerViewStyle={unlockModalStyle.buttonContainer}
-                            activeOpacity={0.8}
                             title={'Unlock PRO ($2.99)'}
+                            activeOpacity={1}
+                            underlayColor="transparent"
                             onPress={ this.unlockProVersion}
-                            textStyle={unlockModalStyle.buttonText}
                             loading={isLoading}
                             disabled={isLoading}
+                            loadingProps={{size: 'small', color: 'white'}}
+                            buttonStyle={authStyle.button}
+                            containerStyle={{marginVertical: 5}}
+                            titleStyle={{color: 'white'}}
                         />
                         <Button
-                            buttonStyle={[unlockModalStyle.button, unlockModalStyle.restoreButton]}
-                            containerViewStyle={unlockModalStyle.buttonContainer}
-                            activeOpacity={0.8}
                             title={'Restore Purchase'}
+                            activeOpacity={1}
+                            underlayColor="transparent"
                             onPress={ this.restorePurchase}
-                            textStyle={unlockModalStyle.buttonText}
                             loading={isLoading}
                             disabled={isLoading}
+                            loadingProps={{size: 'small', color: 'white'}}
+                            buttonStyle={authStyle.button}
+                            containerStyle={{marginVertical: 5}}
+                            titleStyle={{color: 'white'}}
                         />
+
                     </View>
                 </ScrollView>
             </ImageBackground>

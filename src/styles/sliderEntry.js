@@ -77,7 +77,7 @@ export default{
         paddingTop: 20 - entryBorderRadius,
         paddingBottom: 20,
         paddingHorizontal: 16,
-        backgroundColor: colors.secondary2,
+        backgroundColor: 'transparent',//colors.secondary2,
         borderBottomLeftRadius: entryBorderRadius,
         borderBottomRightRadius: entryBorderRadius
     },

@@ -57,13 +57,13 @@ export default{
         borderRadius: 5,
         height: 50,
         width: 200,
+        marginBottom: 10,
     },
     restoreButton:{
         backgroundColor: colors.secondary2,
     },
     buttonContainer: {
         alignSelf: 'center',
-        marginBottom: 10,
     },
     buttonText: {
         fontSize: 16,

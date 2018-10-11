@@ -6,7 +6,7 @@ import Spinner from 'react-native-spinkit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import imageStyle from '../styles/image'
-import {auth,db} from '../config/FirebaseConfig';
+import {auth, db} from '../config/FirebaseConfig';
 
 import {
     getAudiosByCategoryAndType,
@@ -28,11 +28,23 @@ export default class GridCardView extends Component {
         }
     }
 
-    openAudioModal = (e, audioData, item) => {
+    onUnlock = data => {
+        var unlock = data.unLock;
+        if (unlock === true) {
+            // upDateRole();
+        }
+    };
+
+    openAudioModal = (e, audioData, item, isPaidUser) => {
         // console.log('audioData is ', JSON.stringify(audioData));
         console.log('audioData is ', (audioData));
+        if (isPaidUser) {
+            this.props.navigation.push("PlayList", {audio: audioData});//audioArray
+        } else {
+            this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
 
-        this.props.navigation.push("PlayList", {audio: audioData});//audioArray
+        }
+
 
     }
 
@@ -100,7 +112,6 @@ export default class GridCardView extends Component {
                     </View> : <View>
                         {Object.keys(this.state.audiosData).map(key => {
                             const items = (this.state.audiosData)[key];
-                            console.log('items are **********', items)
                             return (
                                 <GridView
                                     key={key}
@@ -137,16 +148,7 @@ export default class GridCardView extends Component {
         )
     }
 
-    onUnlock = data => {
-        var unlock = data.unLock;
-        if (unlock === true) {
-            // upDateRole();
-        }
-    };
-    onUnLock = () => {
-        this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
 
-    }
     renderCategory = () => {
         const {isPaidUser} = this.state;
 
@@ -167,7 +169,7 @@ export default class GridCardView extends Component {
                             style={imageStyle.gridView}
                             renderItem={item => (
                                 <TouchableHighlight
-                                    onPress={(e) => this.openAudioModal(e, this.state.audiosData, item)}
+                                    onPress={(e) => this.openAudioModal(e, this.state.audiosData, item,isPaidUser)}
                                 >
                                     <ImageBackground style={imageStyle.imageContainer}
                                                      imageStyle={imageStyle.imageRadiusBorder}
