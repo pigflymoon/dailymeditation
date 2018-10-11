@@ -82,6 +82,7 @@ const AuthTab = createStackNavigator({
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Sign Up',
                 headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6},
                 headerLeft: null,
 
             }),
