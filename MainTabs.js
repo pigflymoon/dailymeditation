@@ -14,6 +14,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MeditationScreen from './src/screens/meditation/Meditation';
 //auth
 import SigninScreen from './src/screens/auth/Signin';
+import SignupScreen from './src/screens/auth/Signup';
+
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
@@ -67,12 +69,21 @@ const MeditationTab = createStackNavigator({
 
 
 const AuthTab = createStackNavigator({
-        Meditation: {
+        Signin: {
             screen: SigninScreen,
             navigationOptions: ({navigation, screenProps}) => ({
-                title: 'Signin',
+                title: 'Sign In',
                 headerStyle: {backgroundColor: screenProps.tabBg},
                 headerTitleStyle: {color: colors.grey6}
+            }),
+        },
+        Signup: {
+            screen: SignupScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Sign Up',
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerLeft: null,
+
             }),
         },
 
