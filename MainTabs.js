@@ -98,7 +98,7 @@ const AuthTab = createStackNavigator({
 
             }),
         },
-        Confirm: {
+        ConfirmEmail: {
             screen: ConfirmEmailScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Confirm email',
@@ -140,7 +140,7 @@ const StacksInTabs = createBottomTabNavigator(
                 tabBarLabel: 'Profile',
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
-                        name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
+                        name={focused ? 'ios-person' : 'ios-person-outline'}
                         size={30}
                         style={{color: tintColor}}
                     />
