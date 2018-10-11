@@ -280,7 +280,7 @@ export default class Signin extends Component {
                 titleStyle={authStyle.cardTitle}
 
                 title={this.state.title}
-                image={BG_IMAGE}>
+                >
 
                 <Button
                     title="SIGN OUT"

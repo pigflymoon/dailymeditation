@@ -38,7 +38,7 @@ const MyMeditationTab = createStackNavigator({
         screen: MyMeditationScreen,
         navigationOptions: ({navigation, screenProps}) => ({
             title: 'My Meditation',
-            headerStyle: {backgroundColor: screenProps.tabBg},
+            headerStyle: {backgroundColor: colors.purple},
             headerTitleStyle: {color: colors.grey6}
         }),
     },
@@ -50,7 +50,7 @@ const MeditationTab = createStackNavigator({
             screen: MeditationScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Meditation',
-                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerStyle: {backgroundColor: colors.purple},
                 headerTitleStyle: {color: colors.grey6}
             }),
         },
@@ -58,7 +58,7 @@ const MeditationTab = createStackNavigator({
             screen: PlayListScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Play List',
-                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerStyle: {backgroundColor: colors.purple},
                 headerTitleStyle: {color: colors.grey6},
                 headerTintColor: colors.grey6,
 
@@ -74,7 +74,7 @@ const AuthTab = createStackNavigator({
             screen: SigninScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Sign In',
-                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerStyle: {backgroundColor: colors.purple},
                 headerTitleStyle: {color: colors.grey6}
             }),
         },
@@ -82,7 +82,7 @@ const AuthTab = createStackNavigator({
             screen: SignupScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Sign Up',
-                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerStyle: {backgroundColor: colors.purple},
                 headerTitleStyle: {color: colors.grey6},
                 headerLeft: null,
 
@@ -92,7 +92,7 @@ const AuthTab = createStackNavigator({
             screen: ResetPasswordScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Reset Password',
-                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerStyle: {backgroundColor: colors.purple},
                 headerTitleStyle: {color: colors.grey6},
                 headerLeft: null,
 
@@ -102,7 +102,7 @@ const AuthTab = createStackNavigator({
             screen: ConfirmEmailScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Confirm email',
-                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerStyle: {backgroundColor: colors.purple},
                 headerTitleStyle: {color: colors.grey6},
                 headerLeft: null,
 
@@ -117,7 +117,7 @@ const SettingsTab = createStackNavigator({
         screen: SettingsScreen,
         navigationOptions: ({navigation, screenProps}) => ({
             title: 'Settings',//#F6F6F5
-            headerStyle: {backgroundColor: screenProps.tabBg},
+            headerStyle: {backgroundColor: colors.purple},
             headerTitleStyle: {color: colors.grey6}
 
         }),
@@ -126,7 +126,7 @@ const SettingsTab = createStackNavigator({
         screen: AboutScreen,
         navigationOptions: ({navigation, screenProps}) => ({
             title: 'About',
-            headerStyle: {backgroundColor: screenProps.tabBg},
+            headerStyle: {backgroundColor: colors.purple},
             headerTitleStyle: {color: colors.grey6}
         }),
     },

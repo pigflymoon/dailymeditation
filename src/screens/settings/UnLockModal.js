@@ -21,7 +21,7 @@ import {
 import {sliderWidth, itemWidth} from '../../styles/sliderEntry';
 import unlockModalStyle from '../../styles/unlockModal';
 import colors from '../../styles/colors';
-import BG_IMAGE from '../../assets/images/gradient-bg.jpg';
+import BG_IMAGE from '../../assets/images/gradient-bg1.jpg';
 import authStyle from '../../styles/auth';
 
 

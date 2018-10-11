@@ -98,15 +98,11 @@ export default class App extends Component {
                     currentScreen: this.state.currentScreen,
                     isConnected: this.state.isConnected,
                     currentTab:this.state.currentTab||'MeditationTab',
-                    tabBg:this.props.tabBg
                 }}
                 onNavigationStateChange={(prevState, currentState) => {
                     const currentScreen = this.getCurrentRouteName(currentState);
                     const prevScreen = this.getCurrentRouteName(prevState);
-                    if (prevScreen.screen !== currentScreen.screen) {
-                        this.props.getCurrentTab(currentScreen.tab||'MeditationTab')
-                        this.setState({currentScreen: currentScreen,currentTab:currentScreen.tab})
-                    }
+
                 }}
             />
         )

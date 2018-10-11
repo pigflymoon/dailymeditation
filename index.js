@@ -51,7 +51,7 @@ class Root extends Component {
     render() {
         return (
             <SafeAreaView style={{flex:1,backgroundColor:this.state.tabColor}}>
-                <App tabBg={this.state.tabColor} getCurrentTab={this.handleCurrentTab}/>
+                <App/>
             </SafeAreaView>
 
 
