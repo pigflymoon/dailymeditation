@@ -149,11 +149,11 @@ export default class Signin extends Component {
                         <View style={authStyle.loginView}>
                             <View style={authStyle.loginTitle}>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={authStyle.travelText}>MY PEACEFUL</Text>
+                                    <Text style={authStyle.titleText}>MY PEACEFUL</Text>
                                     <Text style={authStyle.plusText}>+</Text>
                                 </View>
                                 <View style={{marginTop: -10}}>
-                                    <Text style={authStyle.travelText}>PLACE</Text>
+                                    <Text style={authStyle.titleText}>PLACE</Text>
                                 </View>
                             </View>
                             <View style={authStyle.loginInput}>

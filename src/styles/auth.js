@@ -28,7 +28,7 @@ export default {
         justifyContent: 'center',
         alignItems: 'center',
     },
-    travelText: {
+    titleText: {
         color: 'white',
         fontSize: 30,
     },
@@ -56,10 +56,15 @@ export default {
         borderRadius: 30
     },
     formContainer: {
-        backgroundColor: colors.white,
+        backgroundColor: 'transparent',
         width: SCREEN_WIDTH - 30,
         borderRadius: 10,
         padding: 20,
         alignItems: 'center',
+
     },
+    cardTitle:{
+        color: 'white',
+    }
+
 }

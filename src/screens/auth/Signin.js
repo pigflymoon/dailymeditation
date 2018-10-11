@@ -164,11 +164,11 @@ export default class Signin extends Component {
             <View style={authStyle.loginView}>
                 <View style={authStyle.loginTitle}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={authStyle.travelText}>MY PEACEFUL</Text>
+                        <Text style={authStyle.titleText}>MY PEACEFUL</Text>
                         <Text style={authStyle.plusText}>+</Text>
                     </View>
                     <View style={{marginTop: -10}}>
-                        <Text style={authStyle.travelText}>PLACE</Text>
+                        <Text style={authStyle.titleText}>PLACE</Text>
                     </View>
                 </View>
                 <View style={authStyle.loginInput}>
@@ -274,21 +274,27 @@ export default class Signin extends Component {
             showLoading,
         } = this.state;
         return (
+
             <Card
                 containerStyle={[authStyle.formContainer]}
+                titleStyle={authStyle.cardTitle}
+
                 title={this.state.title}
                 image={BG_IMAGE}>
-                <Text style={authStyle.infoText}>
-                    Welcom to Daily Meditation:simple habit
-                </Text>
+
                 <Button
                     title="SIGN OUT"
-                    clear
-                    activeOpacity={0.5}
-                    titleStyle={{color: 'white', fontSize: 15}}
-                    containerStyle={{marginTop: -10}}
+
+                    activeOpacity={1}
+                    underlayColor="transparent"
                     onPress={this.handleSignout}
+                    loading={showLoading}
+                    loadingProps={{size: 'small', color: 'white'}}
+                    buttonStyle={authStyle.button}
+                    containerStyle={{marginVertical: 5}}
+                    titleStyle={{color: 'white'}}
                 />
+
             </Card>
         )
 

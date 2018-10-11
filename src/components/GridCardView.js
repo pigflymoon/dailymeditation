@@ -6,6 +6,7 @@ import Spinner from 'react-native-spinkit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import imageStyle from '../styles/image'
+import {auth,db} from '../config/FirebaseConfig';
 
 import {
     getAudiosByCategoryAndType,
@@ -23,6 +24,7 @@ export default class GridCardView extends Component {
             isLoading: true,
             color: "#FFFFFF",
             size: 100,
+            isPaidUser: false,
         }
     }
 
@@ -68,6 +70,21 @@ export default class GridCardView extends Component {
         });
 
 
+    }
+
+    async componentDidMount() {
+        var self = this;
+        auth.onAuthStateChanged(function (authUser) {
+            if (authUser) {
+                var userId = auth.currentUser.uid;
+                db.ref('/users/' + userId).once('value').then(function (snapshot) {
+                    var userrole = (snapshot.val() && snapshot.val().role) || {free_user: true, paid_user: false};
+                    var isPaidUser = userrole.paid_user;
+                    self.setState({signin: true, authUser, isPaidUser: isPaidUser});
+
+                });
+            }
+        });
     }
 
     renderBeginner = () => {
@@ -130,8 +147,10 @@ export default class GridCardView extends Component {
         this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
 
     }
-    renderCategory = (isPaidUser) => {
-        console.log('isPaidUser: ',isPaidUser);
+    renderCategory = () => {
+        const {isPaidUser} = this.state;
+
+        console.log('isPaidUser: ', isPaidUser);
         return (
             <View>
                 {this.state.isLoading ?
@@ -157,8 +176,7 @@ export default class GridCardView extends Component {
                                                         start={{x: 0.5, y: 0.4}}
                                                         style={imageStyle.imageGradient}>
                                             <View style={imageStyle.text}>
-                                            {}
-                                            <Ionicons name="ios-lock-outline"  size={25} style={{ position: 'absolute', top: 30, left: 10 }} />
+                                            {!isPaidUser&&<Ionicons name="ios-lock-outline"  size={25} style={{ position: 'absolute', top: 30, left: 10 }} />}
                                                 <Text style={imageStyle.title}>{item.audioType}</Text>
                                                 <Text style={imageStyle.subtitle}>{item.name}</Text>
                                             </View>
@@ -176,12 +194,12 @@ export default class GridCardView extends Component {
     }
 
     render() {
-        const {category,isPaidUser} = this.props;
-        console.log('category',category);
+        const {category, isPaidUser} = this.props;
+        console.log('category', category);
         return (
             <View>
                 {
-                    (category == 'beginner' ? this.renderBeginner() : this.renderCategory(isPaidUser))
+                    (category == 'beginner' ? this.renderBeginner() : this.renderCategory())
                 }
 
             </View>
