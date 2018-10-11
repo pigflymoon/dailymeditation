@@ -11,6 +11,7 @@
     "flow": "flow"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "firebase": "^5.3.1",
     "react": "16.4.1",
     "react-native": "0.56.0",
@@ -20,6 +21,7 @@
     "react-native-fs": "^2.11.15",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-scrollable-tab-view": "git+https://github.com/pigflymoon/react-native-scrollable-tab-view.git",
+    "react-native-snap-carousel": "^3.7.5",
     "react-native-sortable-list": "0.0.22",
     "react-native-spinkit": "^1.1.1",
     "react-native-super-grid": "^2.4.1",

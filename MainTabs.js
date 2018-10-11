@@ -23,6 +23,7 @@ import PlayListScreen from './src/components/PlayList';
 import MyMeditationScreen from './src/screens/myMeditation/MyMeditation';
 
 import CustomTabBar from './src/components/CustomTabBar';
+import UnLockModalScreen from './src/screens/settings/UnLockModal';
 
 import colors from './src/styles/colors';
 
@@ -155,6 +156,12 @@ const StacksOverTabs = createStackNavigator({
             screen: MusicPlayerScreen,
             navigationOptions: {
                 title: 'Meditation Music Player',
+            },
+        },
+        UnLock: {
+            screen: UnLockModalScreen,
+            navigationOptions: {
+                title: 'UnLock',
             },
         },
 

@@ -3,12 +3,16 @@ import {StyleSheet, View, Text, Image, ImageBackground, TouchableHighlight} from
 import GridView from 'react-native-super-grid';
 import LinearGradient from 'react-native-linear-gradient';
 import Spinner from 'react-native-spinkit';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import imageStyle from '../styles/image'
 
 import {
     getAudiosByCategoryAndType,
 } from '../utils/FetchAudiosByApi';
+import {
+    upDateRole
+} from '../utils/AppPay';
 
 export default class GridCardView extends Component {
     constructor(props) {
@@ -116,7 +120,18 @@ export default class GridCardView extends Component {
         )
     }
 
-    renderCategory = () => {
+    onUnlock = data => {
+        var unlock = data.unLock;
+        if (unlock === true) {
+            // upDateRole();
+        }
+    };
+    onUnLock = () => {
+        this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
+
+    }
+    renderCategory = (isPaidUser) => {
+        console.log('isPaidUser: ',isPaidUser);
         return (
             <View>
                 {this.state.isLoading ?
@@ -142,6 +157,8 @@ export default class GridCardView extends Component {
                                                         start={{x: 0.5, y: 0.4}}
                                                         style={imageStyle.imageGradient}>
                                             <View style={imageStyle.text}>
+                                            {}
+                                            <Ionicons name="ios-lock-outline"  size={25} style={{ position: 'absolute', top: 30, left: 10 }} />
                                                 <Text style={imageStyle.title}>{item.audioType}</Text>
                                                 <Text style={imageStyle.subtitle}>{item.name}</Text>
                                             </View>
@@ -159,11 +176,12 @@ export default class GridCardView extends Component {
     }
 
     render() {
-        const {category} = this.props;
+        const {category,isPaidUser} = this.props;
+        console.log('category',category);
         return (
             <View>
                 {
-                    (category == 'beginner' ? this.renderBeginner() : this.renderCategory())
+                    (category == 'beginner' ? this.renderBeginner() : this.renderCategory(isPaidUser))
                 }
 
             </View>
