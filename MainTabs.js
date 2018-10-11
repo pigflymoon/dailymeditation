@@ -12,6 +12,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // import HomeScreen from './src/screens/home/Home';
 //Meditation
 import MeditationScreen from './src/screens/meditation/Meditation';
+//auth
+import SigninScreen from './src/screens/auth/Signin';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
@@ -63,6 +65,20 @@ const MeditationTab = createStackNavigator({
     }
 );
 
+
+const AuthTab = createStackNavigator({
+        Meditation: {
+            screen: SigninScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Signin',
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6}
+            }),
+        },
+
+
+    }
+);
 const SettingsTab = createStackNavigator({
     Settings: {
         screen: SettingsScreen,
@@ -85,6 +101,20 @@ const SettingsTab = createStackNavigator({
 
 const StacksInTabs = createBottomTabNavigator(
     {
+        AuthTab: {
+            screen: AuthTab,
+            navigationOptions: {
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
+
         MeditationTab: {
             screen: MeditationTab,
             navigationOptions: {
