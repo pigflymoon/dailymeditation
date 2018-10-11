@@ -17,7 +17,8 @@ import SortableList from 'react-native-sortable-list';
 import {Overlay, ListItem, Icon, Button} from 'react-native-elements';
 // import Spinner from 'react-native-spinkit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import  Utils from '../utils/utils';
+import  Utils from '../utils/utils';
+import Config from '../config/ApiConfig';
 
 import colors from '../styles/colors';
 import sortableListStyle from '../styles/sortableList';
@@ -85,9 +86,17 @@ export default class SortablePlayList extends Component {
         this.setState({musicListVisible: value, deleteIndex: deleteIndex, musicData: data});
     }
 
+    onShare = () => {
+        var deleteIndex = this.state.deleteIndex;
+        var musitItem = this.state.musicList[deleteIndex]
+        console.log('item is :',musitItem);
+        const message = `I am using Daily Meditation:Simple Habit.Share this ${musitItem.name} with you,Namaste`
+        const url = Config.share.applestoreUrl;
+        Utils.shareText(message, url)
+    }
+
     componentWillReceiveProps(nextProps) {
         const {musicData, isLoading} = nextProps;
-        // console.log('music data is :', musicData);
         this.setState({musicList: musicData, isLoading: isLoading});
 
     }
@@ -127,18 +136,12 @@ export default class SortablePlayList extends Component {
                         </View>
                         <View style={{flex: 1,  flexDirection: 'column'}}>
                             <ListItem
-                                leftIcon={{name: 'ios-musical-note',type: 'ionicon',color: colors.purple3}}
-                                title={`Next`}
-                                titleStyle={{color: colors.purple3,}}
-                                containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
-                                bottomDivider
-                            />
-                            <ListItem
                                 leftIcon={{name: 'ios-share-outline',type: 'ionicon',color: colors.purple3}}
                                 title={`Share`}
                                 titleStyle={{color: colors.purple3,}}
                                 containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
                                 bottomDivider
+                                onPress={this.onShare}
                             />
                             {type != 'playlist' ? <ListItem
                                     leftIcon={{name: 'ios-remove-circle-outline',type: 'ionicon',color: colors.purple3}}

@@ -4,6 +4,8 @@ import {
     Alert,
     ImageBackground,
     View,
+    Share as NativeShare,
+
 } from 'react-native';
 import {Text, Card} from 'react-native-elements';
 
@@ -12,6 +14,23 @@ import bg from '../assets/images/noWifiBg.png';
 
 
 export default class Utils {
+
+    static shareText = (message, url) => {
+        var shareText = {
+            title: 'Cardmaker App,love and share!',
+            message: message,
+            url: url,
+            // image: imageUrl,
+
+
+        };
+        NativeShare.share(shareText, {
+            // Android only:
+            dialogTitle: 'Cardmaker App',
+            // iOS only:
+
+        })
+    }
     static netWorkError = () => {
         Alert.alert(
             'Network unavailable',

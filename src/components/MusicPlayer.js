@@ -24,6 +24,8 @@ import musicPlayerStyle from '../styles/musicPlayer';
 import colors from '../styles/colors';
 // import mockData from '../config/musicList.json';
 import bgCD from '../assets/images/bgCD.png';
+import  Utils from '../utils/utils';
+import Config from '../config/ApiConfig';
 
 
 export default class MusicPlayer extends Component {
@@ -251,6 +253,15 @@ export default class MusicPlayer extends Component {
         this.setState({musicListVisible: true})
     }
 
+    onShare = (musicData) => {
+        // var deleteIndex = this.state.deleteIndex;
+        // var musitItem = this.state.musicList[deleteIndex]
+        // console.log('item is :',musitItem);
+        const message = `I am using Daily Meditation:Simple Habit.Share this ${musicData.name} with you,Namaste`
+        const url = Config.share.applestoreUrl;
+        Utils.shareText(message, url)
+    }
+
     renderValue(user) {
         const {value, positive} = user;
 
@@ -366,7 +377,7 @@ export default class MusicPlayer extends Component {
                             name={'ios-share-outline'}
                             size={30}
                             color={colors.white}
-                            onPress={() => alert('pop')}
+                            onPress={()=>this.onShare(musicData)}
                         />
                     </View>
                 </View>
@@ -393,22 +404,7 @@ export default class MusicPlayer extends Component {
                     }}
                     source={musicData.imageDownloadUrl}/>
                 <View style={{flex: 1}}>
-                    <View
-                        style={musicPlayerStyle.iconsContainer}>
-                        <Ionicons
-                            style={{marginTop: 5}}
-                            name={'ios-heart-outline'}
-                            size={26}
-                            color={colors.white}
-                        />
-                        <Ionicons
-                            style={{marginTop: 5}}
-                            name={'ios-download-outline'}
-                            size={26}
-                            color={colors.white}
-                        />
 
-                    </View>
                     <View style={musicPlayerStyle.progressStyle}>
                         <Text
                             style={{
