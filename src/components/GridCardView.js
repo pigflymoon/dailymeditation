@@ -66,7 +66,7 @@ export default class GridCardView extends Component {
 
     }
 
-    render() {
+    renderBeginner = () => {
         return (
             <View>
                 {this.state.isLoading ?
@@ -113,7 +113,61 @@ export default class GridCardView extends Component {
                     </View>
                 }
             </View>
+        )
+    }
 
-        );
+    renderCategory = () => {
+        return (
+            <View>
+                {this.state.isLoading ?
+                    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner
+                        style={{ marginBottom: 50}}
+                        isVisible={this.state.isLoading}
+                        size={this.state.size}
+                        type="ThreeBounce"
+                        color={this.state.color}/>
+                    </View> : <View>
+                        <GridView
+                            itemDimension={130}
+                            items={this.state.audiosData}
+                            style={imageStyle.gridView}
+                            renderItem={item => (
+                                <TouchableHighlight
+                                    onPress={(e) => this.openAudioModal(e, this.state.audiosData, item)}
+                                >
+                                    <ImageBackground style={imageStyle.imageContainer}
+                                                     imageStyle={imageStyle.imageRadiusBorder}
+                                                     source={{uri: item.imageDownloadUrl}}>
+                                        <LinearGradient colors={['transparent', 'black']}
+                                                        start={{x: 0.5, y: 0.4}}
+                                                        style={imageStyle.imageGradient}>
+                                            <View style={imageStyle.text}>
+                                                <Text style={imageStyle.title}>{item.audioType}</Text>
+                                                <Text style={imageStyle.subtitle}>{item.name}</Text>
+                                            </View>
+                                        </LinearGradient>
+                                    </ImageBackground>
+                                </TouchableHighlight>
+
+
+                            )}
+                        />
+                    </View>
+                }
+            </View>
+        )
+    }
+
+    render() {
+        const {category} = this.props;
+        return (
+            <View>
+                {
+                    (category == 'beginner' ? this.renderBeginner() : this.renderCategory())
+                }
+
+            </View>
+        )
+
     }
 }

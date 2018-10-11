@@ -9,7 +9,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //Home
-import HomeScreen from './src/screens/home/Home';
+// import HomeScreen from './src/screens/home/Home';
 //Meditation
 import MeditationScreen from './src/screens/meditation/Meditation';
 //Settings
@@ -32,17 +32,6 @@ const MyMeditationTab = createStackNavigator({
         screen: MyMeditationScreen,
         navigationOptions: ({navigation, screenProps}) => ({
             title: 'My Meditation',
-            headerStyle: {backgroundColor: screenProps.tabBg},
-            headerTitleStyle: {color: colors.grey6}
-        }),
-    },
-});
-const HomeTab = createStackNavigator({
-
-    Home: {
-        screen: HomeScreen,
-        navigationOptions: ({navigation, screenProps}) => ({
-            title: 'Home',
             headerStyle: {backgroundColor: screenProps.tabBg},
             headerTitleStyle: {color: colors.grey6}
         }),
@@ -95,33 +84,6 @@ const SettingsTab = createStackNavigator({
 
 const StacksInTabs = createBottomTabNavigator(
     {
-        MyMeditationTab: {
-            screen: MyMeditationTab,
-            navigationOptions: {
-                tabBarLabel: 'My Meditation List',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-flower' : 'ios-flower-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-        },
-        HomeTab: {
-            screen: HomeTab,
-            navigationOptions: {
-                tabBarLabel: 'Home',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-home' : 'ios-home-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-        },
-
         MeditationTab: {
             screen: MeditationTab,
             navigationOptions: {
@@ -135,6 +97,21 @@ const StacksInTabs = createBottomTabNavigator(
                 ),
             },
         },
+
+        MyMeditationTab: {
+            screen: MyMeditationTab,
+            navigationOptions: {
+                tabBarLabel: 'My Meditation List',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-flower' : 'ios-flower-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
+
 
         SettingsTab: {
             screen: SettingsTab,
