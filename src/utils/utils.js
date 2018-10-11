@@ -15,6 +15,16 @@ import bg from '../assets/images/noWifiBg.png';
 
 export default class Utils {
 
+    static validateEmail = (email) => {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        return re.test(email);
+    }
+
+    static validPassword = (password)=>{
+        var re = /^.{4,8}$/;
+        return re.test(password);
+    }
     static shareText = (message, url) => {
         var shareText = {
             title: 'Cardmaker App,love and share!',
@@ -31,6 +41,18 @@ export default class Utils {
 
         })
     }
+
+    static infoAlert = (title,info) => {
+        Alert.alert(
+            `${title}`,
+            `${info}`,
+            [
+                {text: 'OK'},
+            ],
+            {cancelable: false}
+        )
+    }
+
     static netWorkError = () => {
         Alert.alert(
             'Network unavailable',

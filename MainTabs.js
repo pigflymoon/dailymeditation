@@ -15,7 +15,8 @@ import MeditationScreen from './src/screens/meditation/Meditation';
 //auth
 import SigninScreen from './src/screens/auth/Signin';
 import SignupScreen from './src/screens/auth/Signup';
-
+import ResetPasswordScreen from './src/screens/auth/ResetPassword';
+import ConfirmEmailScreen from './src/screens/auth/ConfirmEmail';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
@@ -81,6 +82,26 @@ const AuthTab = createStackNavigator({
             screen: SignupScreen,
             navigationOptions: ({navigation, screenProps}) => ({
                 title: 'Sign Up',
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6},
+                headerLeft: null,
+
+            }),
+        },
+        ResetPassword: {
+            screen: ResetPasswordScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Reset Password',
+                headerStyle: {backgroundColor: screenProps.tabBg},
+                headerTitleStyle: {color: colors.grey6},
+                headerLeft: null,
+
+            }),
+        },
+        Confirm: {
+            screen: ConfirmEmailScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Confirm email',
                 headerStyle: {backgroundColor: screenProps.tabBg},
                 headerTitleStyle: {color: colors.grey6},
                 headerLeft: null,

@@ -1,44 +1,147 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ImageBackground, Dimensions} from 'react-native';
-import {Input, Button} from 'react-native-elements'
+import {
+    Input, Button, Card,
+} from 'react-native-elements'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
+import {auth} from '../../config/FirebaseConfig';
+import  Utils from '../../utils/utils';
 
-import BG_IMAGE from '../../assets/images/2.jpg';
+import colorStyle from '../../styles/colors';
+import authStyle from '../../styles/auth';
+import BG_IMAGE from '../../assets/images/authBg.jpg';
 
 export default class Signin extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            fontLoaded: false,
+            showSignBox: true,
+            welcomeCard: false,
+
             email: '',
             email_valid: true,
             password: '',
+            password_valid: true,
             login_failed: false,
-            showLoading: false
+            showLoading: false,
+            errorMessage: false,
+            validateEmailInfo: 'Please enter a valid email address',
+            validatePasswordInfo: 'Please enter a valid password',
+            validateNameMessage: 'Please enter a valid name',
         };
     }
 
     async componentDidMount() {
-        this.setState({fontLoaded: true});
+        var self = this;
+        // var user = auth.currentUser;
+
+        auth.onAuthStateChanged(function (user) {
+            if (user) {
+                var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
+                var title  = `Hi ${displayName}, welcome to daily meditation:simple habit`
+
+                self.setState({
+                    user: user,
+                    signin: true,
+                    welcomeCard: true,
+                    showSignBox: false,
+                    title: title,
+                    //
+                })
+
+            }
+        })
     }
 
-    validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        return re.test(email);
+    handleSignin = (e) => {
+        var self = this;
+        e.preventDefault();
+        const {
+            email,
+            password,
+        } = this.state;
+
+
+        this.setState({showLoading: true});
+
+        setTimeout(() => {
+            auth.signInWithEmailAndPassword(email, password)
+                .then(function () {
+                    auth.onAuthStateChanged(function (user) {
+                        if (user) {
+                            var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
+                            var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
+                            self.setState({
+                                showLoading: false,
+                                user: user,
+                                signin: true,
+                                welcomeCard: true,
+                                showSignBox: false,
+                                title: title,
+                                //
+                            })
+
+                        } else {
+                            self.setState({showLoading: false});
+                        }
+                    })
+                })
+                .catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    switch (errorCode) {
+                        case 'auth/invalid-email':
+                        case 'auth/user-disabled':
+                        case 'auth/operation-not-allowed':
+                        case 'auth/user-not-found':
+                        case 'auth/wrong-password':
+                            self.setState({
+                                errorMessage: errorMessage,
+                                showLoading: false
+                            });
+                            break;
+                        default:
+                            self.setState({
+                                errorMessage: 'Error',
+                                showLoading: false,
+                            });
+                    }
+                });
+            //
+
+        }, 1500);
+
+
     }
 
-    submitLoginCredentials() {
-        const {showLoading} = this.state;
+    handleSignout = () => {
+        var self = this;
+        this.setState({showLoading: true});
+        // Simulate an API call
+        setTimeout(() => {
+            // LayoutAnimation.easeInEaseOut();
+            auth.signOut().then(function () {
+                // Sign-out successful.
+                self.setState({
+                    showLoading: false,
+                    showSignBox: true,
+                    welcomeCard: false,
+                })
+            }).catch(function (error) {
+                // An error happened.
+                var errorMessage = error.message;
+                self.setState({
+                    errorMessage: errorMessage,
+                });
+            });
 
-        this.setState({
-            showLoading: !showLoading
-        });
+        }, 1500);
+
     }
 
     navigateToResetPassword = () => {
@@ -47,156 +150,164 @@ export default class Signin extends Component {
     navigateToSignup = () => {
         this.props.navigation.navigate('Signup', {});
     }
+    setEmail = (text) => {
+        this.setState({errorMessage: '', email: text});
+    }
 
-    render() {
-        const {email, password, email_valid, showLoading} = this.state;
+    setPassword = (text) => {
+        this.setState({errorMessage: '', password: text});
+    }
+    renderSignBox = () => {
+        const {email, password, email_valid, password_valid, showLoading} = this.state;
 
         return (
-            <View style={styles.container}>
-                <ImageBackground
-                    source={BG_IMAGE}
-                    style={styles.bgImage}
-                >
-                    { this.state.fontLoaded ?
-                        <View style={styles.loginView}>
-                            <View style={styles.loginTitle}>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Text style={styles.travelText}>TRAVEL</Text>
-                                    <Text style={styles.plusText}>+</Text>
-                                </View>
-                                <View style={{marginTop: -10}}>
-                                    <Text style={styles.travelText}>LEISURE</Text>
-                                </View>
-                            </View>
-                            <View style={styles.loginInput}>
-                                <Input
-                                    leftIcon={
+            <View style={authStyle.loginView}>
+                <View style={authStyle.loginTitle}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={authStyle.travelText}>MY PEACEFUL</Text>
+                        <Text style={authStyle.plusText}>+</Text>
+                    </View>
+                    <View style={{marginTop: -10}}>
+                        <Text style={authStyle.travelText}>PLACE</Text>
+                    </View>
+                </View>
+                <View style={authStyle.loginInput}>
+                    <Input
+                        leftIcon={
                   <Icon
-                    name='user-o'
+                    name='envelope-o'
                     color='rgba(171, 189, 219, 1)'
                     size={25}
                   />
                 }
-                                    containerStyle={{marginVertical: 10}}
-                                    onChangeText={email => this.setState({email})}
-                                    value={email}
-                                    inputStyle={{marginLeft: 10, color: 'white'}}
-                                    keyboardAppearance="light"
-                                    placeholder="Email"
-                                    autoFocus={false}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    keyboardType="email-address"
-                                    returnKeyType="next"
-                                    ref={ input => this.emailInput = input }
-                                    onSubmitEditing={() => {
-                  this.setState({email_valid: this.validateEmail(email)});
+                        containerStyle={{marginVertical: 5}}
+                        onChangeText={(email) => this.setEmail(email)}
+                        value={email}
+                        inputStyle={{marginLeft: 10, color: 'white'}}
+                        keyboardAppearance="light"
+                        placeholder="Email"
+                        autoFocus={false}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="email-address"
+                        returnKeyType="next"
+                        ref={ input => this.emailInput = input }
+                        onSubmitEditing={() => {
+                  this.setState({email_valid: Utils.validateEmail(email)});
                   this.passwordInput.focus();
                 }}
-                                    blurOnSubmit={false}
-                                    placeholderTextColor="white"
-                                    errorStyle={{textAlign: 'center', fontSize: 12}}
-                                    errorMessage={email_valid ? null : "Please enter a valid email address"}
-                                />
-                                <Input
-                                    leftIcon={
+                        blurOnSubmit={false}
+                        placeholderTextColor="white"
+                        errorStyle={{textAlign: 'center', fontSize: 12}}
+                        errorMessage={email_valid ? null : "Please enter a valid email address"}
+                    />
+                    <Input
+                        leftIcon={
                   <Icon
                     name='lock'
                     color='rgba(171, 189, 219, 1)'
                     size={25}
                   />
                 }
-                                    containerStyle={{marginVertical: 10}}
-                                    onChangeText={(password) => this.setState({password})}
-                                    value={password}
-                                    inputStyle={{marginLeft: 10, color: 'white'}}
-                                    secureTextEntry={true}
-                                    keyboardAppearance="light"
-                                    placeholder="Password"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    keyboardType="default"
-                                    returnKeyType="done"
-                                    ref={ input => this.passwordInput = input}
-                                    blurOnSubmit={true}
-                                    placeholderTextColor="white"
-                                />
-                            </View>
-                            <Button
-                                title='LOG IN'
-                                activeOpacity={1}
-                                underlayColor="transparent"
-                                onPress={this.submitLoginCredentials.bind(this)}
-                                loading={showLoading}
-                                loadingProps={{size: 'small', color: 'white'}}
-                                disabled={ !email_valid && password.length < 8}
-                                buttonStyle={{height: 50, width: 250, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
-                                containerStyle={{marginVertical: 10}}
-                                titleStyle={{color: 'white'}}
-                            />
-                            <View style={styles.footerView}>
-                                <Text style={{color: 'grey'}}>
-                                    New here?
-                                </Text>
-                                <Button
-                                    title="Create an Account"
-                                    clear
-                                    activeOpacity={0.5}
-                                    titleStyle={{color: 'white', fontSize: 15}}
-                                    containerStyle={{marginTop: -10}}
-                                    onPress={this.navigateToSignup}
-                                />
-                            </View>
-                        </View> :
-                        <Text>Loading...</Text>
-                    }
+                        containerStyle={{marginVertical: 5}}
+                        onChangeText={(password) => this.setPassword(password)}
+                        onSubmitEditing={() => {
+                  this.setState({password_valid: Utils.validPassword(password)});
+                  this.passwordInput.focus();
+                }}
+                        value={password}
+                        inputStyle={{marginLeft: 10, color: 'white'}}
+                        secureTextEntry={true}
+                        keyboardAppearance="light"
+                        placeholder="Password"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="default"
+                        returnKeyType="done"
+                        ref={ input => this.passwordInput = input}
+                        blurOnSubmit={true}
+                        placeholderTextColor="white"
+                        errorStyle={{textAlign: 'center', fontSize: 12}}
+                        errorMessage={password_valid ? null : "Please enter a valid password"}
+                    />
+                </View>
+                <Button
+                    title='LOG IN'
+                    activeOpacity={1}
+                    underlayColor="transparent"
+                    onPress={this.handleSignin}
+                    loading={showLoading}
+                    loadingProps={{size: 'small', color: 'white'}}
+                    disabled={ !email_valid && password.length < 6}
+                    buttonStyle={authStyle.button}
+                    containerStyle={{marginVertical: 5}}
+                    titleStyle={{color: 'white'}}
+                />
+                <View style={authStyle.footerView}>
+                    <Text style={{color: colorStyle.white}}>
+                        New here?
+                    </Text>
+                    <Button
+                        title="Create an Account"
+                        clear
+                        activeOpacity={0.5}
+                        titleStyle={{color: 'white', fontSize: 15}}
+                        containerStyle={{marginTop: -10}}
+                        onPress={this.navigateToSignup}
+                    />
+
+                    <Button
+                        title="Forgot password?"
+                        clear
+                        activeOpacity={0.5}
+                        titleStyle={{color: 'white', fontSize: 15}}
+                        containerStyle={{marginTop: -10}}
+                        onPress={this.navigateToResetPassword}
+                    />
+                </View>
+            </View>
+        )
+    }
+
+    renderWelcomeBox = () => {
+        const {
+            showLoading,
+        } = this.state;
+        return (
+            <Card
+                containerStyle={[authStyle.formContainer]}
+                title={this.state.title}
+                image={BG_IMAGE}>
+                <Text style={authStyle.infoText}>
+                    Welcom to Daily Meditation:simple habit
+                </Text>
+                <Button
+                    title="SIGN OUT"
+                    clear
+                    activeOpacity={0.5}
+                    titleStyle={{color: 'white', fontSize: 15}}
+                    containerStyle={{marginTop: -10}}
+                    onPress={this.handleSignout}
+                />
+            </Card>
+        )
+
+    }
+
+    render() {
+
+        return (
+            <View style={authStyle.container}>
+                <ImageBackground
+                    source={BG_IMAGE}
+                    style={authStyle.bgImage}
+                >
+                    {this.state.showSignBox && this.renderSignBox()}
+                    {this.state.welcomeCard && this.renderWelcomeBox()}
+
                 </ImageBackground>
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    bgImage: {
-        flex: 1,
-        top: 0,
-        left: 0,
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    loginView: {
-        marginTop: 150,
-        backgroundColor: 'transparent',
-        width: 250,
-        height: 400,
-    },
-    loginTitle: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    travelText: {
-        color: 'white',
-        fontSize: 30,
-    },
-    plusText: {
-        color: 'white',
-        fontSize: 30,
-    },
-    loginInput: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    footerView: {
-        marginTop: 20,
-        flex: 0.5,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});
