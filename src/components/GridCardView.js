@@ -119,7 +119,7 @@ export default class GridCardView extends Component {
                                     style={imageStyle.gridView}
                                     renderItem={item => (
                                 <TouchableHighlight
-                                    onPress={(e) => this.openAudioModal(e, items, item)}
+                                    onPress={(e) => this.openAudioModal(e, items, item,true)}
                                 >
                                     <ImageBackground style={imageStyle.imageContainer}
                                                      imageStyle={imageStyle.imageRadiusBorder}

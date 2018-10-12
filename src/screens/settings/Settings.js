@@ -248,6 +248,7 @@ export default class Settings extends Component {
                         hideChevron
                         title='Version'
                         subtitle={this.state.version}
+                        bottomDivider
                     />
                 </View>
             </ScrollView>
