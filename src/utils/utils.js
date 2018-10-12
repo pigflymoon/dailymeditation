@@ -4,6 +4,7 @@ import {
     Alert,
     ImageBackground,
     View,
+    Linking,
     Share as NativeShare,
 
 } from 'react-native';
@@ -14,7 +15,23 @@ import bg from '../assets/images/noWifiBg.png';
 
 
 export default class Utils {
+    static goToURL = (url) => {
+        Linking.canOpenURL(url).then(supported => {
+            if (supported) {
+                Linking.openURL(url);
+            } else {
+                Alert.alert(
+                    'Network unavailable',
+                    'Don\'t know how to open URI:  ${ url}',
+                    [
+                        {text: 'OK'},
+                    ],
+                    {cancelable: false}
+                )
 
+            }
+        });
+    }
     static validateEmail = (email) => {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

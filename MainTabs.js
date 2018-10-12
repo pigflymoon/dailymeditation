@@ -127,13 +127,29 @@ const SettingsTab = createStackNavigator({
         navigationOptions: ({navigation, screenProps}) => ({
             title: 'About',
             headerStyle: {backgroundColor: colors.purple},
-            headerTitleStyle: {color: colors.grey6}
+            headerTitleStyle: {color: colors.grey6},
+            headerTintColor: colors.white,
         }),
     },
 });
 
 const StacksInTabs = createBottomTabNavigator(
     {
+        SettingsTab: {
+            screen: SettingsTab,
+            navigationOptions: {
+                tabBarLabel: 'Settings',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-settings' : 'ios-settings-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+
+        },
+
         AuthTab: {
             screen: AuthTab,
             navigationOptions: {
@@ -176,21 +192,6 @@ const StacksInTabs = createBottomTabNavigator(
             },
         },
 
-
-        SettingsTab: {
-            screen: SettingsTab,
-            navigationOptions: {
-                tabBarLabel: 'Settings',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-settings' : 'ios-settings-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-
-        },
 
 
     },

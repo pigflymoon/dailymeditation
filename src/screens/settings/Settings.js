@@ -14,6 +14,7 @@ import {
     Image,
     ImageBackground,
     AsyncStorage,
+    Switch,
 
 } from 'react-native';
 
@@ -34,7 +35,8 @@ import {
 
 import Config from '../../config/ApiConfig';
 import Utils from '../../utils/utils';
-
+import baseStyle from '../../styles/base';
+import screenStyle from '../../styles/screen';
 import colors from '../../styles/colors';
 import listStyle from '../../styles/list';
 export default class Settings extends Component {
@@ -121,7 +123,7 @@ export default class Settings extends Component {
 
     onUnlock = data => {
         var unlock = data.unLock;
-
+        var unlock = true;
         if (unlock === true) {
             this.setState({
                 showProData: true,
@@ -174,9 +176,9 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <ScrollView style={{backgroundColor:'transparent'}}>
-                <View>
+            <ScrollView style={[baseStyle.container, screenStyle.screenBgPurple]}>
 
+                <View>
                     <ImageBackground
                         source={this.state.bgImage}
                         style={{
@@ -184,72 +186,84 @@ export default class Settings extends Component {
                             height: 120,
 
                         }}>
-                        <View style={listStyle.list}>
-                            <ListItem
-                                containerStyle={{borderBottomWidth: 0,}}
-                                hideChevron
-                                leftIcon={{name: 'vpn-key', color: colors.green}}
-                                title='Unlock Pro Version'
-                                titleStyle={{color: colors.green, fontWeight: 'bold'}}
-                                switchOnTintColor={colors.green}
-                                switchTintColor={colors.green}
-                                switchButton
-                                onSwitch={this.toggleUnlockSwitch}
-                                switched={this.state.unlock}
-                            />
-                        </View>
+
                     </ImageBackground>
                 </View>
                 <View style={listStyle.list}>
                     <ListItem
-                        containerStyle={listStyle.listItem}
+                        switch={{
+                                value: this.state.unlock,
+                                onValueChange: this.toggleUnlockSwitch,
+                                }}
+                        containerStyle={listStyle.listItemContainer}
+                        hideChevron
+                        leftIcon={{name: 'vpn-key', color: colors.purple1}}
+                        title='Unlock Pro Version'
+                        titleStyle={{color: colors.purple1, fontWeight: 'bold'}}
+
+
+                    />
+                    <ListItem
+                        containerStyle={listStyle.listItemContainer}
+                        bottomDivider
                         leftIcon={{name: 'refresh', color: colors.green}}
                         title='Restore Purchase'
+                        titleStyle={{color: colors.white}}
+
                         onPress={this.restorePurchase}
                         hideChevron
                     />
                     <ListItem
-                        containerStyle={listStyle.listItem}
+                        containerStyle={listStyle.listItemContainer}
                         leftIcon={{name: 'wb-incandescent', color: this.state.versionColor}}
                         title='PRO Version'
                         titleStyle={this.titleStyle()}
                         rightTitle={this.state.isPro}
                         rightTitleStyle={this.titleStyle()}
                         hideChevron
-                    />
-                </View>
-                <View style={listStyle.list}>
+                        bottomDivider/>
                     <ListItem
-                        containerStyle={listStyle.listItem}
+                        containerStyle={listStyle.listItemContainer}
+                        titleStyle={{color: colors.white}}
+
                         leftIcon={{name: 'favorite', color: colors.red}}
                         title='Rate on the App Store'
                         onPress={() => this.onRate()}
                         hideChevron
+                        bottomDivider
                     />
                     <ListItem
-                        containerStyle={listStyle.listItem}
-                        leftIcon={{name: 'chat', color: colors.secondary2}}
+                        containerStyle={listStyle.listItemContainer}
+                        titleStyle={{color: colors.white}}
+
+                        leftIcon={{name: 'chat', color: colors.orange}}
                         title='Tell a friend'
                         onPress={() => this.onShare()}
                         hideChevron
+                        bottomDivider
                     />
-
                     <ListItem
-                        containerStyle={listStyle.listItem}
+                        containerStyle={listStyle.listItemContainer}
+                        titleStyle={{color: colors.white}}
+
                         leftIcon={{name: 'info', color: colors.tealBlue}}
                         title='About'
                         onPress={() => this.onAbout()}
                         chevronColor={colors.grey5}
+                        bottomDivider
                     />
                     <ListItem
-                        containerStyle={listStyle.listItem}
-                        leftIcon={{name: 'perm-device-information', color: colors.purple}}
+                        containerStyle={listStyle.listItemContainer}
+                        titleStyle={{color: colors.white}}
+                        leftIcon={{name: 'perm-device-information', color: colors.orange1}}
                         hideChevron
                         title='Version'
                         subtitle={this.state.version}
                     />
 
+
                 </View>
+
 
             </ScrollView>
         )

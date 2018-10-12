@@ -14,6 +14,7 @@ export default {
         height: 30,
     },
     listItem: {
+
         borderBottomColor: colors.purple3,
     },
     label: {
@@ -39,4 +40,7 @@ export default {
         borderColor: colors.greyOutline,
         backgroundColor: 'transparent',
     },
+    listItemContainer:{
+        backgroundColor: 'transparent',
+    }
 }

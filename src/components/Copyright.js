@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {View, ScrollView} from 'react-native';
-import {List, ListItem} from 'react-native-elements';
+import { ListItem} from 'react-native-elements';
 import Label from './Label';
 import Utils from '../utils/utils';
 import colors from '../styles/colors';
+import listStyle from '../styles/list';
 
 export default class Copyright extends Component {
 
@@ -90,9 +91,10 @@ export default class Copyright extends Component {
                 {mitProjects.length > 0 ?
                     <View>
                         <Label text="MIT"/>
-                        <List containerStyle={{borderTopWidth: 0}}>
+                        <View style={listStyle.list}>
                             {mitProjects.map((project, index) =>
                                 <ListItem
+                                    bottomDivider
                                     rightIcon={{name: 'open-in-new', color: colors.secondary2}}
                                     key={`index-${project.name}`}
                                     title={project.name}
@@ -101,15 +103,16 @@ export default class Copyright extends Component {
                                     }}
                                 />,
                             )}
-                        </List>
+                        </View>
                     </View> : null}
 
                 {bsdProjects.length > 0 ?
                     <View>
                         <Label text="BSD"/>
-                        <List containerStyle={{borderTopWidth: 0}}>
+                        <View style={listStyle.list}>
                             {bsdProjects.map(project =>
                                 <ListItem
+                                    bottomDivider
                                     rightIcon={{name: 'open-in-new', color: colors.secondary2}}
                                     key={`index-${project.name}`}
                                     title={project.name}
@@ -118,7 +121,7 @@ export default class Copyright extends Component {
                                     }}
                                 />,
                             )}
-                        </List>
+                        </View>
                     </View> : null}
 
             </View>

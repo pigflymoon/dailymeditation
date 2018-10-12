@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ImageBackground, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground, ScrollView,Dimensions} from 'react-native';
 import {Card,} from 'react-native-elements';
 
 import Copyright from '../../components/Copyright';
@@ -7,22 +7,10 @@ import Copyright from '../../components/Copyright';
 import authStyle from '../../styles/auth';
 import BG_IMAGE from '../../assets/images/authBg.jpg';
 
+import probg from '../../assets/images/probg.jpg';
 
 
 export default class About extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-
-
-        };
-    }
-
-    async componentDidMount() {
-
-    }
-
 
     render() {
 
@@ -35,7 +23,7 @@ export default class About extends Component {
                     <ScrollView style={authStyle.container}>
                         <Card
                             title='FEATURES'
-                            image={bg1}>
+                            image={probg}>
                             <Text style={{marginBottom: 10}}>
                                 1. Multiple card template
                                 * Updated variety cards, you will have surprise!
