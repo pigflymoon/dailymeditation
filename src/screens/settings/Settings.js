@@ -21,8 +21,6 @@ import {
 import {ListItem,} from 'react-native-elements';
 import VersionCheck from 'react-native-version-check';
 import * as StoreReview from 'react-native-store-review';
-import DeviceInfo from 'react-native-device-info'
-
 import {auth, db} from '../../config/FirebaseConfig';
 import probg from '../../assets/images/probg.jpg';
 import graybg from '../../assets/images/bg-grey.jpg';
@@ -123,7 +121,6 @@ export default class Settings extends Component {
 
     onUnlock = data => {
         var unlock = data.unLock;
-        var unlock = true;
         if (unlock === true) {
             this.setState({
                 showProData: true,
@@ -177,16 +174,13 @@ export default class Settings extends Component {
     render() {
         return (
             <ScrollView style={[baseStyle.container, screenStyle.screenBgPurple]}>
-
                 <View>
                     <ImageBackground
                         source={this.state.bgImage}
                         style={{
                             flex: 1,
                             height: 120,
-
                         }}>
-
                     </ImageBackground>
                 </View>
                 <View style={listStyle.list}>
@@ -200,8 +194,6 @@ export default class Settings extends Component {
                         leftIcon={{name: 'vpn-key', color: colors.purple1}}
                         title='Unlock Pro Version'
                         titleStyle={{color: colors.purple1, fontWeight: 'bold'}}
-
-
                     />
                     <ListItem
                         containerStyle={listStyle.listItemContainer}
@@ -209,7 +201,6 @@ export default class Settings extends Component {
                         leftIcon={{name: 'refresh', color: colors.green}}
                         title='Restore Purchase'
                         titleStyle={{color: colors.white}}
-
                         onPress={this.restorePurchase}
                         hideChevron
                     />
@@ -235,7 +226,6 @@ export default class Settings extends Component {
                     <ListItem
                         containerStyle={listStyle.listItemContainer}
                         titleStyle={{color: colors.white}}
-
                         leftIcon={{name: 'chat', color: colors.orange}}
                         title='Tell a friend'
                         onPress={() => this.onShare()}
@@ -245,7 +235,6 @@ export default class Settings extends Component {
                     <ListItem
                         containerStyle={listStyle.listItemContainer}
                         titleStyle={{color: colors.white}}
-
                         leftIcon={{name: 'info', color: colors.tealBlue}}
                         title='About'
                         onPress={() => this.onAbout()}
@@ -260,11 +249,7 @@ export default class Settings extends Component {
                         title='Version'
                         subtitle={this.state.version}
                     />
-
-
                 </View>
-
-
             </ScrollView>
         )
     }

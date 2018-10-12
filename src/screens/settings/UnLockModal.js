@@ -111,7 +111,7 @@ export  default class UnLockModal extends Component {
     }
 
     renderSlide = () => {
-        const {slider1ActiveSlide, descriptions} = this.state;
+        const {slider1ActiveSlide} = this.state;
 
         return (
             <View style={unlockModalStyle.exampleContainer}>

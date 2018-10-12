@@ -31,12 +31,11 @@ export default class GridCardView extends Component {
     onUnlock = data => {
         var unlock = data.unLock;
         if (unlock === true) {
-            // upDateRole();
+            upDateRole();
         }
     };
 
     openAudioModal = (e, audioData, item, isPaidUser) => {
-        // console.log('audioData is ', JSON.stringify(audioData));
         console.log('audioData is ', (audioData));
         if (isPaidUser) {
             this.props.navigation.push("PlayList", {audio: audioData});//audioArray
@@ -196,8 +195,7 @@ export default class GridCardView extends Component {
     }
 
     render() {
-        const {category, isPaidUser} = this.props;
-        console.log('category', category);
+        const {category} = this.props;
         return (
             <View>
                 {
