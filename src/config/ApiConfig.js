@@ -4,7 +4,8 @@ export default Config = {
         applestoreUrl:'https://itunes.apple.com/nz/app/daily-meditation-simple-habit/id1420248188'
     },
     products: {
-        productIdentifier: 'com.lucy.dailymeditation.productid'
+        productIdentifier: 'com.lucy.dailymeditation.productid',
+        // productIdentifier: 'com.lucy.cardmaker.productid'
     },
     receiptVerify: {
         Host: {

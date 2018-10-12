@@ -135,35 +135,6 @@ const SettingsTab = createStackNavigator({
 
 const StacksInTabs = createBottomTabNavigator(
     {
-        SettingsTab: {
-            screen: SettingsTab,
-            navigationOptions: {
-                tabBarLabel: 'Settings',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-settings' : 'ios-settings-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-
-        },
-
-        AuthTab: {
-            screen: AuthTab,
-            navigationOptions: {
-                tabBarLabel: 'Profile',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-person' : 'ios-person-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-        },
-
         MeditationTab: {
             screen: MeditationTab,
             navigationOptions: {
@@ -191,8 +162,33 @@ const StacksInTabs = createBottomTabNavigator(
                 ),
             },
         },
+        AuthTab: {
+            screen: AuthTab,
+            navigationOptions: {
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-person' : 'ios-person-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
+        SettingsTab: {
+            screen: SettingsTab,
+            navigationOptions: {
+                tabBarLabel: 'Settings',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-settings' : 'ios-settings-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
 
-
+        },
 
     },
     {

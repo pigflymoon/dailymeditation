@@ -32,7 +32,6 @@ export default class Copyright extends Component {
                 name: 'axios',
                 linke: 'https://github.com/mzabriskie/axios'
             },
-
             {
                 name: 'react-native-share',
                 link: 'https://github.com/EstebanFuentealba/react-native-share',
@@ -50,40 +49,47 @@ export default class Copyright extends Component {
                 name: 'react-native-super-grid',
                 link: 'git@github.com:saleel/react-native-super-grid.git'
             },
-            {
-                name: 'rn-placeholder',
-                link: 'https://github.com/mfrachet/rn-placeholder'
-            },
-            {
-                name: 'react-native-mask-loader',
-                link: 'https://github.com/TheSavior/react-native-mask-loader'
-            },
-            {
-                name: 'react-native-image-marker',
-                link: 'https://github.com/JimmyDaddy/react-native-image-marker'
-            },
-            {
-                name: 'react-native-color-wheel',
-                link: 'https://github.com/netbeast/react-native-color-wheel'
-            },
+
             {
                 name: 'react-native-snap-carousel',
                 link: 'https://github.com/archriss/react-native-snap-carousel'
             },
             {
-                name: 'react-native-flip-component',
-                link: 'https://github.com/plmok61/react-native-flip-component'
-            },
-            {
-                name: 'react-native-color',
-                link: 'https://github.com/hectahertz/react-native-color'
-            },
-            {
                 name: 'react-native-version-check',
                 link: 'https://github.com/kimxogus/react-native-version-check'
+            },
+            {
+                name: 'react-native-video',
+                link: 'https://github.com/react-native-community/react-native-video'
+            },
+            {
+                name: 'react-navigation-tabs',
+                link: 'https://github.com/react-navigation/react-navigation-tabs'
+            },
+            {
+                name: 'react-native-linear-gradient',
+                link: 'https://github.com/react-native-community/react-native-linear-gradient'
+            },
+            {
+                name: 'react-native-fs',
+                link: 'https://github.com/itinance/react-native-fs'
+            },
+            {
+                name: 'react-native-scrollable-tab-view',
+                link: 'https://github.com/happypancake/react-native-scrollable-tab-view'
+            },
+            {
+                name: 'react-native-blur',
+                link: 'https://github.com/react-native-community/react-native-blur'
+            },
+            {
+                name: 'react-native-spinkit',
+                link: 'https://github.com/maxs15/react-native-spinkit'
+            },
+            {
+                name:'react-native-in-app-utils',
+                link:'https://github.com/chirag04/react-native-in-app-utils'
             }
-
-
         ];
 
         return (

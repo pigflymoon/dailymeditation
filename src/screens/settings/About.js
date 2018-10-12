@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, ImageBackground, ScrollView,Dimensions} from 're
 import {Card,} from 'react-native-elements';
 
 import Copyright from '../../components/Copyright';
+import ImageSourceCopyright from '../../components/ImageSourceCopyright';
 
 import authStyle from '../../styles/auth';
 import BG_IMAGE from '../../assets/images/authBg.jpg';
@@ -25,21 +26,19 @@ export default class About extends Component {
                             title='FEATURES'
                             image={probg}>
                             <Text style={{marginBottom: 10}}>
-                                1. Multiple card template
-                                * Updated variety cards, you will have surprise!
+                                1. Easy to learn meditation.
                             </Text>
                             <Text style={{marginBottom: 10}}>
-                                2. Easy to edit for instant creation
-                                * you will find your festival favourite
+                                2.Updated variety meditations, you will have surprise!
                             </Text>
                             <Text style={{marginBottom: 10}}>
-                                3. Unique artwork straight by designer
-                                * All templates have been produced with love by designer
+                                3. basic meditation for both beginner and advanced users.
                             </Text>
                             <Text style={{marginBottom: 10}}>
-                                4. Email and share
-                                * Easy to use and make our world more green
-
+                                4. Breathing exercises to help you relax.
+                            </Text>
+                            <Text style={{marginBottom: 10}}>
+                                5. guided meditation to help you calm, relax or sleep.
                             </Text>
 
                         </Card>
@@ -49,8 +48,12 @@ export default class About extends Component {
                                 1.I want to thank Matt Luedke for his nice music. Free Music For App Store Preview Videos.
                                 http://www.mattluedke.com/free-music-app-store-preview-videos/
                             </Text>
+                            <Text style={{marginBottom: 10}}>
+                                2.Thanks for Pexels sharing beautiful Photos.Photo is licensed under CC0 from website.
+                            </Text>
                         </Card>
                         <Copyright/>
+                        <ImageSourceCopyright/>
                     </ScrollView>
                 </ImageBackground>
             </View>

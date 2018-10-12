@@ -6,9 +6,11 @@ import {
     View,
     Linking,
     Share as NativeShare,
+    Dimensions
 
 } from 'react-native';
 import {Text, Card} from 'react-native-elements';
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 import showInfo from '../styles/showInfo';
 import bg from '../assets/images/noWifiBg.png';
@@ -38,7 +40,7 @@ export default class Utils {
         return re.test(email);
     }
 
-    static validPassword = (password)=>{
+    static validPassword = (password) => {
         var re = /^.{4,8}$/;
         return re.test(password);
     }
@@ -59,7 +61,7 @@ export default class Utils {
         })
     }
 
-    static infoAlert = (title,info) => {
+    static infoAlert = (title, info) => {
         Alert.alert(
             `${title}`,
             `${info}`,
@@ -86,15 +88,18 @@ export default class Utils {
             <ImageBackground
                 source={bg}
                 style={{
-                    flex: 1,
-                    width: null,
-                    height: 290,
+                        flex: 1,
+        top: 0,
+        left: 0,
+        width: SCREEN_WIDTH,
+        height: 240,
+        justifyContent: 'center',
+        alignItems: 'center'
                 }}
             >
                 <View style={showInfo.container}>
                     <Text style={showInfo.text}>Please add any favorite meditaions to My Meditation.{"\n"}{"\n"}
                         Tap favorite on any meditation session.</Text>
-
 
 
                 </View>

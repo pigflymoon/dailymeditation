@@ -102,7 +102,6 @@ export default class MyMeditation extends Component {
         var self = this;
         AsyncStorage.getItem("myPlayList")
             .then(req => {
-                console.log('req is :', req);
                 return JSON.parse(req)
             })
             .then((myList) => {

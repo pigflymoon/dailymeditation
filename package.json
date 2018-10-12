@@ -19,6 +19,7 @@
     "react-native-elements": "^v1.0.0-beta5",
     "react-native-firebase": "^4.3.8",
     "react-native-fs": "^2.11.15",
+    "react-native-in-app-utils": "^6.0.1",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-scrollable-tab-view": "git+https://github.com/pigflymoon/react-native-scrollable-tab-view.git",
     "react-native-snap-carousel": "^3.7.5",

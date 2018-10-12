@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 
 import {ListItem,} from 'react-native-elements';
-import VersionCheck from 'react-native-version-check';
+// import VersionCheck from 'react-native-version-check';
 import * as StoreReview from 'react-native-store-review';
 import {auth, db} from '../../config/FirebaseConfig';
 import probg from '../../assets/images/probg.jpg';
@@ -42,14 +42,11 @@ export default class Settings extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            version: '2.1.5',
+            version: '0.0.1',
             isPro: 'Disabled',
             versionColor: colors.grey2,
             bgImage: graybg,
             unlock: false,
-            isNotified: true,
-            isSilent: true,
-            localeLanguage: null,
         };
     }
 
@@ -159,12 +156,12 @@ export default class Settings extends Component {
     }
 
     componentWillMount() {
-        VersionCheck.getLatestVersion({
-            provider: 'appStore'  // for iOS
-        })
-            .then(latestVersion => {
-                this.setState({version: latestVersion})
-            });
+        // VersionCheck.getLatestVersion({
+        //     provider: 'appStore'  // for iOS
+        // })
+        //     .then(latestVersion => {
+        //         this.setState({version: latestVersion})
+        //     });
     }
 
     componentDidMount() {
@@ -216,11 +213,10 @@ export default class Settings extends Component {
                     <ListItem
                         containerStyle={listStyle.listItemContainer}
                         titleStyle={{color: colors.white}}
-
+                        chevron
                         leftIcon={{name: 'favorite', color: colors.red}}
                         title='Rate on the App Store'
                         onPress={() => this.onRate()}
-                        hideChevron
                         bottomDivider
                     />
                     <ListItem
@@ -229,7 +225,7 @@ export default class Settings extends Component {
                         leftIcon={{name: 'chat', color: colors.orange}}
                         title='Tell a friend'
                         onPress={() => this.onShare()}
-                        hideChevron
+                        chevron
                         bottomDivider
                     />
                     <ListItem
@@ -240,6 +236,7 @@ export default class Settings extends Component {
                         onPress={() => this.onAbout()}
                         chevronColor={colors.grey5}
                         bottomDivider
+                        chevron
                     />
                     <ListItem
                         containerStyle={listStyle.listItemContainer}

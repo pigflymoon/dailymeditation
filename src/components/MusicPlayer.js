@@ -326,11 +326,6 @@ export default class MusicPlayer extends Component {
                 }
 
                 leftAvatar={{size: 'medium', source: {uri: imageDownloadUrl}}}
-                rightIcon={{
-                    name: 'ios-lock-outline',
-                    type: 'ionicon',
-                    color: colors.grey3
-                }}
                 key={index}
                 title={name}
                 titleStyle={{color: colors.grey1,}}
@@ -356,7 +351,6 @@ export default class MusicPlayer extends Component {
 
     renderPlayer = () => {
         let musicData = this.state.musicList[this.state.currentIndex]
-        console.log('render Player is called~~~~~~~~~~~musicData is : ', musicData)
         return (
             <View style={musicPlayerStyle.bgContainer}>
                 <View style={musicPlayerStyle.navBarStyle}>

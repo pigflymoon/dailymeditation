@@ -17,11 +17,11 @@ import {onceGetReceipts, doCreateReceipt} from '../config/db';
 
 import Config from '../config/ApiConfig';
 
-// var verifysandboxHost = Config.receiptVerify.Host.sandboxHost;
-// var verifyHost = verifysandboxHost;
+var verifysandboxHost = Config.receiptVerify.Host.sandboxHost;
+var verifyHost = verifysandboxHost;
 
-var verifyproductionHost = Config.receiptVerify.Host.productionHost;
-var verifyHost = verifyproductionHost;
+// var verifyproductionHost = Config.receiptVerify.Host.productionHost;
+// var verifyHost = verifyproductionHost;
 export function sendRecipt(receipt) {
     var transactionKey = ((receipt.in_app)[0].transaction_id) ? ( (receipt.in_app)[0].transaction_id).toString() : null;
     if (transactionKey) {
@@ -107,7 +107,6 @@ export function onPay() {
 }
 
 export function onRestore() {
-
     return new Promise(function (resolve, reject) {
         // some async operation here
         setTimeout(function () {
