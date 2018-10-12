@@ -123,6 +123,14 @@ export default class Signin extends Component {
     navigateToSignin = () => {
         this.props.navigation.navigate('Signin', {});
     }
+    navigateToPolicy = ()=>{
+        this.props.navigation.navigate('Policy', {});
+
+    }
+    navigateToTerms= ()=>{
+        this.props.navigation.navigate('Terms', {});
+
+    }
     setEmail = (text) => {
         this.setState({errorMessage: '', email: text});
     }
@@ -263,6 +271,22 @@ export default class Signin extends Component {
                                     titleStyle={{color: 'white', fontSize: 15}}
                                     containerStyle={{marginTop: -10}}
                                     onPress={this.navigateToSignin}
+                                />
+                                <Button
+                                    title="Privacy Policy"
+                                    clear
+                                    activeOpacity={0.5}
+                                    titleStyle={{color: 'white', fontSize: 15}}
+                                    containerStyle={{marginTop: -10}}
+                                    onPress={this.navigateToPolicy}
+                                />
+                                <Button
+                                    title="Terms of Service"
+                                    clear
+                                    activeOpacity={0.5}
+                                    titleStyle={{color: 'white', fontSize: 15}}
+                                    containerStyle={{marginTop: -10}}
+                                    onPress={this.navigateToTerms}
                                 />
                             </View>
                         </View> :

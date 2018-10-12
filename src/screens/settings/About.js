@@ -29,16 +29,16 @@ export default class About extends Component {
                                 1. Easy to learn meditation.
                             </Text>
                             <Text style={{marginBottom: 10}}>
-                                2.Updated variety meditations, you will have surprise!
+                                2. Updated variety meditations, you will have surprise!
                             </Text>
                             <Text style={{marginBottom: 10}}>
-                                3. basic meditation for both beginner and advanced users.
+                                3. Basic meditation for both beginner and advanced users.
                             </Text>
                             <Text style={{marginBottom: 10}}>
                                 4. Breathing exercises to help you relax.
                             </Text>
                             <Text style={{marginBottom: 10}}>
-                                5. guided meditation to help you calm, relax or sleep.
+                                5. Guided meditation to help you calm, relax or sleep.
                             </Text>
 
                         </Card>

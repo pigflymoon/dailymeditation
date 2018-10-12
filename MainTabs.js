@@ -17,6 +17,8 @@ import SigninScreen from './src/screens/auth/Signin';
 import SignupScreen from './src/screens/auth/Signup';
 import ResetPasswordScreen from './src/screens/auth/ResetPassword';
 import ConfirmEmailScreen from './src/screens/auth/ConfirmEmail';
+import PolicyScreen from './src/screens/auth/PrivacyPolicy';
+import TermsScreen from './src/screens/auth/TermOfUse';
 //Settings
 import SettingsScreen from './src/screens/settings/Settings';
 import AboutScreen from './src/screens/settings/About';
@@ -106,6 +108,24 @@ const AuthTab = createStackNavigator({
                 headerTitleStyle: {color: colors.grey6},
                 headerLeft: null,
 
+            }),
+        },
+        Policy: {
+            screen: PolicyScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Privacy Policy',
+                headerStyle: {backgroundColor: colors.purple},
+                headerTitleStyle: {color: colors.grey6},
+                headerTintColor: colors.white,
+            }),
+        },
+        Terms: {
+            screen: TermsScreen,
+            navigationOptions: ({navigation, screenProps}) => ({
+                title: 'Terms of Use',
+                headerStyle: {backgroundColor: colors.purple},
+                headerTitleStyle: {color: colors.grey6},
+                headerTintColor: colors.white,
             }),
         },
 
