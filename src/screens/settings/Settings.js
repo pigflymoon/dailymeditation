@@ -1,199 +1,258 @@
-import React from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
+import React, {Component} from 'react';
+import {
+    Text,
+    View,
+    ScrollView,
+    StyleSheet,
+    Linking,
+    AppState,
+    Platform,
+    Item,
+    TouchableOpacity,
+    Alert,
+    TouchableHighlight,
+    Image,
+    ImageBackground,
+    AsyncStorage,
 
-import {ListItem, Divider, SearchBar} from 'react-native-elements';
-import listStyle from '../../styles/list';
+} from 'react-native';
+
+import {ListItem,} from 'react-native-elements';
+import VersionCheck from 'react-native-version-check';
+import * as StoreReview from 'react-native-store-review';
+import DeviceInfo from 'react-native-device-info'
+
+import {auth, db} from '../../config/FirebaseConfig';
+import probg from '../../assets/images/probg.jpg';
+import graybg from '../../assets/images/bg-grey.jpg';
+
+import {
+    onRestore,
+    upDateRole
+} from '../../utils/AppPay';
+
+
+import Config from '../../config/ApiConfig';
+import Utils from '../../utils/utils';
+
 import colors from '../../styles/colors';
-import screenStyle from '../../styles/screen';
+import listStyle from '../../styles/list';
+export default class Settings extends Component {
 
-const ORANGE = '#FF9500';
-const BLUE = '#007AFF';
-const GREEN = '#4CD964';
-const RED = '#FF3B30';
-const GREY = '#8E8E93';
-const PURPLE = '#5856D6';
-const TEAL_BLUE = '#5AC8FA';
-
-const sections = [
-    {
-        data: [
-            {
-                title: 'Airplane Mode',
-                icon: 'ios-plane',
-                backgroundColor: ORANGE,
-                hideChevron: true,
-                checkbox: true,
-            },
-            {
-                title: 'Wi-Fi',
-                backgroundColor: BLUE,
-                icon: 'ios-wifi',
-            },
-            {
-                title: 'Bluetooth',
-                backgroundColor: BLUE,
-                icon: 'ios-bluetooth',
-                rightTitle: 'Off',
-            },
-            {
-                title: 'Cellular',
-                backgroundColor: GREEN,
-                icon: 'ios-phone-portrait',
-            },
-            {
-                title: 'Personal Hotspot',
-                backgroundColor: GREEN,
-                icon: 'ios-radio-outline',
-                rightTitle: 'Off',
-            },
-        ],
-    },
-    {
-        data: [
-            {
-                title: 'Notifications',
-                icon: 'ios-notifications',
-                backgroundColor: RED,
-            },
-            {
-                title: 'Control Center',
-                backgroundColor: GREY,
-                icon: 'ios-switch',
-            },
-            {
-                title: 'Do Not Disturb',
-                backgroundColor: PURPLE,
-                icon: 'ios-moon',
-            },
-        ],
-    },
-    {
-        data: [
-            {
-                title: 'General',
-                icon: 'ios-settings',
-                backgroundColor: GREY,
-            },
-            {
-                title: 'Display & Brightness',
-                backgroundColor: BLUE,
-                icon: 'ios-bulb',
-            },
-            {
-                title: 'Wallpaper',
-                backgroundColor: TEAL_BLUE,
-                icon: 'ios-color-wand',
-            },
-            {
-                title: 'Sounds',
-                backgroundColor: RED,
-                icon: 'ios-volume-up',
-            },
-            {
-                title: 'Touch ID & Code',
-                backgroundColor: RED,
-                icon: 'ios-finger-print',
-            },
-            {
-                title: 'Emergency Call',
-                backgroundColor: ORANGE,
-                icon: 'ios-medical',
-            },
-            {
-                title: 'Battery',
-                backgroundColor: GREEN,
-                icon: 'ios-battery-full',
-            },
-            {
-                title: 'Confidentiality',
-                backgroundColor: GREY,
-                icon: 'ios-hand',
-            },
-        ],
-    },
-    // Space at the bottom
-    {data: []},
-];
-
-export default class Settings extends React.PureComponent {
-    renderItem = ({
-        item: {
-            title,
-            backgroundColor,
-            icon,
-            rightTitle,
-            hideChevron,
-            checkbox,
-        },
-    }) => (
-        <ListItem
-            containerStyle={{ paddingVertical: 8,backgroundColor:colors.purple}}//purple4
-            titleStyle={{color:colors.grey4 }}
-            switch={checkbox && { value: true }}
-            onPress={() => this.onAbout()}
-            key={title}
-            chevron={!hideChevron}
-            rightTitle={rightTitle}
-            leftIcon={{
-        type: 'ionicon',
-        name: icon,
-        size: 20,
-        color: 'white',
-        containerStyle: {
-          backgroundColor,
-          width: 28,
-          height: 28,
-          borderRadius: 6,
-        },
-      }}
-            title={title}
-        />
-    );
-
-    renderSectionHeader = () => <View style={[listStyle.headerSection,{backgroundColor:colors.purple}]}/>;//{backgroundColor:colors.purple4}
-
-    ItemSeparatorComponent = () => (
-        <View style={listStyle.separatorComponent}>
-            <Divider style={listStyle.separator}/>
-        </View>
-    );
-
-    keyExtractor = (item, index) => index
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            version: '2.1.5',
+            isPro: 'Disabled',
+            versionColor: colors.grey2,
+            bgImage: graybg,
+            unlock: false,
+            isNotified: true,
+            isSilent: true,
+            localeLanguage: null,
+        };
+    }
 
     onAbout = () => {
-        this.props.navigation.push('About');
+        this.props.navigation.navigate('About', {});
     };
-    render() {
-        //backgroundColor:'#7C7482'
-        return (
-            <View style={screenStyle.screenBgPurple}>
-                <SectionList
-                    keyExtractor={this.keyExtractor}
-                    contentContainerStyle={[listStyle.listBgColor,{backgroundColor:colors.purple}]}//#7C7482
-                    sections={sections}
-                    renderItem={this.renderItem}
-                    renderSectionHeader={this.renderSectionHeader}
-                    ItemSeparatorComponent={this.ItemSeparatorComponent}
-                    SectionSeparatorComponent={Divider}
-                    stickySectionHeadersEnabled={false}
-                />
-            </View>
 
-        );
+    onShare = () => {
+        const message = 'I am using Daily Meditation:Simple Habit.Bring calm and relax. Download the App for iOS, and start to meditate everyday!'
+        const url = Config.share.url;
+        Utils.shareText(message, url)
     }
-}
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#EFEFF4',
-    },
-    separatorComponent: {
-        backgroundColor: 'white',
-    },
-    separator: {
-        marginLeft: 58,
-    },
-    headerSection: {
-        height: 30,
-    },
-});
+    onRate = () => {
+        let link = 'https://itunes.apple.com/nz/app/daily-meditation-simple-habit/id1420248188';
+        //
+        if (Platform.OS === 'ios') {
+            if (StoreReview.isAvailable) {
+                return StoreReview.requestReview();
+            }
+
+        }
+
+        return Utils.goToURL(link);
+    }
+
+    titleStyle = () => {
+        const {unlock} = this.state;
+        if (unlock) {
+            return {
+                color: colors.green
+            }
+        } else {
+            return {
+                color: colors.red
+            }
+        }
+
+    }
+
+    getUserRole = () => {
+        var self = this;
+        auth.onAuthStateChanged(function (authUser) {
+            if (authUser) {
+                var userId = auth.currentUser.uid;
+                db.ref('/users/' + userId).once('value').then(function (snapshot) {
+                    var userrole = (snapshot.val() && snapshot.val().role) || {free_user: true, paid_user: false};
+                    var isPaidUser = userrole.paid_user;
+                    if (isPaidUser) {
+                        self.setState({
+                            // showProData: true,
+                            isPro: 'Available',
+                            unlock: true,
+                            bgImage: probg,
+                            versionColor: colors.orange,
+                        });
+                    }
+
+                });
+            } else {
+                self.setState({
+                    // showProData: false,
+                    unlock: false,
+                    isPro: 'Disabled'
+                });
+            }
+        });
+    }
+
+    onUnlock = data => {
+        var unlock = data.unLock;
+
+        if (unlock === true) {
+            this.setState({
+                showProData: true,
+                isPro: 'Available',
+                unlock: true,
+                bgImage: probg,
+                versionColor: colors.green,
+            }, function () {
+                upDateRole();
+            });
+        }
+
+    };
+    toggleUnlockSwitch = () => {
+        this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
+    }
+
+    restorePurchase = () => {
+        var self = this;
+        onRestore().then(function (restoreResponse) {
+            if (restoreResponse.restore) {
+                self.setState({
+                    // showProData: true,
+                    isPro: 'Available',
+                    unlock: true,
+                    bgImage: probg,
+                    versionColor: colors.green,
+                });
+                //update db user
+                upDateRole();
+                Alert.alert('Restore Successful', 'Successfully restores all your purchases.');
+
+            }
+        })
+
+    }
+
+    componentWillMount() {
+        VersionCheck.getLatestVersion({
+            provider: 'appStore'  // for iOS
+        })
+            .then(latestVersion => {
+                this.setState({version: latestVersion})
+            });
+    }
+
+    componentDidMount() {
+        this.getUserRole();
+    }
+
+    render() {
+        return (
+            <ScrollView style={{backgroundColor:'transparent'}}>
+                <View>
+
+                    <ImageBackground
+                        source={this.state.bgImage}
+                        style={{
+                            flex: 1,
+                            height: 120,
+
+                        }}>
+                        <View style={listStyle.list}>
+                            <ListItem
+                                containerStyle={{borderBottomWidth: 0,}}
+                                hideChevron
+                                leftIcon={{name: 'vpn-key', color: colors.green}}
+                                title='Unlock Pro Version'
+                                titleStyle={{color: colors.green, fontWeight: 'bold'}}
+                                switchOnTintColor={colors.green}
+                                switchTintColor={colors.green}
+                                switchButton
+                                onSwitch={this.toggleUnlockSwitch}
+                                switched={this.state.unlock}
+                            />
+                        </View>
+                    </ImageBackground>
+                </View>
+                <View style={listStyle.list}>
+                    <ListItem
+                        containerStyle={listStyle.listItem}
+                        leftIcon={{name: 'refresh', color: colors.green}}
+                        title='Restore Purchase'
+                        onPress={this.restorePurchase}
+                        hideChevron
+                    />
+                    <ListItem
+                        containerStyle={listStyle.listItem}
+                        leftIcon={{name: 'wb-incandescent', color: this.state.versionColor}}
+                        title='PRO Version'
+                        titleStyle={this.titleStyle()}
+                        rightTitle={this.state.isPro}
+                        rightTitleStyle={this.titleStyle()}
+                        hideChevron
+                    />
+                </View>
+                <View style={listStyle.list}>
+                    <ListItem
+                        containerStyle={listStyle.listItem}
+                        leftIcon={{name: 'favorite', color: colors.red}}
+                        title='Rate on the App Store'
+                        onPress={() => this.onRate()}
+                        hideChevron
+                    />
+                    <ListItem
+                        containerStyle={listStyle.listItem}
+                        leftIcon={{name: 'chat', color: colors.secondary2}}
+                        title='Tell a friend'
+                        onPress={() => this.onShare()}
+                        hideChevron
+                    />
+
+                    <ListItem
+                        containerStyle={listStyle.listItem}
+                        leftIcon={{name: 'info', color: colors.tealBlue}}
+                        title='About'
+                        onPress={() => this.onAbout()}
+                        chevronColor={colors.grey5}
+                    />
+                    <ListItem
+                        containerStyle={listStyle.listItem}
+                        leftIcon={{name: 'perm-device-information', color: colors.purple}}
+                        hideChevron
+                        title='Version'
+                        subtitle={this.state.version}
+                    />
+
+                </View>
+
+            </ScrollView>
+        )
+    }
+
+}
