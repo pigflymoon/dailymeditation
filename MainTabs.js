@@ -144,7 +144,8 @@ const SettingsTab = createStackNavigator({
         navigationOptions: ({navigation, screenProps}) => ({
             title: 'About',
             headerStyle: {backgroundColor: colors.purple},
-            headerTitleStyle: {color: colors.grey6}
+            headerTitleStyle: {color: colors.grey6},
+            headerTintColor: colors.grey6,
         }),
     },
 });

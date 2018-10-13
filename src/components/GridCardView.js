@@ -37,7 +37,6 @@ export default class GridCardView extends Component {
     };
 
     openAudioModal = (e, audioData, item, isPaidUser) => {
-        console.log('audioData is ', (audioData));
         if (isPaidUser) {
             this.props.navigation.push("PlayList", {audio: audioData});//audioArray
         } else {
@@ -111,11 +110,11 @@ export default class GridCardView extends Component {
                         type="ThreeBounce"
                         color={this.state.color}/>
                     </View> : <View>
-                        {audiosData.length <= 0 &&
+                        {Object.keys(audiosData).length <= 0 &&
                         <View style={layoutStyle.centerContainer}>
                             <Text style={layoutStyle.infoText}>No new audios,wait a minute.</Text>
                         </View>                        }
-                        {audiosData.length > 0 && Object.keys(this.state.audiosData).map(key => {
+                        {Object.keys(audiosData).length > 0 && Object.keys(this.state.audiosData).map(key => {
                             const items = (this.state.audiosData)[key];
                             return (
                                 <GridView

@@ -75,7 +75,6 @@ export default class MusicPlayer extends Component {
     }
 
     spin = () => {
-        console.log('spin~~~~')
         this.rotation = !this.rotation
         if (this.rotation) {
             this.spinAnimated.start(() => {
@@ -99,9 +98,7 @@ export default class MusicPlayer extends Component {
 
     componentWillMount() {
         const {audio} = this.props.navigation.state.params;
-        console.log('audio list is*********** ', audio)
 
-        console.log('audio is*********** ', audio[this.state.currentIndex])
         this.setState({musicInfo: audio[this.state.currentIndex], musicList: audio})
 
     }
@@ -142,13 +139,10 @@ export default class MusicPlayer extends Component {
     // }
 
     setDuration = (duration) => {
-        console.log('data in setDuration is ', duration)
-
         this.setState({duration: duration.duration})
     }
 
     setTime = (data) => {
-        console.log('data in setTime is ', data)
         let sliderValue = parseInt(this.state.currentTime)
         this.setState({
             slideValue: sliderValue,
@@ -196,7 +190,6 @@ export default class MusicPlayer extends Component {
     }
 
     play = () => {
-        console.log('########play called!!###########',)
         this.spin()
         this.setState({
             paused: !this.state.paused,
@@ -371,7 +364,7 @@ export default class MusicPlayer extends Component {
                             name={'ios-share-outline'}
                             size={30}
                             color={colors.white}
-                            onPress={()=>this.onShare(musicData)}
+                            onPress={() => this.onShare(musicData)}
                         />
                     </View>
                 </View>
@@ -396,7 +389,7 @@ export default class MusicPlayer extends Component {
                             })
                         }]
                     }}
-                    source={musicData.imageDownloadUrl}/>
+                    source={{uri: musicData.imageDownloadUrl}}/>
                 <View style={{flex: 1}}>
 
                     <View style={musicPlayerStyle.progressStyle}>
@@ -479,7 +472,7 @@ export default class MusicPlayer extends Component {
                 </View>
                 <Video
                     ref={video => this.player = video}
-                    source={{uri:musicData.downloadUrl}}
+                    source={{uri: musicData.downloadUrl}}
                     volume={1.0}
                     paused={this.state.paused}
                     playInBackground={true}
@@ -501,7 +494,7 @@ export default class MusicPlayer extends Component {
                         <View style={[musicPlayerStyle.navBarWrapper]}>
                             <Ionicons
                                 name='ios-close'
-                                color='gray'
+                                color='white'
                                 size={30}
                                 onPress={() => this.setState({musicListVisible: false})}
                             />
