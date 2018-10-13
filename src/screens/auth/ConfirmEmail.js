@@ -15,12 +15,13 @@ import BG_IMAGE from '../../assets/images/authBg.jpg';
 let interval = null;
 
 
-export default class Signin extends Component {
+export default class ConfirmEmail extends Component {
     constructor(props) {
         super(props);
-
+        const {user} = this.props.navigation.state.params;
         this.state = {
             email: '',
+            user: user,
             showLoading: false,
             errorMessage: false,
 
@@ -33,8 +34,9 @@ export default class Signin extends Component {
 
     handleConfirmEmail = (e) => {
         var self = this;
+        console.log('user is ',this.state.user)
         var user = this.state.user;
-        this.setState({isLoading: true});
+        this.setState({showLoading: true});
 
         e.preventDefault();
 
@@ -49,29 +51,30 @@ export default class Signin extends Component {
 
                                 auth.onAuthStateChanged((user) => {
                                     self.setState({
-                                        isLoading: false
+                                        showLoading: false
                                     });
                                     clearInterval(interval);
                                     if (user && user.emailVerified) {
+                                        console.log('confirmed');
                                         self.props.navigation.navigate('Signin', {name: self.state.name});
                                         clearInterval(interval);
                                         interval = null;
                                     } else {
                                         self.setState({
-                                            isLoading: false
+                                            showLoading: false
                                         });
                                     }
                                 });
 
                             } else {
                                 self.setState({
-                                    isLoading: false,
+                                    showLoading: false,
                                     errorMessage: 'Error',
                                 });
                             }
                         }).catch(function (error) {
                         self.setState({
-                            isLoading: false,
+                            showLoading: false,
                             errorMessage: 'Error',
                         });
                         // var errorMessage = error.message + ' (' + error.code + ')';
@@ -84,7 +87,7 @@ export default class Signin extends Component {
             var errorMessage = error.message;
             self.setState({
                 errorMessage: errorMessage,
-                isLoading: false,
+                showLoading: false,
             });
         });
 
