@@ -151,19 +151,7 @@ const SettingsTab = createStackNavigator({
 
 const StacksInTabs = createBottomTabNavigator(
     {
-        MyMeditationTab:{
-            screen: MyMeditationTab,
-            navigationOptions: {
-                tabBarLabel: 'My Meditation List',
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Ionicons
-                        name={focused ? 'ios-flower' : 'ios-flower-outline'}
-                        size={30}
-                        style={{color: tintColor}}
-                    />
-                ),
-            },
-        },
+
         MeditationTab: {
             screen: MeditationTab,
             navigationOptions: {
@@ -171,6 +159,19 @@ const StacksInTabs = createBottomTabNavigator(
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
                         name={focused ? 'ios-leaf' : 'ios-leaf-outline'}
+                        size={30}
+                        style={{color: tintColor}}
+                    />
+                ),
+            },
+        },
+        MyMeditationTab:{
+            screen: MyMeditationTab,
+            navigationOptions: {
+                tabBarLabel: 'My Meditation List',
+                tabBarIcon: ({tintColor, focused}) => (
+                    <Ionicons
+                        name={focused ? 'ios-flower' : 'ios-flower-outline'}
                         size={30}
                         style={{color: tintColor}}
                     />

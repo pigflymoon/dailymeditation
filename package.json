@@ -17,6 +17,7 @@
     "react-native": "0.57.3",
     "react-native-blur": "^3.2.2",
     "react-native-elements": "^v1.0.0-beta5",
+    "react-native-firebase": "^5.0.0",
     "react-native-fs": "^2.11.15",
     "react-native-in-app-utils": "^6.0.1",
     "react-native-linear-gradient": "^2.4.0",
@@ -29,7 +30,7 @@
     "react-native-vector-icons": "^4.6.0",
     "react-native-version-check": "^3.0.2",
     "react-native-video": "^3.1.0",
-    "react-navigation": "^2.6.2",
+    "react-navigation": "^2.18.0",
     "react-navigation-tabs": "^0.8.4"
   },
   "devDependencies": {

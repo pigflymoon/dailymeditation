@@ -12,58 +12,56 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
         setTimeout(function () {
             // resolve the promise with some value
             // var dataType = (category === 'beginner') ? 'beginner' : `meditationCategory/${type}`
-            if(category === 'beginner'){
+            if (category === 'beginner') {
                 db.ref().child(`${type}`).once("value", function (snapshot) {
-                    var downloadAudios = snapshot.val(), audioCategoryArray = {};
-                    for (const key of Object.keys(downloadAudios)) {
-                        console.log('key is :', key, 'data is :', downloadAudios[key]);
-                        var audios = downloadAudios[key], childArray = [];
-                        for (const subKey of Object.keys(audios)) {
-                            console.log('subKey: ', subKey, 'value is :', audios[subKey])
-                            // audioCategoryArray[key] = audios[subKey];
-                            // audios[subKey].push({id: subKey});
-                            audios[subKey].id = subKey;
-                            audios[subKey].isDownloaded = false;
-                            childArray.push(audios[subKey]);
+                    console.log('snapshot is ', snapshot);
+
+                    if (snapshot.val()) {
+                        console.log('snapshot is ', snapshot.val());
+                        var downloadAudios = snapshot.val(), audioCategoryArray = {};
+                        for (const key of Object.keys(downloadAudios)) {
+                            console.log('key is :', key, 'data is :', downloadAudios[key]);
+                            var audios = downloadAudios[key], childArray = [];
+                            for (const subKey of Object.keys(audios)) {
+                                console.log('subKey: ', subKey, 'value is :', audios[subKey])
+                                // audioCategoryArray[key] = audios[subKey];
+                                // audios[subKey].push({id: subKey});
+                                audios[subKey].id = subKey;
+                                audios[subKey].isDownloaded = false;
+                                childArray.push(audios[subKey]);
+                            }
+                            audioCategoryArray[key] = childArray;
                         }
-                        audioCategoryArray[key] = childArray;
+                        console.log('*******audioCategoryArray is********* ', audioCategoryArray);
+                        resolve(audioCategoryArray);
+                    } else {
+                        resolve([])
                     }
-                    console.log('*******audioCategoryArray is********* ', audioCategoryArray);
-                    resolve(audioCategoryArray);
+
+                }).catch(function (e) {
+                    console.log('no data', e); // "oh, no!"
                 });
-            }else{
+            } else {
                 db.ref().child(`${category}/${type}`).once("value", function (snapshot) {
-                    var downloadAudios = snapshot.val(), audioCategoryArray = {};
-                    //
-                    var result = [];
-                    var keys = Object.keys(downloadAudios);
-                    keys.forEach(function(key){
-                        downloadAudios[key].id = key;
-                        downloadAudios[key].isDownloaded = false;
-                        result.push(downloadAudios[key]);
-                    });
-                    console.log('result is ',result);
-                    //
-                    // console.log('downloadAudios:',downloadAudios);
-                    // for (const key of Object.keys(downloadAudios)) {
-                    //     console.log('key is :', key, 'data is :', downloadAudios[key]);
-                    //     var audios = downloadAudios[key], childArray = [];
-                    //     for (const subKey of Object.keys(audios)) {
-                    //         console.log('subKey: ', subKey, 'value is :', audios[subKey])
-                    //         // audioCategoryArray[key] = audios[subKey];
-                    //         // audios[subKey].push({id: subKey});
-                    //         audios[subKey].id = subKey;
-                    //         audios[subKey].isDownloaded = false;
-                    //         childArray.push(audios[subKey]);
-                    //     }
-                    //     audioCategoryArray[key] = childArray;
-                    // }
-                    // console.log('*******audioCategoryArray is********* ', audioCategoryArray);
-                    resolve(result);
+                    if (snapshot.val()) {
+                        var downloadAudios = snapshot.val(), audioCategoryArray = {};
+                        //
+                        var result = [];
+                        var keys = Object.keys(downloadAudios);
+                        keys.forEach(function (key) {
+                            downloadAudios[key].id = key;
+                            downloadAudios[key].isDownloaded = false;
+                            result.push(downloadAudios[key]);
+                        });
+
+                        resolve(result);
+                    } else {
+                        resolve([])
+                    }
+
+
                 });
             }
-
-
 
 
         }, 500);

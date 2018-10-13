@@ -10,6 +10,14 @@ export default{
         flex: 1,
         backgroundColor: colors.white,
     },
+    centerContainer:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    infoText:{
+        color:colors.white,
+    },
     maskLoader: {
         flex: 1,
     },
