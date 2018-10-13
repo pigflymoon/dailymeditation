@@ -27,7 +27,7 @@ export default class CustomTabBar extends Component {
         return (
             <BottomTabBar
                 {...this.props}
-                style={{backgroundColor: this.getTabColor(this.props.screenProps.currentTab)}}
+                style={{backgroundColor: colors.purple}}
             />
         )
     }

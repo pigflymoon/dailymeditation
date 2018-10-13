@@ -11,7 +11,6 @@ import {
 
 import MainTabs from './MainTabs';
 import  Utils from './src/utils/utils';
-var tab = '';
 export default class App extends Component {
 
     constructor(props, context) {
@@ -27,30 +26,24 @@ export default class App extends Component {
         if (!navigationState) {
             return null;
         }
-
         const route = navigationState.routes[navigationState.index];
         if (route.routes) {
-            var tabReg = /Tab/;
-
-            if ((route.key).match(tabReg)) {
-                tab = route.key;
-            }
             return this.getCurrentRouteName(route);
         }
-        console.log('route name is ', route.routeName)
-        return {screen: route.routeName, tab: tab};//route.routeName;
+        return route.routeName;
     }
 
+
     handleConnectivityChange = (connectionInfo) => {
+        var self = this;
         let connectionType = connectionInfo.type;
         if (connectionType === 'none' || connectionType === 'unknown') {
             Utils.netWorkError();
-            this.setState({
+            self.setState({
                 isConnected: false
             });
         } else {
-            this.setState({
-                // connectionInfo: connectionType,
+            self.setState({
                 isConnected: true
             });
         }
@@ -61,7 +54,6 @@ export default class App extends Component {
         //Intial connection check
         var self = this;
         NetInfo.isConnected.fetch().then(isConnected => {
-            console.log('fetch isConnected ', isConnected)
             if (isConnected) {
                 self.setState({
                     isConnected: true
@@ -74,7 +66,6 @@ export default class App extends Component {
         });
         //Check connection change
         const handleFirstConnectivityChange = (isConnected) => {
-            console.log('isConnected ', isConnected)
             this.setState({
                 isConnected: isConnected
             });
@@ -88,6 +79,7 @@ export default class App extends Component {
             'connectionChange',
             this.handleConnectivityChange
         );
+
     }
 
     render() {
@@ -95,15 +87,9 @@ export default class App extends Component {
             <MainTabs
                 screenProps={{
                     signin: this.state.signin,
-                    currentScreen: this.state.currentScreen,
                     isConnected: this.state.isConnected,
-                    currentTab:this.state.currentTab||'MeditationTab',
                 }}
-                onNavigationStateChange={(prevState, currentState) => {
-                    const currentScreen = this.getCurrentRouteName(currentState);
-                    const prevScreen = this.getCurrentRouteName(prevState);
 
-                }}
             />
         )
     }

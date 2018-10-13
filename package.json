@@ -30,8 +30,7 @@
     "react-native-vector-icons": "^4.6.0",
     "react-native-version-check": "^3.0.2",
     "react-native-video": "^3.1.0",
-    "react-navigation": "^2.6.2",
-    "react-navigation-tabs": "^0.5.1"
+    "react-navigation": "^2.6.2"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.47",

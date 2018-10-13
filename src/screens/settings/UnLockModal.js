@@ -22,6 +22,10 @@ import {sliderWidth, itemWidth} from '../../styles/sliderEntry';
 import unlockModalStyle from '../../styles/unlockModal';
 import colors from '../../styles/colors';
 import BG_IMAGE from '../../assets/images/gradient-bg1.jpg';
+// import bg1 from '../../assets/images/1.jpg';
+// import bg2 from '../../assets/images/2.jpg';
+// import bg3 from '../../assets/images/2.jpg';
+
 import authStyle from '../../styles/auth';
 
 
@@ -30,15 +34,15 @@ const SLIDER_1_FIRST_ITEM = 0;
 
 export const ENTRIES1 = [
     {
-        title: 'Get all types of illustration with new illustrations always on the way',
+        title: 'Get all types of meditation with new meditation always on the way',
         illustration:'https://firebasestorage.googleapis.com/v0/b/cardmaker-31ae8.appspot.com/o/appImages%2Fbanner1.jpg?alt=media&token=77f65b50-0664-4f39-a3c7-bf580c96e5eb'
     },
     {
-        title: 'Create unique color for your text',
+        title: 'Basic meditation for both beginner and advanced users.',
         illustration: 'https://firebasestorage.googleapis.com/v0/b/cardmaker-31ae8.appspot.com/o/appImages%2Fbanner2.jpg?alt=media&token=18df4d9f-6c1a-44fe-8d18-ce2a7a1a232d'
     },
     {
-        title: 'Make your own card with popular font family',
+        title: 'Guided meditation to help you calm, relax or sleep.',
         illustration:'https://firebasestorage.googleapis.com/v0/b/cardmaker-31ae8.appspot.com/o/appImages%2Fbanner3.jpg?alt=media&token=37a8ff9e-df2c-4bfb-8bca-2bd67b80d8f2'
     },
 
