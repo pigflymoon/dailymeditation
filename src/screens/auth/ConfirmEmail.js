@@ -5,9 +5,7 @@ import {Input, Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {auth} from '../../config/FirebaseConfig';
-import {doCreateUser} from '../../config/db';
 
-import  Utils from '../../utils/utils';
 
 import colorStyle from '../../styles/colors';
 import authStyle from '../../styles/auth';
@@ -19,6 +17,7 @@ export default class ConfirmEmail extends Component {
     constructor(props) {
         super(props);
         const {user} = this.props.navigation.state.params;
+        // var user = auth.currentUser;
         this.state = {
             email: '',
             user: user,
@@ -28,9 +27,6 @@ export default class ConfirmEmail extends Component {
         };
     }
 
-    async componentDidMount() {
-
-    }
 
     handleConfirmEmail = (e) => {
         var self = this;
@@ -43,8 +39,10 @@ export default class ConfirmEmail extends Component {
         user.sendEmailVerification().then(
             function () {
                 interval = setInterval(() => {
+
                     user.reload().then(
                         function () {
+                            console.log('confirmed??? reload');
                             if (interval && user.emailVerified) {
                                 clearInterval(interval);
                                 interval = null;
@@ -55,7 +53,6 @@ export default class ConfirmEmail extends Component {
                                     });
                                     clearInterval(interval);
                                     if (user && user.emailVerified) {
-                                        console.log('confirmed');
                                         self.props.navigation.navigate('Signin', {name: self.state.name});
                                         clearInterval(interval);
                                         interval = null;
@@ -77,8 +74,7 @@ export default class ConfirmEmail extends Component {
                             showLoading: false,
                             errorMessage: 'Error',
                         });
-                        // var errorMessage = error.message + ' (' + error.code + ')';
-                        // self.setState({showErrorInfo: true, errorInfo: errorMessage});
+
                     });
                 }, 1000 * 30);
             }).catch(function (error) {

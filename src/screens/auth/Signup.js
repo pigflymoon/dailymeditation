@@ -173,6 +173,7 @@ export default class Signin extends Component {
                     size={25}
                   />
                 }
+                                    selectionColor={colorStyle.white}
                                     containerStyle={{marginVertical: 5}}
                                     onChangeText={(email) => this.setEmail(email)}
                                     value={email}
@@ -190,7 +191,7 @@ export default class Signin extends Component {
                   this.passwordInput.focus();
                 }}
                                     blurOnSubmit={false}
-                                    placeholderTextColor="white"
+                                    placeholderTextColor={colorStyle.grey5}
                                     errorStyle={{textAlign: 'center', fontSize: 12}}
                                     errorMessage={email_valid ? null : "Please enter a valid email address"}
                                 />
@@ -202,6 +203,7 @@ export default class Signin extends Component {
                     size={25}
                   />
                 }
+                                    selectionColor={colorStyle.white}
                                     containerStyle={{marginVertical: 5}}
                                     onChangeText={(name) => this.setName(name)}
                                     value={name}
@@ -214,7 +216,7 @@ export default class Signin extends Component {
                                     returnKeyType="next"
                                     ref={ input => this.nameInput = input }
                                     blurOnSubmit={false}
-                                    placeholderTextColor="white"
+                                    placeholderTextColor={colorStyle.grey5}
                                     errorStyle={{textAlign: 'center', fontSize: 12}}
                                     errorMessage={name_valid ? null : "Please enter your name or nickname"}
                                 />
@@ -226,6 +228,7 @@ export default class Signin extends Component {
                     size={25}
                   />
                 }
+                                    selectionColor={colorStyle.white}
                                     containerStyle={{marginVertical: 5}}
                                     onChangeText={(password) => this.setPassword(password)}
                                     onSubmitEditing={() => {
@@ -243,7 +246,7 @@ export default class Signin extends Component {
                                     returnKeyType="done"
                                     ref={ input => this.passwordInput = input}
                                     blurOnSubmit={true}
-                                    placeholderTextColor="white"
+                                    placeholderTextColor={colorStyle.grey5}
                                     errorStyle={{textAlign: 'center', fontSize: 12}}
                                     errorMessage={password_valid ? null : "Please enter a valid password"}
                                 />
@@ -261,11 +264,8 @@ export default class Signin extends Component {
                                 titleStyle={{color: 'white'}}
                             />
                             <View style={authStyle.footerView}>
-                                <Text style={{color: colorStyle.white}}>
-                                    New here?
-                                </Text>
                                 <Button
-                                    title="Have an Account"
+                                    title="Have an Account?"
                                     clear
                                     activeOpacity={0.5}
                                     titleStyle={{color: 'white', fontSize: 15}}

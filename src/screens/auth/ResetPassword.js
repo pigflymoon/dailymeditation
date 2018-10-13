@@ -105,6 +105,7 @@ export default class ResetPassword extends Component {
                     size={25}
                   />
                 }
+                                selectionColor={colorStyle.white}
                                 containerStyle={{marginVertical: 5}}
                                 onChangeText={(email) => this.setEmail(email)}
                                 value={email}
@@ -121,7 +122,7 @@ export default class ResetPassword extends Component {
                   this.setState({email_valid: Utils.validateEmail(email)});
                 }}
                                 blurOnSubmit={false}
-                                placeholderTextColor="white"
+                                placeholderTextColor={colorStyle.grey5}
                                 errorStyle={{textAlign: 'center', fontSize: 12}}
                                 errorMessage={email_valid ? null : "Please enter a valid email address"}
                             />

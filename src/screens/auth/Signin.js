@@ -180,6 +180,7 @@ export default class Signin extends Component {
                     size={25}
                   />
                 }
+                        selectionColor={colorStyle.white}
                         containerStyle={{marginVertical: 5}}
                         onChangeText={(email) => this.setEmail(email)}
                         value={email}
@@ -197,7 +198,7 @@ export default class Signin extends Component {
                   this.passwordInput.focus();
                 }}
                         blurOnSubmit={false}
-                        placeholderTextColor="white"
+                        placeholderTextColor={colorStyle.grey5}
                         errorStyle={{textAlign: 'center', fontSize: 12}}
                         errorMessage={email_valid ? null : "Please enter a valid email address"}
                     />
@@ -215,6 +216,7 @@ export default class Signin extends Component {
                   this.setState({password_valid: Utils.validPassword(password)});
                   this.passwordInput.focus();
                 }}
+                        selectionColor={colorStyle.white}
                         value={password}
                         inputStyle={{marginLeft: 10, color: 'white'}}
                         secureTextEntry={true}
@@ -226,7 +228,7 @@ export default class Signin extends Component {
                         returnKeyType="done"
                         ref={ input => this.passwordInput = input}
                         blurOnSubmit={true}
-                        placeholderTextColor="white"
+                        placeholderTextColor={colorStyle.grey5}
                         errorStyle={{textAlign: 'center', fontSize: 12}}
                         errorMessage={password_valid ? null : "Please enter a valid password"}
                     />
