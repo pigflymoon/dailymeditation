@@ -1494,8 +1494,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucy.dailymeditation;
 				PRODUCT_NAME = dailymeditation;
-				PROVISIONING_PROFILE = "743eb8db-6cf6-4745-a67f-5efbbf9766f7";
-				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-production";
+				PROVISIONING_PROFILE = "215bcabf-3520-4805-9a73-08cae6b43d66";
+				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-InApp-Purchase";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1533,8 +1533,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucy.dailymeditation;
 				PRODUCT_NAME = dailymeditation;
-				PROVISIONING_PROFILE = "743eb8db-6cf6-4745-a67f-5efbbf9766f7";
-				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-production";
+				PROVISIONING_PROFILE = "215bcabf-3520-4805-9a73-08cae6b43d66";
+				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-InApp-Purchase";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

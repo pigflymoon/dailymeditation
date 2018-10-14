@@ -41,7 +41,7 @@ export default class Signin extends Component {
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
-                var title  = `Hi ${displayName}, welcome to daily meditation:simple habit`
+                var title = `Hi ${displayName}, welcome to daily meditation:simple habit`
 
                 self.setState({
                     user: user,
@@ -73,17 +73,38 @@ export default class Signin extends Component {
                 .then(function () {
                     auth.onAuthStateChanged(function (user) {
                         if (user) {
-                            var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
-                            var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
-                            self.setState({
-                                showLoading: false,
-                                user: user,
-                                signin: true,
-                                welcomeCard: true,
-                                showSignBox: false,
-                                title: title,
-                                //
-                            })
+                            const {previousScreen,audio} = self.props.navigation.state.params;
+                            console.log('previousScreen is ', previousScreen);
+                            if (previousScreen === 'MusicPlayer') {
+                                var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
+                                var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
+                                self.setState({
+                                    showLoading: false,
+                                    user: user,
+                                    signin: true,
+                                    welcomeCard: true,
+                                    showSignBox: false,
+                                    title: title,
+                                    //
+                                },() => {
+                                    self.props.navigation.push("PlayList", {audio:audio});//audioArray
+
+                                })
+
+                            } else {
+                                var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
+                                var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
+                                self.setState({
+                                    showLoading: false,
+                                    user: user,
+                                    signin: true,
+                                    welcomeCard: true,
+                                    showSignBox: false,
+                                    title: title,
+                                    //
+                                })
+                            }
+
 
                         } else {
                             self.setState({showLoading: false});
@@ -174,12 +195,12 @@ export default class Signin extends Component {
                 <View style={authStyle.loginInput}>
                     <Input
                         leftIcon={
-                  <Icon
-                    name='envelope-o'
-                    color='rgba(171, 189, 219, 1)'
-                    size={25}
-                  />
-                }
+                            <Icon
+                                name='envelope-o'
+                                color='rgba(171, 189, 219, 1)'
+                                size={25}
+                            />
+                        }
                         selectionColor={colorStyle.white}
                         containerStyle={{marginVertical: 5}}
                         onChangeText={(email) => this.setEmail(email)}
@@ -194,9 +215,9 @@ export default class Signin extends Component {
                         returnKeyType="next"
                         ref={ input => this.emailInput = input }
                         onSubmitEditing={() => {
-                  this.setState({email_valid: Utils.validateEmail(email)});
-                  this.passwordInput.focus();
-                }}
+                            this.setState({email_valid: Utils.validateEmail(email)});
+                            this.passwordInput.focus();
+                        }}
                         blurOnSubmit={false}
                         placeholderTextColor={colorStyle.grey5}
                         errorStyle={{textAlign: 'center', fontSize: 12}}
@@ -204,18 +225,18 @@ export default class Signin extends Component {
                     />
                     <Input
                         leftIcon={
-                  <Icon
-                    name='lock'
-                    color='rgba(171, 189, 219, 1)'
-                    size={25}
-                  />
-                }
+                            <Icon
+                                name='lock'
+                                color='rgba(171, 189, 219, 1)'
+                                size={25}
+                            />
+                        }
                         containerStyle={{marginVertical: 5}}
                         onChangeText={(password) => this.setPassword(password)}
                         onSubmitEditing={() => {
-                  this.setState({password_valid: Utils.validPassword(password)});
-                  this.passwordInput.focus();
-                }}
+                            this.setState({password_valid: Utils.validPassword(password)});
+                            this.passwordInput.focus();
+                        }}
                         selectionColor={colorStyle.white}
                         value={password}
                         inputStyle={{marginLeft: 10, color: 'white'}}
@@ -282,7 +303,7 @@ export default class Signin extends Component {
                 titleStyle={authStyle.cardTitle}
 
                 title={this.state.title}
-                >
+            >
 
                 <Button
                     title="SIGN OUT"

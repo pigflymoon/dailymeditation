@@ -33,19 +33,25 @@ export default class GridCardView extends Component {
         var unlock = data.unLock;
         if (unlock === true) {
             upDateRole();
+            this.setState({isPaidUser: true})
         }
     };
 
     openAudioModal = (e, audioData, item, isPaidUser) => {
+        console.log('clicked!!!!!!!!!!!!!!');
+        this.props.navigation.push("PlayList", {audio: audioData});//audioArray
+/*
         if (isPaidUser) {
             this.props.navigation.push("PlayList", {audio: audioData});//audioArray
         } else {
             this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
 
         }
+        */
 
 
     }
+
 
     fetchData = (category, type, isPaidUser) => {
         var self = this;

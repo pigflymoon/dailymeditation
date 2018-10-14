@@ -19,7 +19,7 @@ import Config from '../config/ApiConfig';
 
 var verifysandboxHost = Config.receiptVerify.Host.sandboxHost;
 var verifyHost = verifysandboxHost;
-
+//
 // var verifyproductionHost = Config.receiptVerify.Host.productionHost;
 // var verifyHost = verifyproductionHost;
 export function sendRecipt(receipt) {
@@ -31,6 +31,7 @@ export function sendRecipt(receipt) {
                     console.log('exists')
                 } else {
                     // Create a receipt in your own accessible Firebase Database too
+                    console.log('receipt is ',receipt);
                     doCreateReceipt(transactionKey, receipt)
                         .then(() => {
                             console.log('Got the receipt!')
@@ -52,6 +53,7 @@ export function onPay() {
     return new Promise(function (resolve, reject) {
         // some async operation here
         setTimeout(function () {
+            console.log('on pay is click');
             InAppUtils.canMakePayments((enabled) => {
 
                 if (enabled) {
@@ -118,10 +120,7 @@ export function onRestore() {
                         Alert.alert('No Purchases', "We didn't find any purchases to restore.");
                         return;
                     } else {
-
-
                         var productIdentifier = Config.products.productIdentifier;
-
                         response.forEach((purchase) => {
                             if (purchase.productIdentifier === productIdentifier) {
                                 resolve({restore: true})

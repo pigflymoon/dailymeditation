@@ -18,6 +18,8 @@ import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import {auth, db} from '../config/FirebaseConfig';
+
 import baseStyle from '../styles/base';
 import screenStyle from '../styles/screen';
 // import musicPlayerStyle from '../../styles/musicPlayer';
@@ -26,8 +28,6 @@ import meditationStyle from '../styles/meditation';
 import colors from '../styles/colors';
 
 import SortablePlayList from '../components/SortablePlayList';
-
-
 
 
 export default class PlayList extends Component {
@@ -61,31 +61,63 @@ export default class PlayList extends Component {
     componentWillMount() {
         const {audio} = this.props.navigation.state.params;
         console.log('audio list is*********** ', audio)
+        var self = this;
+        // var user = auth.currentUser;
 
-        // console.log('audio is*********** ', audio[this.state.currentIndex])
-        // console.log('music list is',audio);
+
         this.setState({musicList: audio})
 
     }
 
+    componentDidMount() {
 
-    playAllList = () => {
-        this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
     }
 
+    playAllList = () => {
+        const {audio} = this.props.navigation.state.params;
+
+        var self = this;
+        auth.onAuthStateChanged(function (authUser) {
+            console.log('authUser:',authUser);
+            if (authUser) {
+                var userId = auth.currentUser.uid;
+                self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
+
+
+                // this.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
+
+                /*
+                 db.ref('/users/' + userId).once('value').then(function (snapshot) {
+                 var userrole = (snapshot.val() && snapshot.val().role) || {free_user: true, paid_user: false};
+                 var isPaidUser = userrole.paid_user;
+                 if (isPaidUser) {
+                 self.setState({
+
+                 });
+                 }
+
+                 });
+                 */
+            } else {
+                self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
+
+            }
+        });
+    }
 
 
     render() {
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
-                <View style={{ flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'flex-end',
-                                paddingVertical: 5,
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    paddingVertical: 5,
                 }}>
                     <Icon
-                        containerStyle={{marginRight:10}}
+                        containerStyle={{marginRight: 10}}
                         name='play-circle-outline'
                         color={colors.grey6}
                         onPress={this.playAllList}/>
