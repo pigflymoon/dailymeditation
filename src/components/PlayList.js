@@ -82,22 +82,6 @@ export default class PlayList extends Component {
             if (authUser) {
                 var userId = auth.currentUser.uid;
                 self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
-
-
-                // this.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
-
-                /*
-                 db.ref('/users/' + userId).once('value').then(function (snapshot) {
-                 var userrole = (snapshot.val() && snapshot.val().role) || {free_user: true, paid_user: false};
-                 var isPaidUser = userrole.paid_user;
-                 if (isPaidUser) {
-                 self.setState({
-
-                 });
-                 }
-
-                 });
-                 */
             } else {
                 self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
 

@@ -37,17 +37,22 @@ export default class GridCardView extends Component {
         }
     };
 
-    openAudioModal = (e, audioData, item, isPaidUser) => {
+    openAudioModal = (e, audioData, item, isPro) => {
         console.log('clicked!!!!!!!!!!!!!!');
-        this.props.navigation.push("PlayList", {audio: audioData});//audioArray
-/*
-        if (isPaidUser) {
-            this.props.navigation.push("PlayList", {audio: audioData});//audioArray
-        } else {
-            this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
 
+        if (isPro && !this.state.isPaidUser) {
+            this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
+        } else {
+            this.props.navigation.push("PlayList", {audio: audioData});//audioArray
         }
-        */
+        /*
+         if (isPaidUser) {
+         this.props.navigation.push("PlayList", {audio: audioData});//audioArray
+         } else {
+         this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
+
+         }
+         */
 
 
     }
@@ -94,13 +99,18 @@ export default class GridCardView extends Component {
         auth.onAuthStateChanged(function (authUser) {
             if (authUser) {
                 var userId = auth.currentUser.uid;
+                console.log('userid???????',userId);
                 db.ref('/users/' + userId).once('value').then(function (snapshot) {
                     var userrole = (snapshot.val() && snapshot.val().role) || {free_user: true, paid_user: false};
                     var isPaidUser = userrole.paid_user;
                     self.setState({signin: true, authUser, isPaidUser: isPaidUser});
 
                 });
+            }else{
+                self.setState({signin: false,  isPaidUser: false});
+
             }
+
         });
     }
 
@@ -130,7 +140,7 @@ export default class GridCardView extends Component {
                                     style={imageStyle.gridView}
                                     renderItem={item => (
                                         <TouchableHighlight
-                                            onPress={(e) => this.openAudioModal(e, items, item, true)}
+                                            onPress={(e) => this.openAudioModal(e, items, item, false)}
                                         >
                                             <ImageBackground style={imageStyle.imageContainer}
                                                              imageStyle={imageStyle.imageRadiusBorder}
@@ -183,7 +193,7 @@ export default class GridCardView extends Component {
                             style={imageStyle.gridView}
                             renderItem={item => (
                                 <TouchableHighlight
-                                    onPress={(e) => this.openAudioModal(e, this.state.audiosData, item, isPaidUser)}
+                                    onPress={(e) => this.openAudioModal(e, this.state.audiosData, item, true)}
                                 >
                                     <ImageBackground style={imageStyle.imageContainer}
                                                      imageStyle={imageStyle.imageRadiusBorder}

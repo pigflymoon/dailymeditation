@@ -73,24 +73,26 @@ export default class Signin extends Component {
                 .then(function () {
                     auth.onAuthStateChanged(function (user) {
                         if (user) {
-                            const {previousScreen,audio} = self.props.navigation.state.params;
-                            console.log('previousScreen is ', previousScreen);
-                            if (previousScreen === 'MusicPlayer') {
-                                var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
-                                var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
-                                self.setState({
-                                    showLoading: false,
-                                    user: user,
-                                    signin: true,
-                                    welcomeCard: true,
-                                    showSignBox: false,
-                                    title: title,
-                                    //
-                                },() => {
-                                    self.props.navigation.push("PlayList", {audio:audio});//audioArray
+                            if (self.props.navigation.state.params) {
+                                const {previousScreen, audio} = self.props.navigation.state.params;
+                                console.log('previousScreen is ', previousScreen);
+                                if (previousScreen === 'MusicPlayer') {
+                                    var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
+                                    var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
+                                    self.setState({
+                                        showLoading: false,
+                                        user: user,
+                                        signin: true,
+                                        welcomeCard: true,
+                                        showSignBox: false,
+                                        title: title,
+                                        //
+                                    }, () => {
+                                        self.props.navigation.push("PlayList", {audio: audio});//audioArray
 
-                                })
+                                    })
 
+                                }
                             } else {
                                 var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
                                 var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
