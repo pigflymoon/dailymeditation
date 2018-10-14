@@ -30,7 +30,6 @@ export default class ConfirmEmail extends Component {
 
     handleConfirmEmail = (e) => {
         var self = this;
-        console.log('user is ',this.state.user)
         var user = this.state.user;
         this.setState({showLoading: true});
 
@@ -42,7 +41,6 @@ export default class ConfirmEmail extends Component {
 
                     user.reload().then(
                         function () {
-                            console.log('confirmed??? reload');
                             if (interval && user.emailVerified) {
                                 clearInterval(interval);
                                 interval = null;

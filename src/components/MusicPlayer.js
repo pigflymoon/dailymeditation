@@ -151,15 +151,11 @@ export default class MusicPlayer extends Component {
     }
 
     onNextSong = (currentIndex) => (e) => {
-
         e.preventDefault();
-        console.log('currentIndex is ', currentIndex)
         this.nextSong(currentIndex);
     }
 
     nextSong = (currentIndex) => {
-        console.log('next song called')
-        console.log('currentIndex is ', currentIndex)
         this.reset()
         this.setState({currentIndex: currentIndex >= this.state.musicList.length ? 0 : currentIndex})
 
@@ -222,10 +218,7 @@ export default class MusicPlayer extends Component {
         } else if (this.state.playMode === 1) {
             this.player.seek(0)
         } else {
-            console.log('list length', this.state.musicList.length);//mockData.list.length
             var randomIndex = Math.floor(Math.random() * this.state.musicList.length);
-            console.log('random is', randomIndex);//this.musicList.length
-
             this.nextSong(randomIndex)
         }
     }

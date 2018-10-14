@@ -106,7 +106,6 @@ export default class MyMeditation extends Component {
             })
             .then((myList) => {
                 if (myList) {
-                    console.log('my list is ', myList);
                     self.setState({
                         musicList: myList,
                         isLoading: false,
@@ -164,11 +163,8 @@ export default class MyMeditation extends Component {
     }
 
     render() {
-        console.log('music list is :', this.state.musicList);
-        const {isLoading, musicList} = this.state;
-        // const {isConnected} = this.props.screenProps;
 
-        // console.log('screenprops isConnected',this.props.screenProps.isConnected);
+        const {isLoading, musicList} = this.state;
         if (!musicList) {
 
             return (

@@ -38,25 +38,12 @@ export default class GridCardView extends Component {
     };
 
     openAudioModal = (e, audioData, item, isPro) => {
-        console.log('clicked!!!!!!!!!!!!!!');
-
         if (isPro && !this.state.isPaidUser) {
             this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
         } else {
             this.props.navigation.push("PlayList", {audio: audioData});//audioArray
         }
-        /*
-         if (isPaidUser) {
-         this.props.navigation.push("PlayList", {audio: audioData});//audioArray
-         } else {
-         this.props.navigation.navigate("UnLock", {onUnlock: this.onUnlock});
-
-         }
-         */
-
-
     }
-
 
     fetchData = (category, type, isPaidUser) => {
         var self = this;
@@ -99,7 +86,6 @@ export default class GridCardView extends Component {
         auth.onAuthStateChanged(function (authUser) {
             if (authUser) {
                 var userId = auth.currentUser.uid;
-                console.log('userid???????',userId);
                 db.ref('/users/' + userId).once('value').then(function (snapshot) {
                     var userrole = (snapshot.val() && snapshot.val().role) || {free_user: true, paid_user: false};
                     var isPaidUser = userrole.paid_user;
@@ -171,8 +157,6 @@ export default class GridCardView extends Component {
 
     renderCategory = () => {
         const {isPaidUser, audiosData} = this.state;
-
-        console.log('isPaidUser: ', isPaidUser);
         return (
             <View>
                 {this.state.isLoading ?

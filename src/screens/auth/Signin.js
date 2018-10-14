@@ -75,7 +75,6 @@ export default class Signin extends Component {
                         if (user) {
                             if (self.props.navigation.state.params) {
                                 const {previousScreen, audio} = self.props.navigation.state.params;
-                                console.log('previousScreen is ', previousScreen);
                                 if (previousScreen === 'MusicPlayer') {
                                     var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
                                     var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`

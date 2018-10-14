@@ -27,7 +27,6 @@ import sortableListStyle from '../styles/sortableList';
 export default class SortablePlayList extends Component {
     constructor(props) {
         super(props);
-        console.log('pass props is :', this.props.musicData);
         this.state = {
             musicListVisible: false,
             musicList: this.props.musicData,
@@ -69,7 +68,6 @@ export default class SortablePlayList extends Component {
         let showDownload = (type === 'playlist') ? false : true;
 
         let musicId = data.id;
-        console.log('data is', data);
         // console.log('musicId is ', musicId);
         return <Row key={index} data={data} index={index} active={active}
                     isCurrentIndex={isCurrentIndex}
@@ -82,14 +80,12 @@ export default class SortablePlayList extends Component {
 
 
     onHandleDropMenu = (data) => (value, deleteIndex) => {//第一个参数是直接传给调用回调函数的，第二个括号里的参数是回调函数返回的值
-        console.log('music data', data, 'value, deleteIndex', value, deleteIndex);
         this.setState({musicListVisible: value, deleteIndex: deleteIndex, musicData: data});
     }
 
     onShare = () => {
         var deleteIndex = this.state.deleteIndex;
         var musitItem = this.state.musicList[deleteIndex]
-        console.log('item is :',musitItem);
         const message = `I am using Daily Meditation:Simple Habit.Share this ${musitItem.name} with you,Namaste`
         const url = Config.share.applestoreUrl;
         Utils.shareText(message, url)
@@ -104,8 +100,6 @@ export default class SortablePlayList extends Component {
     render() {
         const {musicList, musicListVisible} = this.state;
         const {type} = this.props;
-        console.log('music data is :', musicList);
-
         return (
             <View style={sortableListStyle.container}>
                 <SortableList
@@ -232,7 +226,6 @@ class Row extends Component {
 
 
     showDropDownMenu = (index) => (e) => {
-        console.log('index pass to menu', index);
         this.props.dropMenu(true, index);
     }
 
@@ -244,7 +237,6 @@ class Row extends Component {
             fromUrl: musicItem.downloadUrl,
             toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`,
         }).promise.then((r) => {
-            console.log('response is :', r, 'music id is: ', musicItem.id);
             RNFS.downloadFile({
                 fromUrl: musicItem.imageDownloadUrl,
                 toFile: `${RNFS.DocumentDirectoryPath}/${musicItem.id}.png`,
@@ -252,20 +244,14 @@ class Row extends Component {
 
                 AsyncStorage.getItem("myPlayList")
                     .then(req => {
-                        console.log('req is :', req);
                         return JSON.parse(req)
                     })
                     .then((myList) => {
-                        console.log('save in storage :', myList);
-                        // myList = myList
                         if (myList) {
-                            //
                             var listIndex = myList.findIndex(el => el.id === musicItem.id)
-                            console.log('list is download? ', myList[listIndex].isDownloaded);
                             myList[listIndex].isDownloaded = true;
                             myList[listIndex].downloadUrl = `${RNFS.DocumentDirectoryPath}/${musicItem.id}.mp3`;
                             myList[listIndex].imageDownloadUrl = `${RNFS.DocumentDirectoryPath}/${musicItem.id}.png`;
-                            console.log('myList[listIndex] is ', myList[listIndex]);
                             AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({
                                 isDownloaded: true,
                                 musicItem: myList[listIndex]
@@ -292,7 +278,6 @@ class Row extends Component {
 
                 if (myList) {
                     if (myList.some(e => e.downloadUrl === musicItem.downloadUrl)) {
-                        console.log('already have item');
                         return;
                     } else {
                         myList.push(musicItem);
@@ -313,9 +298,6 @@ class Row extends Component {
 
     render() {
         const {musicItem, musicItemIndex, isCurrentIndex, showAddTo, showDownload, isDownloaded, downloadLoading} = this.state;
-
-        console.log(' music Item ', musicItem, 'isDownloaded is :', isDownloaded);
-
         return (
             <Animated.View style={[
                 sortableListStyle.row,

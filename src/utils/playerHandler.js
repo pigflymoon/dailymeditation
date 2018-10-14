@@ -3,7 +3,6 @@ import TrackStore from '../stores/Track';
 
 module.exports = async (data) => {
     // Handles the player event
-    console.log('data is ',data)
     if (data.type === 'playback-track-changed') {
         if (data.nextTrack) {
             const track = await TrackPlayer.getTrack(data.nextTrack);

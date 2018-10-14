@@ -31,7 +31,6 @@ export function sendRecipt(receipt) {
                     console.log('exists')
                 } else {
                     // Create a receipt in your own accessible Firebase Database too
-                    console.log('receipt is ',receipt);
                     doCreateReceipt(transactionKey, receipt)
                         .then(() => {
                             console.log('Got the receipt!')
@@ -53,7 +52,6 @@ export function onPay() {
     return new Promise(function (resolve, reject) {
         // some async operation here
         setTimeout(function () {
-            console.log('on pay is click');
             InAppUtils.canMakePayments((enabled) => {
 
                 if (enabled) {

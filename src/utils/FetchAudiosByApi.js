@@ -6,7 +6,7 @@ import {db} from '../config/FirebaseConfig';
 
 export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginner') {
     var self = this;
-    console.log('category:', category, 'type is :', type);
+
     return new Promise(function (resolve, reject) {
         // some async operation here
         setTimeout(function () {
@@ -14,16 +14,11 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
             // var dataType = (category === 'beginner') ? 'beginner' : `meditationCategory/${type}`
             if (category === 'beginner') {
                 db.ref().child(`${type}`).once("value", function (snapshot) {
-                    console.log('snapshot is ', snapshot);
-
-                    if (snapshot.val()) {
-                        console.log('snapshot is ', snapshot.val());
+                       if (snapshot.val()) {
                         var downloadAudios = snapshot.val(), audioCategoryArray = {};
                         for (const key of Object.keys(downloadAudios)) {
-                            console.log('key is :', key, 'data is :', downloadAudios[key]);
                             var audios = downloadAudios[key], childArray = [];
                             for (const subKey of Object.keys(audios)) {
-                                console.log('subKey: ', subKey, 'value is :', audios[subKey])
                                 // audioCategoryArray[key] = audios[subKey];
                                 // audios[subKey].push({id: subKey});
                                 audios[subKey].id = subKey;
@@ -32,7 +27,6 @@ export function getAudiosByCategoryAndType(category = 'beginner', type = 'beginn
                             }
                             audioCategoryArray[key] = childArray;
                         }
-                        console.log('*******audioCategoryArray is********* ', audioCategoryArray);
                         resolve(audioCategoryArray);
                     } else {
                         resolve([])

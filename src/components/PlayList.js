@@ -60,11 +60,6 @@ export default class PlayList extends Component {
 
     componentWillMount() {
         const {audio} = this.props.navigation.state.params;
-        console.log('audio list is*********** ', audio)
-        var self = this;
-        // var user = auth.currentUser;
-
-
         this.setState({musicList: audio})
 
     }
@@ -78,9 +73,7 @@ export default class PlayList extends Component {
 
         var self = this;
         auth.onAuthStateChanged(function (authUser) {
-            console.log('authUser:',authUser);
             if (authUser) {
-                var userId = auth.currentUser.uid;
                 self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
             } else {
                 self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
