@@ -59,7 +59,6 @@ export default class SortablePlayList extends Component {
         var self = this;
         const {signin} = this.props;
 
-        console.log("signin :", signin);
         if (signin) {
             self.setState({activeIndex: parseInt(index)})
             var musicData = [];
@@ -78,8 +77,7 @@ export default class SortablePlayList extends Component {
         let showAddToMylist = (type === 'playlist') ? true : false;
         let showDownload = (type === 'playlist') ? false : true;
 
-        let musicId = data.id;
-        // console.log('musicId is ', musicId);
+        // let musicId = data.id;
         return <Row key={index} data={data} index={index} active={active}
                     isCurrentIndex={isCurrentIndex}
                     isDownloaded={data.isDownloaded}
@@ -243,7 +241,6 @@ class Row extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log('nextProps isCurrentIndex is ', nextProps.isCurrentIndex);
         this.setState({
             musicItem: nextProps.data,
             isCurrentIndex: nextProps.isCurrentIndex,

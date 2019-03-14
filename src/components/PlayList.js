@@ -96,7 +96,6 @@ export default class PlayList extends Component {
 
     render() {
         const {musicList, signin, bgImage, audioType} = this.state;
-        console.log('bgImage:', bgImage);
         let banner = bgImage ? {uri: bgImage} : bg;
 
         return (

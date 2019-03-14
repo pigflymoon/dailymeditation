@@ -80,14 +80,12 @@ export default class MyMeditation extends Component {
             })
             .then((myList) => {
                 if (myList) {
-                    console.log('myList is :', myList[0].imageDownloadUrl);
                     self.setState({
                         musicList: myList,
                         isLoading: false,
                         bannerImage: myList[0].imageDownloadUrl
                     })
                 } else {
-                    console.log('myList is :', myList);
                     self.setState({
                         musicList: [],
                         isLoading: false,
@@ -101,7 +99,6 @@ export default class MyMeditation extends Component {
     }
 
     playAllList = () => {
-        console.log('this.state.musicList is ', this.state.musicList);
         if (this.state.signin) {
             if ((this.state.musicList).length > 0) {
                 this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
@@ -158,7 +155,6 @@ export default class MyMeditation extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {isConnected} = nextProps.screenProps;
-        // console.log('music data is :', musicData);
         if (!isConnected) {
             this.getDataFromLocalStorage();
 
@@ -168,10 +164,7 @@ export default class MyMeditation extends Component {
 
     render() {
         const {isLoading, musicList, signin, bannerImage} = this.state;
-        console.log('musicList is :', musicList);
-
         let banner = bannerImage ? {uri: bannerImage} : bg;//
-
 
         if (musicList.length == 0) {
 

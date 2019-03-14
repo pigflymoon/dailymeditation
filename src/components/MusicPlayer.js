@@ -98,7 +98,6 @@ export default class MusicPlayer extends Component {
 
     componentDidMount() {
         const {audio} = this.props.navigation.state.params;
-        console.log("audio is :", audio);
         this.setState({musicInfo: audio[this.state.currentIndex], musicList: audio})
 
         this.spin()
