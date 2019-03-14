@@ -59,15 +59,15 @@ export default class SortablePlayList extends Component {
         var self = this;
         const {signin} = this.props;
 
-        console.log("signin :",signin);
-            if (signin) {
-                self.setState({activeIndex: parseInt(index)})
-                var musicData = [];
-                musicData.push(data);
-                self.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
-            } else {
-                self.props.navigate.navigate('Signin', {previousScreen: 'PlayList'});
-            }
+        console.log("signin :", signin);
+        if (signin) {
+            self.setState({activeIndex: parseInt(index)})
+            var musicData = [];
+            musicData.push(data);
+            self.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
+        } else {
+            self.props.navigate.navigate('Signin', {previousScreen: 'PlayList'});
+        }
 
     }
 
@@ -117,12 +117,24 @@ export default class SortablePlayList extends Component {
                     style={sortableListStyle.list}
                     contentContainerStyle={sortableListStyle.contentContainer}
                     data={musicList}
-                    onChangeOrder={(nextOrder)=>{console.log('next order is :',nextOrder)}}
-                    onPressRow={(key)=>{this.showMusicPlayer(musicList[key],key)}}
+                    onChangeOrder={(nextOrder) => {
+                        console.log('next order is :', nextOrder)
+                    }}
+                    onPressRow={(key) => {
+                        this.showMusicPlayer(musicList[key], key)
+                    }}
                     renderRow={this._renderRow}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
-                    overlayStyle={{flex: 1,zIndex:99, position: 'absolute', bottom: 250, width: '100%', right: 0, height: 360}}
+                    overlayStyle={{
+                        flex: 1,
+                        zIndex: 99,
+                        position: 'absolute',
+                        bottom: 250,
+                        width: '100%',
+                        right: 0,
+                        height: 360
+                    }}
                     isVisible={musicListVisible}
                     borderRadius={0}
                     onBackdropPress={() => this.setState({musicListVisible: false})}
@@ -139,20 +151,32 @@ export default class SortablePlayList extends Component {
                                 <Text style={sortableListStyle.title}>{`Play List`}</Text>
                             </View>
                         </View>
-                        <View style={{flex: 1,  flexDirection: 'column'}}>
+                        <View style={{flex: 1, flexDirection: 'column'}}>
                             <ListItem
-                                leftIcon={{name: 'ios-share-outline',type: 'ionicon',color: colors.purple3}}
+                                leftIcon={{name: 'ios-share-outline', type: 'ionicon', color: colors.purple3}}
                                 title={`Share`}
                                 titleStyle={{color: colors.purple3,}}
-                                containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
+                                containerStyle={{
+                                    backgroundColor: 'transparent',
+                                    paddingVertical: 10,
+                                    marginVertical: 4,
+                                }}
                                 bottomDivider
                                 onPress={this.onShare}
                             />
                             {type != 'playlist' ? <ListItem
-                                    leftIcon={{name: 'ios-remove-circle-outline',type: 'ionicon',color: colors.purple3}}
+                                    leftIcon={{
+                                        name: 'ios-remove-circle-outline',
+                                        type: 'ionicon',
+                                        color: colors.purple3
+                                    }}
                                     title={`Delete`}
                                     titleStyle={{color: colors.purple3,}}
-                                    containerStyle={{backgroundColor:'transparent',paddingVertical: 10, marginVertical: 4,}}
+                                    containerStyle={{
+                                        backgroundColor: 'transparent',
+                                        paddingVertical: 10,
+                                        marginVertical: 4,
+                                    }}
                                     bottomDivider
                                     onPress={this.deleteListItem}
                                 /> : null}
@@ -185,7 +209,6 @@ class Row extends Component {
             showDownload: this.props.showDownload,
             isDownloaded: this.props.isDownloaded,
             downloadLoading: false,
-
         }
 
         this._style = {
@@ -299,7 +322,9 @@ class Row extends Component {
                     myList.push(musicItem)
                 }
 
-                AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({myPlayList: myList}));
+                AsyncStorage.setItem('myPlayList', JSON.stringify(myList)).then(self.setState({
+                    myPlayList: myList,
+                }));
 
             });
 
@@ -316,31 +341,31 @@ class Row extends Component {
             ]}>
                 <Icon
                     containerStyle={{flex: 1,}}
-                    iconStyle={{alignSelf:'flex-start'}}
-                    style={{width:30}}
+                    iconStyle={{alignSelf: 'flex-start'}}
+                    style={{width: 30}}
                     name='ios-musical-note'
                     type='ionicon'
                     color={isCurrentIndex ? colors.green : colors.grey4}
                 />
                 <Image source={{uri: musicItem.imageDownloadUrl}} style={sortableListStyle.image}/>
-                <View style={{flex:1,flexGrow:3}}>
+                <View style={{flex: 1, flexGrow: 3}}>
                     <Text style={sortableListStyle.text}>{musicItem.audioType}-{musicItem.name}</Text>
                 </View>
                 {showDownload ? isDownloaded ? <Icon
                             containerStyle={{flex: 1,}}
-                            iconStyle={{alignSelf:'flex-end'}}
+                            iconStyle={{alignSelf: 'flex-end'}}
                             color={colors.grey4}
                             type='ionicon'
                             name='ios-cloud-done'
                         /> : <Button
-                            buttonStyle={{backgroundColor:'transparent'}}
+                            buttonStyle={{backgroundColor: 'transparent'}}
                             loading={downloadLoading}
                             title={null}
                             icon={<Icon
-                                  name='ios-cloud-download-outline'
-                                  type='ionicon'
-                                  color={colors.grey4}
-                                  />}
+                                name='ios-cloud-download-outline'
+                                type='ionicon'
+                                color={colors.grey4}
+                            />}
                             disabled={downloadLoading}
                             onPress={this.downloadMusicItem}
                         />
@@ -348,13 +373,13 @@ class Row extends Component {
 
                 {showAddTo ? <Icon
                         containerStyle={{flex: 1,}}
-                        iconStyle={{alignSelf:'flex-end'}}
+                        iconStyle={{alignSelf: 'flex-end'}}
                         color={colors.grey4}
-                        name='favorite'
+                        name='add-box'
                         onPress={this.addToMyList(musicItem)}/> : null}
                 <Icon
                     containerStyle={{flex: 1,}}
-                    iconStyle={{alignSelf:'flex-end'}}
+                    iconStyle={{alignSelf: 'flex-end'}}
                     color={colors.grey4}
                     name='more-vert'
                     onPress={this.showDropDownMenu(musicItemIndex)}/>

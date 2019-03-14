@@ -13,8 +13,9 @@ import {
     Dimensions,
     ScrollView,
     Alert,
+    ImageBackground,
 } from 'react-native'
-import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
+import {Overlay, Avatar, ListItem, Icon, Tile} from 'react-native-elements';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -28,6 +29,7 @@ import meditationStyle from '../styles/meditation';
 import colors from '../styles/colors';
 
 import SortablePlayList from '../components/SortablePlayList';
+import bg from '../assets/images/noWifiBg.png';
 
 
 export default class PlayList extends Component {
@@ -51,6 +53,8 @@ export default class PlayList extends Component {
             musicList: [],
             deleteListVisible: false,
             signin: false,
+            bgImage: null,
+            audioType: 'Guided Meditation For'
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
             toValue: 1,
@@ -61,7 +65,11 @@ export default class PlayList extends Component {
 
     componentDidMount() {
         const {audio} = this.props.navigation.state.params;
-        this.setState({musicList: audio});
+        this.setState({
+            musicList: audio,
+            audioType: 'Guided Meditation For ' + audio[0].audioType,
+            bgImage: audio[0].imageDownloadUrl
+        });
         var self = this;
 
         auth.onAuthStateChanged(function (authUser) {
@@ -77,43 +85,53 @@ export default class PlayList extends Component {
         const {audio} = this.props.navigation.state.params;
 
         var self = this;
-        if (this.signin) {
+        if (this.state.signin) {
             self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
-
         } else {
             self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
-
         }
-        // auth.onAuthStateChanged(function (authUser) {
-        //     if (authUser) {
-        //         self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
-        //     } else {
-        //         self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
-        //
-        //     }
-        // });
+
     }
 
 
     render() {
-        const {musicList, signin} = this.state;
+        const {musicList, signin, bgImage, audioType} = this.state;
+        console.log('bgImage:', bgImage);
+        let banner = bgImage ? {uri: bgImage} : bg;
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    paddingVertical: 5,
-                }}>
-                    <Icon
-                        containerStyle={{marginRight: 10}}
-                        name='play-circle-outline'
-                        color={colors.grey6}
-                        onPress={this.playAllList}/>
 
+                <View style={{flex: 1,}}>
+
+                    <ImageBackground
+                        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+                        source={banner}>
+                        <Text style={{color: colors.grey6, fontWeight: 'bold'}}>{audioType}</Text>
+                    </ImageBackground>
+
+                    <View
+                        style={{
+                            flexDirection: 'row', justifyContent: 'flex-start',
+                            marginVertical: 10,
+                            paddingHorizontal: 10,
+                            borderBottomWidth: StyleSheet.hairlineWidth,
+                            borderBottomColor: '#A7A7AA',
+                            height: 30,
+                        }}
+                    >
+                        <Icon
+                            containerStyle={{marginRight: 10}}
+                            name='play-circle-outline'
+                            color={colors.grey6}
+                            onPress={this.playAllList}/>
+                        <Text style={{color: colors.grey6}}>Play All</Text>
+
+                    </View>
                 </View>
-                <SortablePlayList signin={signin} musicData={musicList} type="playlist"
+
+
+                <SortablePlayList style={{flex: 1,}} signin={signin} musicData={musicList} type="playlist"
                                   navigate={this.props.navigation}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
