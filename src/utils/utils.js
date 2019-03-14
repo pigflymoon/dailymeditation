@@ -99,7 +99,7 @@ export default class Utils {
             >
                 <View style={showInfo.container}>
                     <Text style={showInfo.text}>Please add any favorite meditaions to My Meditation.{"\n"}{"\n"}
-                        Tap favorite on any meditation session.</Text>
+                        Tap Add icon on any meditation session.</Text>
 
 
                 </View>

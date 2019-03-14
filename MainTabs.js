@@ -169,7 +169,7 @@ const StacksInTabs = createBottomTabNavigator(
         MyMeditationTab:{
             screen: MyMeditationTab,
             navigationOptions: {
-                tabBarLabel: 'My Meditation List',
+                tabBarLabel: 'My Meditation',
                 tabBarIcon: ({tintColor, focused}) => (
                     <Ionicons
                         name={focused ? 'ios-flower' : 'ios-flower-outline'}

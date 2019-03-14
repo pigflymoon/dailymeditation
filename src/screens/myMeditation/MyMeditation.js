@@ -62,6 +62,7 @@ export default class MyMeditation extends Component {
             isLoading: true,
             color: "#FFFFFF",
             size: 100,
+            bannerImage: ''
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
             toValue: 1,
@@ -79,13 +80,16 @@ export default class MyMeditation extends Component {
             })
             .then((myList) => {
                 if (myList) {
+                    console.log('myList is :', myList[0].imageDownloadUrl);
                     self.setState({
                         musicList: myList,
                         isLoading: false,
+                        bannerImage: myList[0].imageDownloadUrl
                     })
                 } else {
+                    console.log('myList is :', myList);
                     self.setState({
-                        musicList: myList,
+                        musicList: [],
                         isLoading: false,
                     })
                 }
@@ -97,9 +101,22 @@ export default class MyMeditation extends Component {
     }
 
     playAllList = () => {
-
+        console.log('this.state.musicList is ', this.state.musicList);
         if (this.state.signin) {
-            this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
+            if ((this.state.musicList).length > 0) {
+                this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
+            } else {
+                Alert.alert(
+                    'Meditation list is empty',
+                    `Please add any favorite meditaions to My Meditation.`,
+                    [
+                        {
+                            text: 'OK'
+                        },
+                    ],
+                    {cancelable: false}
+                )
+            }
         } else {
             this.props.navigation.navigate('Signin', {previousScreen: 'MyMeditation', audio: this.state.musicList});
         }
@@ -131,9 +148,9 @@ export default class MyMeditation extends Component {
 
         auth.onAuthStateChanged(function (authUser) {
             if (authUser) {
-                self.setState({signin:true})
+                self.setState({signin: true})
             } else {
-                self.setState({signin:false})
+                self.setState({signin: false})
             }
         });
 
@@ -150,31 +167,34 @@ export default class MyMeditation extends Component {
     }
 
     render() {
-        const {isLoading, musicList,signin} = this.state;
+        const {isLoading, musicList, signin, bannerImage} = this.state;
+        console.log('musicList is :', musicList);
 
-        let banner =  bg;
+        let banner = bannerImage ? {uri: bannerImage} : bg;//
 
-        if (!musicList) {
+
+        if (musicList.length == 0) {
 
             return (
                 <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
-                    <View style={{ flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'flex-end',
-                                paddingVertical: 5,
-                }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        paddingVertical: 5,
+                    }}>
                         <Icon
-                            containerStyle={{marginRight:10}}
+                            containerStyle={{marginRight: 10}}
                             name='refresh'
                             color={colors.grey6}
                             onPress={this.refreshList}/>
                         <Icon
-                            containerStyle={{marginRight:10}}
+                            containerStyle={{marginRight: 10}}
                             name='play-circle-outline'
                             color={colors.grey6}
                             onPress={this.playAllList}/>
                         <Icon
-                            containerStyle={{marginRight:10}}
+                            containerStyle={{marginRight: 10}}
                             name='delete-forever'
                             color={colors.grey4}
                             size={26}
@@ -193,7 +213,7 @@ export default class MyMeditation extends Component {
                     <ImageBackground
                         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
                         source={banner}>
-                        <Text style={{color: colors.grey6, fontWeight: 'bold'}}>My list</Text>
+                        <Text style={{color: colors.grey6, fontWeight: 'bold'}}>My Daily Meditation:Simple Habit</Text>
                     </ImageBackground>
 
                     <View
@@ -206,43 +226,44 @@ export default class MyMeditation extends Component {
                             height: 30,
                         }}
                     >
-                        <View style={{flex:1,flexDirection: 'row',}}>
-                        <Icon
-                            containerStyle={{marginRight: 10}}
-                            name='play-circle-outline'
-                            color={colors.grey6}
-                            onPress={this.playAllList}/>
-                        <Text style={{color: colors.grey6}}>Play All</Text>
+                        <View style={{flex: 1, flexDirection: 'row',}}>
+                            <Icon
+                                containerStyle={{marginRight: 10}}
+                                name='play-circle-outline'
+                                color={colors.grey6}
+                                onPress={this.playAllList}/>
+                            <Text style={{color: colors.grey6}}>Play All</Text>
 
                         </View>
-                        <View style={{flex:1,flexDirection: 'row',justifyContent:'flex-end'}}>
-                        <Icon
-                            containerStyle={{marginRight:10}}
-                            name='refresh'
-                            color={colors.grey6}
-                            onPress={this.refreshList}/>
-                        <Icon
-                            containerStyle={{marginRight:10}}
-                            name='delete-forever'
-                            color={colors.grey4}
-                            size={26}
-                            onPress={this.deleteAllList}
-                        />
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                            <Icon
+                                containerStyle={{marginRight: 10}}
+                                name='refresh'
+                                color={colors.grey6}
+                                onPress={this.refreshList}/>
+                            <Icon
+                                containerStyle={{marginRight: 10}}
+                                name='delete-forever'
+                                color={colors.grey4}
+                                size={26}
+                                onPress={this.deleteAllList}
+                            />
                         </View>
                     </View>
                 </View>
 
-                <View style={{ flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'flex-end',
-                                paddingVertical: 5,
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    paddingVertical: 5,
                 }}>
 
                 </View>
 
                 {this.state.isLoading ?
-                    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}><Spinner
-                        style={{ marginBottom: 50}}
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><Spinner
+                        style={{marginBottom: 50}}
                         isVisible={this.state.isLoading}
                         size={this.state.size}
                         type="ThreeBounce"
