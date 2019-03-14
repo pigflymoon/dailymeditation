@@ -58,14 +58,9 @@ export default class PlayList extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {audio} = this.props.navigation.state.params;
         this.setState({musicList: audio})
-
-    }
-
-    componentDidMount() {
-
     }
 
     playAllList = () => {

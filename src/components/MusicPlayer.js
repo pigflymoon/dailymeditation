@@ -96,14 +96,11 @@ export default class MusicPlayer extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {audio} = this.props.navigation.state.params;
-
+        console.log("audio is :", audio);
         this.setState({musicInfo: audio[this.state.currentIndex], musicList: audio})
 
-    }
-
-    componentDidMount() {
         this.spin()
         // this.setState({musicInfo: mockData.list[this.state.currentIndex]})
         // fetch(musicListUrl, {
@@ -122,21 +119,6 @@ export default class MusicPlayer extends Component {
         //   })
         //   .done()
     }
-
-    // getxiamiMusic(musicId) {
-    //   fetch(`${musicDetail}${musicId}`, {
-    //     method: 'GET',
-    //     headers: header})
-    //     .then((response) => response.json())
-    //     .then((responseData) => {
-    //       console.log(responseData)
-    //       this.setState({musicList: this.musicList, musicInfo: responseData})
-    //     })
-    //     .catch((error) => {
-    //       console.log(error)
-    //     })
-    //     .done()
-    // }
 
     setDuration = (duration) => {
         this.setState({duration: duration.duration})
@@ -235,7 +217,7 @@ export default class MusicPlayer extends Component {
         const {audio} = this.props.navigation.state.params;
 
         const {navigation} = this.props;
-        navigation.navigate('PlayList', {audio:audio});
+        navigation.navigate('PlayList', {audio: audio});
         // navigation.goBack();
     }
     showMusicList = () => {
@@ -518,9 +500,8 @@ export default class MusicPlayer extends Component {
     render() {
         const musicList = this.state.musicList || [];
         const musicData = musicList[this.state.currentIndex]
-
         return (
-            musicData.downloadUrl ?
+            musicData ?
                 <View style={musicPlayerStyle.container}>
                     <Image
                         ref={(img) => {

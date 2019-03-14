@@ -302,13 +302,11 @@ export default class Signin extends Component {
             <Card
                 containerStyle={[authStyle.formContainer]}
                 titleStyle={authStyle.cardTitle}
-
                 title={this.state.title}
             >
 
                 <Button
                     title="SIGN OUT"
-
                     activeOpacity={1}
                     underlayColor="transparent"
                     onPress={this.handleSignout}

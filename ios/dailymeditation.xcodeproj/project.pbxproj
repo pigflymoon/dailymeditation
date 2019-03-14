@@ -34,8 +34,8 @@
 		8D0CBC44213F4FB6007C1E22 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D0CBC40213F4F98007C1E22 /* libRNSpinkit.a */; };
 		8D36A3AB2170423E0024EB00 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D36A3AA2170423E0024EB00 /* StoreKit.framework */; };
 		8D36A4002170463D0024EB00 /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D36A3FD217046230024EB00 /* libInAppUtils.a */; };
-		8D46CF2021728193000714AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D46CF1F21728192000714AB /* GoogleService-Info.plist */; };
 		8D89011E21408CAF0020C272 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D89011821408C6F0020C272 /* libRNFS.a */; };
+		8DE29AFB223A4E4E00A3F73A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE29AFA223A4E4E00A3F73A /* GoogleService-Info.plist */; };
 		90848D05F133405DB23B7B01 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B722100F66D74623948E572E /* Zocial.ttf */; };
 		9BB13B3393BA4D2E806A6D68 /* libRNStoreReview.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DED440C63257482BAE92CA04 /* libRNStoreReview.a */; };
 		9F8F4DA6CBDA4B87BAD4AB90 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DFF5D207D34E24B110F92B /* libRCTVideo.a */; };
@@ -458,9 +458,9 @@
 		8D0CBC0E213F4F97007C1E22 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		8D36A3AA2170423E0024EB00 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8D36A3F7217046230024EB00 /* InAppUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = InAppUtils.xcodeproj; path = "../node_modules/react-native-in-app-utils/InAppUtils.xcodeproj"; sourceTree = "<group>"; };
-		8D46CF1F21728192000714AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D5363CF2126BC44002B6622 /* dailymeditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = dailymeditation.entitlements; path = dailymeditation/dailymeditation.entitlements; sourceTree = "<group>"; };
 		8D8900E621408C6F0020C272 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
+		8DE29AFA223A4E4E00A3F73A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../pplfly/project/dailymeditation/google-firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95EB9700D51B4366AC988287 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		A5BE61BF3CBD4A94B786D088 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		A7E7599F05C7B5EC703533B3 /* libPods-dailymeditation-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-dailymeditation-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -598,7 +598,7 @@
 			isa = PBXGroup;
 			children = (
 				8D5363CF2126BC44002B6622 /* dailymeditation.entitlements */,
-				8D46CF1F21728192000714AB /* GoogleService-Info.plist */,
+				8DE29AFA223A4E4E00A3F73A /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1383,6 +1383,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				8DE29AFB223A4E4E00A3F73A /* GoogleService-Info.plist in Resources */,
 				2850478B3FC641DBAC5715C5 /* Entypo.ttf in Resources */,
 				F1CA37C73F71441687BFFFF4 /* EvilIcons.ttf in Resources */,
 				63B4635335B2435389EB8CE0 /* Feather.ttf in Resources */,
@@ -1394,7 +1395,6 @@
 				B7A294A6AFB64F9D8D9EAC5D /* Octicons.ttf in Resources */,
 				412216A8DA8A44A1900A56B2 /* SimpleLineIcons.ttf in Resources */,
 				90848D05F133405DB23B7B01 /* Zocial.ttf in Resources */,
-				8D46CF2021728193000714AB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1467,7 +1467,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = dailymeditation/dailymeditation.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Simei Lu (SCU974Q2GV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simei Lu (SCU974Q2GV)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1494,8 +1495,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucy.dailymeditation;
 				PRODUCT_NAME = dailymeditation;
-				PROVISIONING_PROFILE = "743eb8db-6cf6-4745-a67f-5efbbf9766f7";
-				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-production";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-dev";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1507,7 +1509,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = dailymeditation/dailymeditation.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Simei Lu (TFYB97VTU3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Simei Lu (TFYB97VTU3)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TFYB97VTU3;
@@ -1533,8 +1536,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucy.dailymeditation;
 				PRODUCT_NAME = dailymeditation;
-				PROVISIONING_PROFILE = "743eb8db-6cf6-4745-a67f-5efbbf9766f7";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "dailymeditation-production";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

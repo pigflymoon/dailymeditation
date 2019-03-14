@@ -147,7 +147,7 @@ export default class MyMeditation extends Component {
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getDataFromLocalStorage();
 
     }

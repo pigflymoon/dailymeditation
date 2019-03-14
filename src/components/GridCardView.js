@@ -66,8 +66,8 @@ export default class GridCardView extends Component {
             }, 500);
         });
     }
-
-    componentWillMount() {
+    
+    async componentDidMount() {
         var self = this;
         const {category, type, isPaidUser} = this.props;
 
@@ -78,11 +78,6 @@ export default class GridCardView extends Component {
             });
         });
 
-
-    }
-
-    async componentDidMount() {
-        var self = this;
         auth.onAuthStateChanged(function (authUser) {
             if (authUser) {
                 var userId = auth.currentUser.uid;
