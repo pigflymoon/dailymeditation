@@ -16,6 +16,8 @@ import RNFS from 'react-native-fs';
 import SortableList from 'react-native-sortable-list';
 import {Overlay, ListItem, Icon, Button} from 'react-native-elements';
 // import Spinner from 'react-native-spinkit';
+import {auth} from '../config/FirebaseConfig';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import  Utils from '../utils/utils';
 import Config from '../config/ApiConfig';
@@ -54,10 +56,19 @@ export default class SortablePlayList extends Component {
     }
 
     showMusicPlayer = (data, index) => {
-        this.setState({activeIndex: parseInt(index)})
-        var musicData = [];
-        musicData.push(data);
-        this.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
+        var self = this;
+        const {signin} = this.props;
+
+        console.log("signin :",signin);
+            if (signin) {
+                self.setState({activeIndex: parseInt(index)})
+                var musicData = [];
+                musicData.push(data);
+                self.props.navigate.push("MusicPlayer", {audio: musicData});//audioArray
+            } else {
+                self.props.navigate.navigate('Signin', {previousScreen: 'PlayList'});
+            }
+
     }
 
     _renderRow = ({data, active, index}) => {

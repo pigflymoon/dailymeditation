@@ -50,6 +50,7 @@ export default class PlayList extends Component {
             musicInfo: {},
             musicList: [],
             deleteListVisible: false,
+            signin: false,
         }
         this.spinAnimated = Animated.timing(this.state.spinValue, {
             toValue: 1,
@@ -60,25 +61,42 @@ export default class PlayList extends Component {
 
     componentDidMount() {
         const {audio} = this.props.navigation.state.params;
-        this.setState({musicList: audio})
+        this.setState({musicList: audio});
+        var self = this;
+
+        auth.onAuthStateChanged(function (authUser) {
+            if (authUser) {
+                self.setState({signin: true})
+            } else {
+                self.setState({signin: false})
+            }
+        });
     }
 
     playAllList = () => {
         const {audio} = this.props.navigation.state.params;
 
         var self = this;
-        auth.onAuthStateChanged(function (authUser) {
-            if (authUser) {
-                self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
-            } else {
-                self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
+        if (this.signin) {
+            self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
 
-            }
-        });
+        } else {
+            self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
+
+        }
+        // auth.onAuthStateChanged(function (authUser) {
+        //     if (authUser) {
+        //         self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
+        //     } else {
+        //         self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
+        //
+        //     }
+        // });
     }
 
 
     render() {
+        const {musicList, signin} = this.state;
 
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
@@ -95,7 +113,8 @@ export default class PlayList extends Component {
                         onPress={this.playAllList}/>
 
                 </View>
-                <SortablePlayList musicData={this.state.musicList} type="playlist" navigate={this.props.navigation}/>
+                <SortablePlayList signin={signin} musicData={musicList} type="playlist"
+                                  navigate={this.props.navigation}/>
                 <Overlay
                     overlayBackgroundColor='rgba(255, 255, 255, .9)'
                     overlayStyle={meditationStyle.overlay}

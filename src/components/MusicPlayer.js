@@ -217,8 +217,8 @@ export default class MusicPlayer extends Component {
         const {audio} = this.props.navigation.state.params;
 
         const {navigation} = this.props;
-        navigation.navigate('PlayList', {audio: audio});
-        // navigation.goBack();
+        // navigation.navigate('PlayList', {audio: audio});
+        navigation.goBack();
     }
     showMusicList = () => {
         this.setState({musicListVisible: true})
