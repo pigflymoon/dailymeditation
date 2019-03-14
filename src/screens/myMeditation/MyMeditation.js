@@ -97,7 +97,12 @@ export default class MyMeditation extends Component {
     }
 
     playAllList = () => {
-        this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
+
+        if (this.state.signin) {
+            this.props.navigation.push("MusicPlayer", {audio: this.state.musicList});//audioArray
+        } else {
+            this.props.navigation.navigate('Signin', {previousScreen: 'MyMeditation', audio: this.state.musicList});
+        }
     }
 
     deleteAllList = () => {

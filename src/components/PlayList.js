@@ -88,7 +88,7 @@ export default class PlayList extends Component {
         if (this.state.signin) {
             self.props.navigation.push("MusicPlayer", {audio: audio});//audioArray
         } else {
-            self.props.navigation.navigate('Signin', {previousScreen: 'MusicPlayer', audio: audio});
+            self.props.navigation.navigate('Signin', {previousScreen: 'PlayList', audio: audio});
         }
 
     }

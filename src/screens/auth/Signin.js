@@ -75,8 +75,7 @@ export default class Signin extends Component {
                         if (user) {
                             if (self.props.navigation.state.params) {
                                 const {previousScreen, audio} = self.props.navigation.state.params;
-                                console.log('previousScreen is :',previousScreen);
-                                if (previousScreen === 'MusicPlayer') {
+                                if (previousScreen) {
                                     var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
                                     var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
                                     self.setState({
@@ -88,7 +87,7 @@ export default class Signin extends Component {
                                         title: title,
                                         //
                                     }, () => {
-                                        self.props.navigation.push("PlayList", {audio: audio});//audioArray
+                                        self.props.navigation.navigate(previousScreen, {audio: audio});//audioArray
 
                                     })
 
