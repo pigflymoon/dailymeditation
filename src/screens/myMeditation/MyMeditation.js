@@ -13,7 +13,8 @@ import {
     Dimensions,
     ScrollView,
     Alert,
-    AsyncStorage
+    AsyncStorage,
+    ImageBackground,
 } from 'react-native'
 import {Overlay, Avatar, ListItem, Icon, Button} from 'react-native-elements';
 import Spinner from 'react-native-spinkit';
@@ -23,6 +24,8 @@ import {auth} from '../../config/FirebaseConfig';
 
 import  Utils from '../../utils/utils';
 import SortablePlayList from '../../components/SortablePlayList';
+
+import bg from '../../assets/images/noWifiBg.png';
 
 import colors from '../../styles/colors';
 import baseStyle from '../../styles/base';
@@ -142,8 +145,10 @@ export default class MyMeditation extends Component {
     }
 
     render() {
-
         const {isLoading, musicList,signin} = this.state;
+
+        let banner =  bg;
+
         if (!musicList) {
 
             return (
@@ -178,28 +183,56 @@ export default class MyMeditation extends Component {
         return (
             <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
 
+                <View style={{flex: 1,}}>
+
+                    <ImageBackground
+                        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+                        source={banner}>
+                        <Text style={{color: colors.grey6, fontWeight: 'bold'}}>My list</Text>
+                    </ImageBackground>
+
+                    <View
+                        style={{
+                            flexDirection: 'row', justifyContent: 'space-between',
+                            marginVertical: 10,
+                            paddingHorizontal: 10,
+                            borderBottomWidth: StyleSheet.hairlineWidth,
+                            borderBottomColor: '#A7A7AA',
+                            height: 30,
+                        }}
+                    >
+                        <View style={{flex:1,flexDirection: 'row',}}>
+                        <Icon
+                            containerStyle={{marginRight: 10}}
+                            name='play-circle-outline'
+                            color={colors.grey6}
+                            onPress={this.playAllList}/>
+                        <Text style={{color: colors.grey6}}>Play All</Text>
+
+                        </View>
+                        <View style={{flex:1,flexDirection: 'row',justifyContent:'flex-end'}}>
+                        <Icon
+                            containerStyle={{marginRight:10}}
+                            name='refresh'
+                            color={colors.grey6}
+                            onPress={this.refreshList}/>
+                        <Icon
+                            containerStyle={{marginRight:10}}
+                            name='delete-forever'
+                            color={colors.grey4}
+                            size={26}
+                            onPress={this.deleteAllList}
+                        />
+                        </View>
+                    </View>
+                </View>
+
                 <View style={{ flexDirection: 'row',
                                 alignItems: 'center',
                                 justifyContent: 'flex-end',
                                 paddingVertical: 5,
                 }}>
-                    <Icon
-                        containerStyle={{marginRight:10}}
-                        name='refresh'
-                        color={colors.grey6}
-                        onPress={this.refreshList}/>
-                    <Icon
-                        containerStyle={{marginRight:10}}
-                        name='play-circle-outline'
-                        color={colors.grey6}
-                        onPress={this.playAllList}/>
-                    <Icon
-                        containerStyle={{marginRight:10}}
-                        name='delete-forever'
-                        color={colors.grey4}
-                        size={26}
-                        onPress={this.deleteAllList}
-                    />
+
                 </View>
 
                 {this.state.isLoading ?
