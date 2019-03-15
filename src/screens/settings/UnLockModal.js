@@ -185,7 +185,7 @@ export  default class UnLockModal extends Component {
 
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
                         <Button
-                            title={'Unlock PRO ($2.99)'}
+                            title={'Unlock PRO ($1.99)'}
                             activeOpacity={1}
                             underlayColor="transparent"
                             onPress={ this.unlockProVersion}
