@@ -20,7 +20,6 @@ export default class Signin extends Component {
         this.state = {
             showSignBox: true,
             welcomeCard: false,
-
             email: '',
             email_valid: true,
             password: '',
@@ -36,8 +35,6 @@ export default class Signin extends Component {
 
     async componentDidMount() {
         var self = this;
-        // var user = auth.currentUser;
-
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
@@ -65,7 +62,6 @@ export default class Signin extends Component {
             password,
         } = this.state;
 
-
         this.setState({showLoading: true});
 
         setTimeout(() => {
@@ -73,6 +69,7 @@ export default class Signin extends Component {
                 .then(function () {
                     auth.onAuthStateChanged(function (user) {
                         if (user) {
+                            console.log('param ', self.props.navigation.state.params);
                             if (self.props.navigation.state.params) {
                                 const {previousScreen, audio} = self.props.navigation.state.params;
                                 if (previousScreen) {
@@ -85,10 +82,8 @@ export default class Signin extends Component {
                                         welcomeCard: true,
                                         showSignBox: false,
                                         title: title,
-                                        //
                                     }, () => {
                                         self.props.navigation.navigate(previousScreen, {audio: audio});//audioArray
-
                                     })
 
                                 } else {
@@ -101,10 +96,20 @@ export default class Signin extends Component {
                                         welcomeCard: true,
                                         showSignBox: false,
                                         title: title,
-                                        //
                                     })
                                 }
 
+                            } else {
+                                var displayName = user.displayName ? user.displayName : (user.email).split("@")[0];
+                                var title = `Hi ${displayName}, Welcome to DailyMeditation:Simple Habit!`
+                                self.setState({
+                                    showLoading: false,
+                                    user: user,
+                                    signin: true,
+                                    welcomeCard: true,
+                                    showSignBox: false,
+                                    title: title,
+                                })
                             }
 
                         } else {
@@ -298,13 +303,11 @@ export default class Signin extends Component {
             showLoading,
         } = this.state;
         return (
-
             <Card
                 containerStyle={[authStyle.formContainer]}
                 titleStyle={authStyle.cardTitle}
                 title={this.state.title}
             >
-
                 <Button
                     title="SIGN OUT"
                     activeOpacity={1}
@@ -316,14 +319,11 @@ export default class Signin extends Component {
                     containerStyle={{marginVertical: 5}}
                     titleStyle={{color: 'white'}}
                 />
-
             </Card>
         )
-
     }
 
     render() {
-
         return (
             <View style={authStyle.container}>
                 <ImageBackground
