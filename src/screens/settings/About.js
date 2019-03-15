@@ -51,6 +51,11 @@ export default class About extends Component {
                             <Text style={{marginBottom: 10}}>
                                 2.Thanks for Pexels sharing beautiful Photos.Photo is licensed under CC0 from website.
                             </Text>
+                            <Text>
+                                3. Thanks for Kevin MacLeod for his amazing music.
+                                   Music by Kevin MacLeod (https://incompetech.com)
+                                    Licence: CC BY (http://creativecommons.org/licenses/by/4.0/)
+                            </Text>
                         </Card>
                         <Copyright/>
                         <ImageSourceCopyright/>

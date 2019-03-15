@@ -1,11 +1,10 @@
 export default Config = {
     share: {
-        url: 'http://cardmaker.kiwiinfo.com/files/dailymeditation/index.html',
+        url: 'https://dailymeditation.kiwiinfo.com/',
         applestoreUrl:'https://itunes.apple.com/nz/app/daily-meditation-simple-habit/id1420248188'
     },
     products: {
         productIdentifier: 'com.lucy.dailymeditation.productid',
-        // productIdentifier: 'com.lucy.cardmaker.productid'
     },
     receiptVerify: {
         Host: {
