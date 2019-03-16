@@ -69,7 +69,6 @@ export default class Signin extends Component {
                 .then(function () {
                     auth.onAuthStateChanged(function (user) {
                         if (user) {
-                            console.log('param ', self.props.navigation.state.params);
                             if (self.props.navigation.state.params) {
                                 const {previousScreen, audio} = self.props.navigation.state.params;
                                 if (previousScreen) {
