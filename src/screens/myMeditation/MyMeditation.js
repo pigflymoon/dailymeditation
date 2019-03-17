@@ -156,6 +156,7 @@ export default class MyMeditation extends Component {
     componentWillReceiveProps(nextProps) {
         const {isConnected} = nextProps.screenProps;
         if (!isConnected) {
+            Utils.netWorkError();
             this.getDataFromLocalStorage();
 
         }
@@ -164,7 +165,13 @@ export default class MyMeditation extends Component {
 
     render() {
         const {isLoading, musicList, signin, bannerImage} = this.state;
+        const {isConnected} = this.props.screenProps;
+        if (!isConnected) {
+            return Utils.renderOffline();
+        }
         let banner = bannerImage ? {uri: bannerImage} : bg;//
+
+
 
         if (musicList.length == 0) {
 

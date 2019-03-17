@@ -146,7 +146,11 @@ export default class Signin extends Component {
 
     render() {
         const {email, name, password, email_valid, name_valid, password_valid, showLoading} = this.state;
+        const {isConnected} = this.props.screenProps;
 
+        if (!isConnected) {
+            return Utils.renderOffline();
+        }
         return (
             <View style={authStyle.container}>
                 <ImageBackground

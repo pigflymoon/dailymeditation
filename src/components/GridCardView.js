@@ -15,6 +15,7 @@ import {
 import {
     upDateRole
 } from '../utils/AppPay';
+import  Utils from '../utils/utils';
 
 export default class GridCardView extends Component {
     constructor(props) {
@@ -95,6 +96,7 @@ export default class GridCardView extends Component {
         });
     }
 
+
     renderBeginner = () => {
         const {audiosData} =this.state;
         return (
@@ -148,7 +150,6 @@ export default class GridCardView extends Component {
             </View>
         )
     }
-
 
     renderCategory = () => {
         const {isPaidUser, audiosData} = this.state;
@@ -205,6 +206,11 @@ export default class GridCardView extends Component {
 
     render() {
         const {category} = this.props;
+        const {isConnected} = this.props.screenProps;
+
+        if (!isConnected) {
+            return Utils.renderOffline();
+        }
         return (
             <View>
                 {

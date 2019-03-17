@@ -14,6 +14,8 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 import showInfo from '../styles/showInfo';
 import bg from '../assets/images/noWifiBg.png';
+import baseStyle from '../styles/base';
+import screenStyle from '../styles/screen';
 
 
 export default class Utils {
@@ -88,13 +90,13 @@ export default class Utils {
             <ImageBackground
                 source={bg}
                 style={{
-                        flex: 1,
-        top: 0,
-        left: 0,
-        width: SCREEN_WIDTH,
-        height: 240,
-        justifyContent: 'center',
-        alignItems: 'center'
+                    flex: 1,
+                    top: 0,
+                    left: 0,
+                    width: SCREEN_WIDTH,
+                    height: 240,
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}
             >
                 <View style={showInfo.container}>
@@ -104,6 +106,25 @@ export default class Utils {
 
                 </View>
             </ImageBackground >
+
+        )
+    }
+
+    static renderOffline = () => {
+        return (
+            <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
+                <ImageBackground
+                    source={bg}
+                    style={{
+                        flex: 1,
+                        width: null,
+                        height: 400,
+                    }}
+                >
+                    <View style={showInfo.container}><Text style={showInfo.text}>Offline: Cannot Connect to
+                        App.</Text></View>
+                </ImageBackground >
+            </View>
 
         )
     }
