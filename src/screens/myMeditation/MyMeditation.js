@@ -158,9 +158,7 @@ export default class MyMeditation extends Component {
         if (!isConnected) {
             Utils.netWorkError();
             this.getDataFromLocalStorage();
-
         }
-
     }
 
     render() {
@@ -170,11 +168,7 @@ export default class MyMeditation extends Component {
             return Utils.renderOffline();
         }
         let banner = bannerImage ? {uri: bannerImage} : bg;//
-
-
-
         if (musicList.length == 0) {
-
             return (
                 <View style={[baseStyle.container, screenStyle.screenBgPurple]}>
                     <View style={{

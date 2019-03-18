@@ -124,6 +124,7 @@ export  default class UnLockModal extends Component {
                     itemWidth={itemWidth}
                     hasParallaxImages={true}
                     firstItem={SLIDER_1_FIRST_ITEM}
+                    removeClippedSubviews={false}
                     inactiveSlideScale={0.94}
                     inactiveSlideOpacity={0.7}
                     containerCustomStyle={unlockModalStyle.slider}
